@@ -38,7 +38,7 @@ export default {
     toggleFavorite(productId) {
       // 提交mutation去改變商品狀態
       this.$store.commit("UpdateFavorite", productId);
-
+      console.log("emit toggle");
       // 更新localStorage的資料
       const favoriteIdList =
         JSON.parse(window.localStorage.getItem("favorite_products")) || [];

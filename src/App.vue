@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "./components/Navbar";
 import { mapActions } from "vuex";
 
