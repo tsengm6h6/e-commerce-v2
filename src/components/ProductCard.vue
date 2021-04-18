@@ -40,17 +40,21 @@
                 <el-row>
                   <el-col :span="24">
                     <el-button
-                      type="primary"
-                      plain
+                      v-if="product.isFavorite"
                       @click.prevent.stop="toggleFavorite(product.id)"
+                      icon="el-icon-star-on"
                     >
-                      {{
-                        product.isFavorite ? "取消收藏" : "加入收藏"
-                      }}</el-button
+                    </el-button>
+                    <el-button
+                      v-else
+                      @click.prevent.stop="toggleFavorite(product.id)"
+                      icon="el-icon-star-off"
                     >
+                    </el-button>
                     <el-button
                       type="primary"
                       @click.prevent.stop="dialogVisible = true"
+                      icon="el-icon-goods"
                       >加到購物車</el-button
                     >
                   </el-col>
@@ -171,7 +175,6 @@ export default {
       },
       pickerOptions: {
         disabledDate: (time) => {
-          // 參考文章：https://www.cnblogs.com/steamed-twisted-roll/p/9755651.html
           return time.getTime() < Date.now();
         },
       },
@@ -190,6 +193,7 @@ export default {
       this.dialogVisible = false;
     },
     toggleFavorite(productId) {
+      console.log("toggle");
       this.$emit("toggle-favorite", productId);
     },
     handleClose(done) {
