@@ -8,7 +8,7 @@
         background-color="transparent"
         text-color="#c4c4c4"
         active-text-color="#ffd04b"
-        router="true"
+        router
       >
         <el-menu-item index="/">首頁</el-menu-item>
         <el-submenu index="/product/:id">
@@ -33,7 +33,7 @@
         <el-menu-item index="/favorites">收藏清單</el-menu-item>
         <!-- TODO: 調整位置和value-->
         <el-badge :value="cartLength" class="cartBadge">
-          <el-menu-item index="6">購物車</el-menu-item>
+          <el-menu-item index="/checkout/cart-list">購物車</el-menu-item>
         </el-badge>
       </el-menu>
     </el-header>
