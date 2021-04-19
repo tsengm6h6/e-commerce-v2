@@ -1,21 +1,21 @@
 <template>
   <el-main>
+    <!-- <el-button type="text" @click="dialogTableVisible = true"
+      >open a Table nested Dialog</el-button
+    > -->
+    <loading :active.sync="isLoading"></loading>
     <el-row>
-      <el-col :span="20" :offset="2">
+      <el-col :span="24">
         <loading :active.sync="isLoading"></loading>
         <h2>所有訂單</h2>
         <el-divider></el-divider>
         <el-table stripe height="500" :data="orders" style="width: 100%">
           <el-table-column width="50" align="center">
-            <template slot="header"></template>
-            <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="mini"
-                @click="fetchProduct(scope.row.id)"
-                ><i class="el-icon-view"></i
-              ></el-button>
-            </template>
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <OrderTwo :currOrderId="props.row.id" />
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column
             min-width="100"
@@ -60,16 +60,21 @@
 </template>
 
 <script>
+import OrderTwo from "../components/OrderTwo";
 import customerAPI from "../apis/customer";
 import { Toast } from "../utils/helper";
 
 export default {
   name: "orders",
+  components: {
+    OrderTwo,
+  },
   data() {
     return {
       orders: [],
       pagination: {},
       isLoading: false,
+      currOrderId: "",
     };
   },
   methods: {
@@ -115,7 +120,6 @@ export default {
         this.isLoading = false;
       }
     },
-    fetchProduct() {},
   },
   created() {
     this.fetchOrders();
