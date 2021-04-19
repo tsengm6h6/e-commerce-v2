@@ -14,7 +14,13 @@
     <el-main v-if="active === 0">
       <el-row>
         <el-col :span="18" :offset="3">
-          <el-table stripe :data="cartList" style="width: 100%">
+          <el-table
+            stripe
+            :data="cartList"
+            :summary-method="getSummaries"
+            show-summary
+            style="width: 100%"
+          >
             <el-table-column width="50" align="center">
               <template slot="header"></template>
               <template slot-scope="scope">
@@ -74,38 +80,6 @@
           </el-table>
         </el-col>
       </el-row>
-      <!-- 自製的總價計算TODO: 金額不會連動，還是要用現成的總價計算 -->
-      <el-row>
-        <el-col :span="18" :offset="3">
-          <el-table
-            :show-header="false"
-            stripe
-            :data="sumList"
-            style="width: 100%"
-          >
-            <el-table-column min-width="100" align="center">
-              <template slot="header"></template>
-            </el-table-column>
-            <el-table-column
-              prop="name"
-              label="總計"
-              min-width="100"
-              align="right"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="price"
-              label="金額"
-              min-width="100"
-              align="right"
-            >
-            </el-table-column>
-            <el-table-column min-width="100" align="center">
-              <template slot="header"></template>
-            </el-table-column>
-          </el-table>
-        </el-col>
-      </el-row>
       <el-row>
         <el-col :span="18" :offset="3">
           <el-input placeholder="請輸入優惠碼" v-model="couponCode">
@@ -120,7 +94,6 @@
     </el-main>
 
     <!-- Form -->
-    <!-- TODO: 驗證未通過要擋Submit -->
     <el-main v-if="active === 1">
       <el-row>
         <el-col :span="12" :offset="6">
@@ -130,7 +103,7 @@
         <el-col :span="12" :offset="6">
           <div style="margin: 20px"></div>
           <el-form
-            ref="form"
+            ref="userForm"
             label-position="top"
             :rules="rules"
             :model="userForm"
@@ -194,7 +167,6 @@
       <el-row>
         <el-col :span="18" :offset="3">
           <h4>訂單編號：{{ currOrder.id }}</h4>
-          <p>請盡快完成付款</p>
           <el-divider></el-divider>
           <div>
             <p>訂購人資訊</p>
@@ -213,12 +185,11 @@
                 <p>產品名稱：{{ props.row.product.title }}</p>
                 <p>數量：{{ props.row.qty }} / {{ props.row.product.unit }}</p>
                 <p>單價：{{ props.row.product.price }}</p>
-                <!-- <p>Zip: {{ props.row.zip }}</p> -->
               </template>
             </el-table-column>
             <el-table-column label="日期" prop="createdAt"></el-table-column>
-            <el-table-column label="付款狀態" prop="isPaid"> </el-table-column>
-            <el-table-column label="總計" prop="final_total"> </el-table-column>
+            <el-table-column label="付款狀態" prop="isPaid"></el-table-column>
+            <el-table-column label="總計" prop="final_total"></el-table-column>
           </el-table>
         </el-col>
       </el-row>
@@ -234,10 +205,10 @@
           v-if="active === 1"
           type="primary"
           style="margin-top: 12px"
-          @click="next"
+          @click="validateForm('userForm')"
           >送出訂單</el-button
         >
-        <el-button
+        <!-- <el-button
           v-if="active === 2"
           type="success"
           plain
@@ -245,13 +216,21 @@
           @click="next"
         >
           <router-link to="/"> 回首頁 </router-link>
-        </el-button>
+        </el-button> -->
         <el-button
-          v-if="active === 2"
-          @click="payOrder"
-          type="success"
+          v-if="active === 2 && !currOrder.isPaid"
+          @click="payOrder(currOrderId)"
+          type="warning"
           style="margin-top: 12px"
           >確認付款</el-button
+        >
+        <el-button
+          v-if="active === 2 && currOrder.isPaid"
+          @click="next"
+          type="success"
+          plain
+          style="margin-top: 12px"
+          >回首頁</el-button
         >
       </el-col>
     </el-row>
@@ -269,16 +248,6 @@ export default {
     return {
       couponCode: "",
       active: 0,
-      sumList: [
-        {
-          name: "總價",
-          price: this.$store.state.cartInfo.total,
-        },
-        {
-          name: "折扣價",
-          price: this.$store.state.cartInfo.final_total,
-        },
-      ],
       userForm: {
         name: "",
         email: "",
@@ -372,22 +341,42 @@ export default {
         this.couponCode = ""; // 清空優惠券欄位
       }
     },
-    async next() {
-      try {
-        if (this.active === 1) {
-          await this.confirmOrder();
-          await this.fetchOrder(this.currOrderId);
-          return this.active++;
-        }
-        this.active++;
-        if (this.active > 2) this.active = 0;
-      } catch (error) {
-        console.log(error);
+    next() {
+      console.log("currStep", this.active);
+      this.active++;
+      console.log("nextStep", this.active);
+      if (this.active > 2) {
+        this.$router.push("/");
+        this.active = 0;
       }
+    },
+    getSummaries() {
+      if (this.final_total !== this.total) {
+        const sums = ["", "", "總價", this.total, "折扣價", this.final_total];
+        return sums;
+      } else {
+        const sums = ["", "", "", "", "總價", this.total];
+        return sums;
+      }
+    },
+    validateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 通過驗證才送出
+          this.confirmOrder();
+          // console.log("submit");
+          // this.next();
+        } else {
+          Toast.fire({
+            icon: "warning",
+            title: "請再次確認資料內容",
+          });
+          return false;
+        }
+      });
     },
     async confirmOrder() {
       try {
-        // TODO: message必填驗證
         const { name, email, tel, address, message } = this.userForm;
         const user = {
           name,
@@ -395,17 +384,17 @@ export default {
           tel,
           address,
         };
-        console.log(user, message);
         const response = await customerAPI.confirmOrder({
           data: { user },
           message: message.trim(),
         });
+        console.log(response);
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        const orderId = response.data.orderId;
-        this.currOrderId = orderId;
-        // this.$router.push({ name: "order", params: { order_id: orderId } });
+        this.currOrderId = response.data.orderId;
+        await this.fetchOrder(this.currOrderId);
+        this.next();
       } catch (error) {
         console.log(error);
         Toast.fire({
@@ -455,7 +444,7 @@ export default {
             title: "您的訂單已建立，請盡快完成付款",
           });
         }
-        // this.isLoading = false;
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         Toast.fire({
@@ -465,9 +454,27 @@ export default {
         // this.isLoading = false;
       }
     },
-    async payOrder() {
-      // ...
-      this.next();
+    async payOrder(orderId) {
+      try {
+        // this.isLoading = true;
+        const response = await customerAPI.payOrder(orderId);
+        if (response.data.success !== true) {
+          throw new Error();
+        }
+        this.currOrder.isPaid = true;
+        // this.isLoading = false;
+        Toast.fire({
+          icon: "success",
+          title: "感謝您的預訂，我們將盡快為您出貨",
+        });
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法完成付款，請稍後再試",
+        });
+        // this.isLoading = false;
+      }
     },
   },
 };
