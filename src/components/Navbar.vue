@@ -35,7 +35,8 @@ export default {
   name: "Navbar",
   computed: {
     ...mapState({
-      cartLength: (state) => state.cartInfo.cartList.length || 0,
+      cartLength: (state) =>
+        state.cartInfo.cartList ? state.cartInfo.cartList.length : 0,
     }),
   },
 };

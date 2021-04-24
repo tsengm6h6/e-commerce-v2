@@ -59,6 +59,8 @@
 <script>
 import customerAPI from "../apis/customer";
 import { Toast } from "../utils/helper";
+import mixin from "../utils/mixin";
+
 export default {
   name: "Order",
   props: {
@@ -74,6 +76,7 @@ export default {
       },
     },
   },
+  mixins: [mixin],
   data() {
     return {
       orderIsPaid: null,
@@ -101,15 +104,9 @@ export default {
         } = response.data.order;
 
         this.orderIsPaid = isPaid;
-        // 轉換日期格式
-        const date = new Date(createdAt);
-        const yyyy = date.getFullYear();
-        const mm =
-          (date.getMonth() + 1 < 10 ? "0" : "") + (date.getMonth() + 1);
-        const dd = (date.getDate() < 10 ? "0" : "") + date.getDate();
         this.orderList.push({
           id,
-          orderDate: `${yyyy}-${mm}-${dd}`,
+          orderDate: this.dateFormat(createdAt),
           isPaid: isPaid ? "已付款" : "尚未付款",
           orderSum: total,
           userName: user ? user.name : "-",
@@ -148,6 +145,7 @@ export default {
         }));
         this.orderIsPaid = true;
         this.isLoading = false;
+        this.$emit("after-pay-order");
       } catch (error) {
         console.log(error);
         Toast.fire({

@@ -2,8 +2,8 @@ import { adminApi } from '../utils/helper'
 const getCookie = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
 
 export default {
-  getProducts() {
-    return adminApi.get('/admin/products/all', {
+  getProducts(page) {
+    return adminApi.get(`/admin/products?page=${page}`, {
       headers: {
         Authorization: getCookie
       }
@@ -18,7 +18,7 @@ export default {
     })
   },
   addProduct({ data }) {
-    return adminApi.post(`/admin/product`, { data }, {
+    return adminApi.post('/admin/product', { data }, {
       headers: {
         Authorization: getCookie
       }
@@ -39,22 +39,22 @@ export default {
       }
     })
   },
-  getOrders() {
-    return adminApi.get('/admin/orders', {
+  getOrders(page) {
+    return adminApi.get(`/admin/orders?page=${page}`, {
       headers: {
-        Authorization: getCookie,
+        Authorization: getCookie
       }
     })
   },
-  editOrder(id) {
-    return adminApi.put(`/admin/order/${id}`), {
+  editOrder({ id, data }) {
+    return adminApi.put(`/admin/order/${id}`, { data }, {
       headers: {
-        Authorization: getCookie,
+        Authorization: getCookie
       }
-    }
+    })
   },
-  getCoupons() {
-    return adminApi.get('/admin/coupons', {
+  getCoupons(page) {
+    return adminApi.get(`/admin/coupons?page=${page}`, {
       headers: {
         Authorization: getCookie,
       }

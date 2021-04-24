@@ -5,60 +5,41 @@
         <el-row>
           <el-col :span="24">
             <router-link :to="{ name: 'product', params: { id: product.id } }">
-              <img
-                :src="product.image"
-                class="image"
-                style="
-                  width: 100%;
-                  height: 20vh;
-                  object-fit: cover;
-                  object-position: center;
-                "
-              />
+              <img :src="product.image" class="image" />
+              <el-button
+                class="heart-icon"
+                v-if="product.isFavorite"
+                @click.prevent.stop="toggleFavorite(product.id)"
+                icon="el-icon-star-on"
+                circle
+              >
+              </el-button>
+              <el-button
+                class="heart-icon"
+                v-else
+                @click.prevent.stop="toggleFavorite(product.id)"
+                icon="el-icon-star-off"
+                circle
+              >
+              </el-button>
             </router-link>
           </el-col>
-          <el-col :span="24">
-            <div style="padding: 20px">
+          <el-col :span="20" :offset="2">
+            <div class="card-content">
               <router-link
                 :to="{ name: 'product', params: { id: product.id } }"
               >
                 <h3>
-                  <a href="#" class="text-dark">{{ product.title }}</a>
+                  {{ product.title }}
                 </h3>
               </router-link>
-              <p>{{ product.content }}</p>
-              <el-row>
-                <el-col :span="24">
-                  <div>NT$ {{ product.price }}</div>
-                </el-col>
-                <el-col :span="24">
-                  <del>NT$ {{ product.origin_price }}</del>
-                </el-col>
-              </el-row>
-
-              <div class="bottom clearfix">
-                <el-row>
-                  <el-col :span="24">
-                    <el-button
-                      v-if="product.isFavorite"
-                      @click.prevent.stop="toggleFavorite(product.id)"
-                      icon="el-icon-star-on"
-                    >
-                    </el-button>
-                    <el-button
-                      v-else
-                      @click.prevent.stop="toggleFavorite(product.id)"
-                      icon="el-icon-star-off"
-                    >
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      @click.prevent.stop="dialogVisible = true"
-                      icon="el-icon-goods"
-                      >加到購物車</el-button
-                    >
-                  </el-col>
-                </el-row>
+              <!-- <p>{{ product.content }}</p> -->
+              <div class="price-tag">
+                NT$ {{ product.origin_price }} / {{ product.unit }}
+                <i
+                  @click.prevent.stop="dialogVisible = true"
+                  class="shop-icon el-icon-shopping-cart-2"
+                ></i>
               </div>
             </div>
           </el-col>
@@ -66,7 +47,7 @@
       </el-card>
     </el-col>
 
-    <!-- Dialog -->
+    <!-- Cart Dialog -->
     <el-dialog
       :title="product.title"
       :visible.sync="dialogVisible"
@@ -74,13 +55,13 @@
       :before-close="handleClose"
     >
       <el-row>
-        <el-col :span="24">
+        <el-col :span="6">
           <img
             :src="product.image"
             alt=""
             style="
               width: 100%;
-              height: 60vh;
+              height: 180px;
               object-fit: cover;
               object-position: center;
             "
@@ -106,6 +87,8 @@
             v-model="form.date"
             style="width: 100%"
             :picker-options="pickerOptions"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
           ></el-date-picker>
         </el-col>
         <el-col :span="11" :offset="1">
@@ -136,7 +119,9 @@
       <!-- TODO: 購物車 isloading 效果 & 關閉提示 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false"> 取消 </el-button>
-        <el-button type="primary" @click="addToCart">加入購物車</el-button>
+        <el-button type="primary" @click="handleAddToCart"
+          >加入購物車</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -144,6 +129,8 @@
 
 <script>
 import { mapState } from "vuex";
+import cartMixin from "../utils/cartMixin";
+import mixin from "../utils/cartMixin";
 
 export default {
   name: "productCard",
@@ -164,6 +151,7 @@ export default {
       },
     },
   },
+  mixins: [cartMixin, mixin],
   data() {
     return {
       product: this.initProduct,
@@ -184,13 +172,17 @@ export default {
     ...mapState(["isLoading"]),
   },
   methods: {
-    async addToCart() {
-      const addData = {
-        product_id: this.product.id,
-        qty: this.selectedNum,
-      };
-      await this.$store.dispatch("addProductToCart", { addData });
+    handleAddToCart() {
+      this.addToCart(this.product, this.selectedNum, this.form);
       this.dialogVisible = false;
+      this.resetDialogForm();
+    },
+    resetDialogForm() {
+      (this.selectedNum = ""),
+        (this.form = {
+          data: "",
+          time: "",
+        });
     },
     toggleFavorite(productId) {
       console.log("toggle");
@@ -209,6 +201,49 @@ export default {
 
 <style scoped>
 .el-col {
+  margin-bottom: 10px;
+}
+
+.image {
+  display: block;
+  position: relative;
+  border-radius: 16px;
+  width: 100%;
+  height: 40vh;
+  object-fit: cover;
+  object-position: center;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-icon {
+  font-size: 24px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+}
+
+.el-card.is-always-shadow {
+  box-shadow: none;
+}
+
+.el-card {
+  border: none;
+}
+
+h3 {
+  margin: 0;
   margin-bottom: 10px;
 }
 </style>

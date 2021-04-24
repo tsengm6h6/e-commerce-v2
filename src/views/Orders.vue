@@ -10,13 +10,12 @@
         <h2>所有訂單</h2>
         <el-divider></el-divider>
         <el-table stripe height="500" :data="orders" style="width: 100%">
-          <el-table-column width="50" align="center">
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <OrderTwo :currOrderId="props.row.id" />
-              </template>
-            </el-table-column>
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <OrderTwo :currOrderId="props.row.id" />
+            </template>
           </el-table-column>
+
           <el-table-column
             min-width="100"
             label="日期"
@@ -63,6 +62,7 @@
 import OrderTwo from "../components/OrderTwo";
 import customerAPI from "../apis/customer";
 import { Toast } from "../utils/helper";
+import mixin from "../utils/mixin";
 
 export default {
   name: "orders",
@@ -77,6 +77,7 @@ export default {
       currOrderId: "",
     };
   },
+  mixins: [mixin],
   methods: {
     async fetchOrders() {
       try {
@@ -94,13 +95,8 @@ export default {
             total,
             user,
           } = item;
-          const date = new Date(createdAt);
-          const yyyy = date.getFullYear();
-          const mm =
-            (date.getMonth() + 1 < 10 ? "0" : "") + (date.getMonth() + 1);
-          const dd = (date.getDate() < 10 ? "0" : "") + date.getDate();
           return {
-            createdAt: `${yyyy}-${mm}-${dd}`,
+            createdAt: this.dateFormat(createdAt),
             id,
             isPaid: isPaid ? "已付款" : "尚未付款",
             num,

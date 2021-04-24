@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <!-- Carousel -->
     <div class="block">
       <el-carousel height="60vh" indicator-position="none" arrow="never">
@@ -81,7 +82,7 @@
               </el-select>
             </el-col>
             <el-col :span="12" :offset="12">
-              <el-button type="primary" @click="addToCart"
+              <el-button type="primary" @click="handleAddToCart"
                 >加入購物車</el-button
               >
             </el-col>
@@ -102,6 +103,7 @@
 <script>
 import customerAPI from "../apis/customer";
 import { Toast } from "../utils/helper";
+import cartMixin from "../utils/cartMixin";
 
 export default {
   name: "product",
@@ -135,6 +137,7 @@ export default {
       },
     };
   },
+  mixins: [cartMixin],
   created() {
     const { id } = this.$route.params;
     this.fetchProduct(id);
@@ -161,14 +164,18 @@ export default {
         this.isLoading = false;
       }
     },
-    async addToCart() {
+    handleAddToCart() {
       this.isAdding = true;
-      const addData = {
-        product_id: this.product.id,
-        qty: this.selectedNum,
-      };
-      await this.$store.dispatch("addProductToCart", { addData });
+      this.addToCart(this.product, this.selectedNum, this.form);
       this.isAdding = false;
+      this.resetDialogForm();
+    },
+    resetDialogForm() {
+      (this.selectedNum = ""),
+        (this.form = {
+          data: "",
+          time: "",
+        });
     },
   },
 };
