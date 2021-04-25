@@ -3,10 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '../src/assets/style/theme/index.css'
-// import VueI18n from 'vue-i18n'
-// import zhLocale from 'element-ui/lib/locale/lang/zh-TW'
+import 'element-ui/lib/theme-chalk/display.css';
 import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css' 原始CSS
 import Loading from 'vue-loading-overlay'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
@@ -35,10 +34,7 @@ configure({
 })
 
 Vue.use(ElementUI)
-// TODO:語言待處理版本問題
-// Vue.use(VueI18n)
-// Vue.config.lang = 'zh-TW'
-// Vue.locale('zh-TW', zhLocale)
+// TODO: 處理繁體中文問題
 
 Vue.component('Loading', Loading)
 Vue.component('ValidationProvider', ValidationProvider)
