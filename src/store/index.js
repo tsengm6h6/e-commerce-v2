@@ -15,12 +15,25 @@ export default new Vuex.Store({
       cartList: [], // API拿到的購物車資料
       total: 0,
       final_total: 0
-    }
+    },
+    category: '全部'
   },
   getters: {
     favoriteList(state) {
       // 當productList裡的isFavorite改變時，同步更新收藏清單（有用到才會console.log）
       return state.productsList.filter(item => item.isFavorite)
+    },
+    filterProductsList(state) {
+      console.log('store category', state.category)
+      return state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
+    },
+    categoryList(state) {
+      return state.productsList.reduce((prev, curr) => {
+        if (!prev.includes(curr.category)) {
+          prev.push(curr.category)
+        }
+        return prev
+      }, ['全部'])
     }
   },
   mutations: {
@@ -28,11 +41,14 @@ export default new Vuex.Store({
       state.isLogin = success
     },
     setProductsList(state, payload) {
-      console.log('mutations setProductList')
+      console.log('mutations setProductList', payload)
       state.productsList = payload
     },
     setLoading(state, isLoading) {
       state.isLoading = isLoading
+    },
+    setCategory(state, category) {
+      state.category = category
     },
     UpdateFavorite(state, productId) {
       state.productsList = state.productsList.map((item) => {

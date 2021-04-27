@@ -1,19 +1,53 @@
 <template>
-  <el-container>
-    <el-main>
-      <h3>我的收藏清單</h3>
-      <hr />
-      <el-row :gutter="20">
-        <ProductCard
-          v-for="product in favoriteList"
-          :key="product.id"
-          :init-product="product"
-          @toggle-favorite="toggleFavorite"
-        />
-      </el-row>
-    </el-main>
+  <el-container direction="vertical">
+    <div class="title">
+      <h3>收藏清單</h3>
+      <p>不要再猶豫，快和我們一起出發去冒險！</p>
+    </div>
+    <el-row :gutter="20">
+      <ProductCard
+        v-for="product in favoriteList"
+        :key="product.id"
+        :init-product="product"
+        @toggle-favorite="toggleFavorite"
+      />
+    </el-row>
   </el-container>
 </template>
+
+<style scoped>
+.el-container {
+  padding: 30px;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.title h3 {
+  margin-bottom: 10px;
+}
+
+/* sm */
+@media only screen and (min-width: 768px) {
+  .el-container {
+    padding: 30px 80px;
+  }
+}
+
+/* md */
+@media only screen and (min-width: 992px) {
+  .el-container {
+    padding: 30px 120px;
+  }
+}
+</style>
 
 <script>
 import ProductCard from "../components/ProductCard";

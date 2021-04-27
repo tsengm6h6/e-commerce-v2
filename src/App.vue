@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <main role="main" class="mt-5 bg-white">
+    <main role="main">
       <router-view />
     </main>
   </div>
@@ -31,7 +31,6 @@ export default {
 
 body {
   font-family: "Work Sans", "Noto Sans TC", sans-serif;
-  /* font-family: "Work Sans", sans-serif; */
 }
 
 * {
@@ -43,5 +42,9 @@ body {
 a {
   text-decoration: none;
   color: #242323;
+}
+
+main {
+  margin-top: 60px;
 }
 </style>

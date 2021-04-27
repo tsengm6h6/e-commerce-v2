@@ -5,28 +5,28 @@
         <div class="image-wrapper">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
             <img :src="product.image" class="image" />
-          </router-link>
-          <div class="mask">
-            <el-button
-              class="favorite-icon"
-              v-if="product.isFavorite"
-              @click.prevent.stop="toggleFavorite(product.id)"
-              icon="el-icon-star-on"
-              circle
-            >
-            </el-button>
-            <el-button
-              class="favorite-icon"
-              v-else
-              @click.prevent.stop="toggleFavorite(product.id)"
-              icon="el-icon-star-off"
-              circle
-            >
-            </el-button>
-            <div class="add-to-cart" @click.prevent.stop="dialogVisible = true">
-              加入購物車
+            <div class="mask">
+              <el-button
+                class="favorite-icon"
+                v-if="product.isFavorite"
+                @click.prevent.stop="toggleFavorite(product.id)"
+                icon="el-icon-star-on"
+                circle
+              >
+              </el-button>
+              <el-button
+                class="favorite-icon"
+                v-else
+                @click.prevent.stop="toggleFavorite(product.id)"
+                icon="el-icon-star-off"
+                circle
+              >
+              </el-button>
+              <div class="add-to-cart" @click.prevent.stop="handleOpenDialog">
+                加入購物車
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
 
         <div class="card-content">
@@ -40,66 +40,13 @@
       </el-card>
     </el-col>
 
-    <!-- Cart Dialog -->
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="75%"
-      :before-close="handleClose"
-    >
-      <el-row>
-        <el-col :xs="24" :md="12">
-          <img :src="product.image" alt="" class="dialog-image" />
-        </el-col>
-        <el-col :xs="24" :md="12" class="dialog-info">
-          <h1>{{ product.title }}</h1>
-          <p>NT$ {{ product.price }}</p>
-          <span class="info-link">
-            <router-link :to="{ name: 'product', params: { id: product.id } }">
-              更多資訊
-            </router-link>
-          </span>
-          <el-date-picker
-            type="date"
-            placeholder="請選擇日期"
-            v-model="form.date"
-            style="width: 100%"
-            :picker-options="pickerOptions"
-            format="yyyy-MM-dd"
-            value-format="yyyy-MM-dd"
-          ></el-date-picker>
-          <el-time-select
-            v-model="form.time"
-            :picker-options="{
-              start: '07:00',
-              step: '02:00',
-              end: '15:00',
-            }"
-            placeholder="請選擇時段"
-            style="width: 100%"
-          >
-          </el-time-select>
-          <el-select
-            v-model="selectedNum"
-            placeholder="請選擇報名人數"
-            style="width: 100%"
-          >
-            <el-option v-for="num in 10" :key="num" :label="num" :value="num">
-              選購 {{ num }} {{ product.unit }}
-            </el-option>
-          </el-select>
-          <el-button type="primary" @click="handleAddToCart"
-            >加入購物車</el-button
-          >
-        </el-col>
-      </el-row>
-    </el-dialog>
+    <AddToCartDialog ref="dialog" />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import cartMixin from "../utils/cartMixin";
-import mixin from "../utils/cartMixin";
+import AddToCartDialog from "./AddToCartDialog";
 
 export default {
   name: "productCard",
@@ -109,60 +56,24 @@ export default {
       require: true,
     },
   },
-  watch: {
-    initProduct: {
-      deep: true,
-      handler(newVal) {
-        this.product = {
-          ...this.initProduct,
-          ...newVal,
-        };
-      },
-    },
+  components: {
+    AddToCartDialog,
   },
-  mixins: [cartMixin, mixin],
   data() {
     return {
       product: this.initProduct,
-      selectedNum: "",
-      dialogVisible: false,
-      form: {
-        data: "",
-        time: "",
-      },
-      pickerOptions: {
-        disabledDate: (time) => {
-          return time.getTime() < Date.now();
-        },
-      },
     };
   },
   computed: {
     ...mapState(["isLoading"]),
   },
   methods: {
-    handleAddToCart() {
-      this.addToCart(this.product, this.selectedNum, this.form);
-      this.dialogVisible = false;
-      this.resetDialogForm();
-    },
-    resetDialogForm() {
-      (this.selectedNum = ""),
-        (this.form = {
-          data: "",
-          time: "",
-        });
+    handleOpenDialog() {
+      this.$refs.dialog.handleOpen(this.product);
     },
     toggleFavorite(productId) {
       console.log("toggle");
       this.$emit("toggle-favorite", productId);
-    },
-    handleClose(done) {
-      this.$confirm("確定取消選購嗎?")
-        .then(() => {
-          done();
-        })
-        .catch(() => {});
     },
   },
 };
@@ -265,9 +176,10 @@ export default {
 }
 
 .product-title {
-  margin: 10px 0;
+  margin: 10px 0 0;
   font-size: 20px;
   letter-spacing: 1px;
+  font-weight: 500;
 }
 
 /* Dialog */
@@ -331,7 +243,7 @@ export default {
   }
 
   .dialog-image {
-    height: 50vh;
+    height: 365px;
   }
 }
 </style>

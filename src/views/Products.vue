@@ -26,7 +26,9 @@
       >
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
-          <el-breadcrumb-item>所有活動</el-breadcrumb-item>
+          <el-breadcrumb-item>{{
+            category === "all" ? "所有活動" : category
+          }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
       <!-- < lg Selector -->
@@ -36,12 +38,12 @@
         :md="{ span: 6, offset: 0 }"
         class="hidden-lg-and-up"
       >
-        <el-select v-model="value" placeholder="Select">
+        <el-select v-model="category">
           <el-option
-            v-for="item in options"
-            :key="item.index"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in categoryList"
+            :key="item"
+            :label="item"
+            :value="item"
           >
           </el-option>
         </el-select>
@@ -51,29 +53,13 @@
     <el-row>
       <!-- > lg sideMenu -->
       <el-col :lg="3" class="hidden-md-and-down">
-        <el-menu mode="vertical" default-active="1">
-          <el-menu-item index="1">
-            <span>所有活動</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <span>體驗系列</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <span>水肺潛水</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <span>自由潛水</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <span>潛水旅遊</span>
-          </el-menu-item>
-        </el-menu>
+        <AsideMenu />
       </el-col>
       <!-- Cards -->
       <el-col :md="24" :lg="20">
         <el-row :gutter="0">
           <ProductCard
-            v-for="product in productsList"
+            v-for="product in filterProductsList"
             :key="product.id"
             :init-product="product"
             @toggle-favorite="toggleFavorite"
@@ -86,48 +72,32 @@
 
 <script>
 import ProductCard from "../components/ProductCard";
-import { mapState } from "vuex";
+import AsideMenu from "../components/AsideMenu";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "Products",
   components: {
     ProductCard,
+    AsideMenu,
   },
   data() {
     return {
       pagination: {},
-      value: "all",
-      options: [
-        {
-          index: 1,
-          label: "所有活動",
-          value: "all",
-        },
-        {
-          index: 2,
-          label: "體驗系列",
-          value: "experience",
-        },
-        {
-          index: 3,
-          label: "水肺潛水",
-          value: "scuba",
-        },
-        {
-          index: 4,
-          label: "自由潛水",
-          value: "free",
-        },
-        {
-          index: 5,
-          label: "潛水旅遊",
-          value: "trip",
-        },
-      ],
     };
   },
   computed: {
-    ...mapState(["productsList", "isLoading"]),
+    ...mapState(["productsList", "isLoading", "category"]),
+    ...mapGetters(["filterProductsList", "categoryList"]),
+    category: {
+      get() {
+        return this.$store.state.category;
+      },
+      set(value) {
+        console.log("set new Cat", value);
+        this.$store.commit("setCategory", value);
+      },
+    },
   },
   methods: {
     toggleFavorite(productId) {
@@ -170,27 +140,6 @@ export default {
 
 .bread-crumb-and-select {
   margin: 120px 0 35px;
-}
-
-.el-menu {
-  border-right: none;
-}
-
-.el-menu-item {
-  height: 40px;
-  line-height: 40px;
-  letter-spacing: 1px;
-}
-
-.el-menu-item:focus,
-.el-menu-item:hover {
-  background-color: transparent;
-}
-
-.el-menu-item.is-active,
-.el-menu-item:hover {
-  font-weight: 600;
-  color: #00c9c8;
 }
 
 /* sm */

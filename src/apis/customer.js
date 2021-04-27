@@ -25,8 +25,8 @@ export default {
     return customerApi.post('/order', { data, message })
   },
   // 取得訂單列表
-  getOrders() {
-    return customerApi.get('/orders')
+  getOrders(page) {
+    return customerApi.get(`orders?page=${page}`)
   },
   getOrder(orderId) {
     return customerApi.get(`/order/${orderId}`)

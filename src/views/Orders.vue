@@ -1,15 +1,13 @@
 <template>
-  <el-main>
-    <!-- <el-button type="text" @click="dialogTableVisible = true"
-      >open a Table nested Dialog</el-button
-    > -->
+  <el-container direction="vertical">
     <loading :active.sync="isLoading"></loading>
+    <div class="title">
+      <h3>訂單列表</h3>
+      <p>如有任何問題，請洽專人客服</p>
+    </div>
     <el-row>
       <el-col :span="24">
-        <loading :active.sync="isLoading"></loading>
-        <h2>所有訂單</h2>
-        <el-divider></el-divider>
-        <el-table stripe height="500" :data="orders" style="width: 100%">
+        <el-table stripe :data="orders" style="width: 100%">
           <el-table-column type="expand">
             <template slot-scope="props">
               <OrderTwo :currOrderId="props.row.id" />
@@ -29,17 +27,25 @@
             align="center"
           ></el-table-column>
           <el-table-column
-            min-width="100"
+            prop="is_paid"
             label="付款狀態"
-            prop="isPaid"
-            align="center"
-          ></el-table-column>
-          <el-table-column
             min-width="100"
-            label="數量"
-            prop="num"
             align="center"
-          ></el-table-column>
+            :filters="[
+              { text: '已付款', value: true },
+              { text: '尚未付款', value: false },
+            ]"
+            :filter-method="filterTag"
+          >
+            <template slot-scope="scope">
+              <el-tag
+                size="small"
+                :type="scope.row.is_paid ? 'info' : 'danger'"
+                disable-transitions
+                >{{ scope.row.is_paid ? "已付款" : "尚未付款" }}</el-tag
+              >
+            </template>
+          </el-table-column>
           <el-table-column
             min-width="100"
             label="總計"
@@ -53,10 +59,54 @@
             align="center"
           ></el-table-column>
         </el-table>
+        <!-- Pagination -->
+        <el-row type="flex" class="row-bg" justify="center">
+          <el-pagination
+            :page-count="pagination.total_pages"
+            :current-page.sync="pagination.current_page"
+            @current-change="handlePageChange"
+            layout="prev, pager, next"
+          >
+          </el-pagination>
+        </el-row>
       </el-col>
     </el-row>
-  </el-main>
+  </el-container>
 </template>
+
+<style scoped>
+.el-container {
+  padding: 30px;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.title h3 {
+  margin-bottom: 10px;
+}
+
+/* sm */
+@media only screen and (min-width: 768px) {
+  .el-container {
+    padding: 30px 80px;
+  }
+}
+
+/* md */
+@media only screen and (min-width: 992px) {
+  .el-container {
+    padding: 30px 120px;
+  }
+}
+</style>
 
 <script>
 import OrderTwo from "../components/OrderTwo";
@@ -79,26 +129,19 @@ export default {
   },
   mixins: [mixin],
   methods: {
-    async fetchOrders() {
+    async fetchOrders(page = 1) {
       try {
         this.isLoading = true;
-        const response = await customerAPI.getOrders();
+        const response = await customerAPI.getOrders(page);
         if (response.data.success !== true) {
           throw new Error();
         }
         this.orders = response.data.orders.map((item) => {
-          const {
-            create_at: createdAt,
-            id,
-            is_paid: isPaid,
-            num,
-            total,
-            user,
-          } = item;
+          const { create_at: createdAt, id, is_paid, num, total, user } = item;
           return {
             createdAt: this.dateFormat(createdAt),
             id,
-            isPaid: isPaid ? "已付款" : "尚未付款",
+            is_paid,
             num,
             total,
             userName: user ? user.name : "-",
@@ -116,9 +159,33 @@ export default {
         this.isLoading = false;
       }
     },
+    handlePageChange(page) {
+      this.fetchOrders(page);
+      this.$router.push({
+        path: "/orders",
+        query: {
+          page: page,
+        },
+      });
+    },
+    filterTag(value, row) {
+      return row.is_paid === value;
+    },
   },
   created() {
-    this.fetchOrders();
+    const { page } = this.$route.query;
+    this.fetchOrders(page);
   },
 };
 </script>
+
+<style scoped>
+.el-pagination {
+  margin-top: 30px;
+}
+
+.el-checkbox__label,
+.el-table-filter__bottom button {
+  font-size: 14px;
+}
+</style>
