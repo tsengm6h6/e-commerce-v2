@@ -8,9 +8,11 @@
 
     <!-- 大圖 -->
     <el-image :src="product.image" fit="cover">
-      <div slot="error" class="image-slot">
-        <i class="el-icon-picture-outline"></i>
-      </div>
+      <img
+        slot="error"
+        class="image-slot"
+        src="https://i.imgur.com/m4YOpWy.png"
+      />
     </el-image>
 
     <div class="info-wrapper">
@@ -32,7 +34,7 @@
           </div>
         </el-col>
 
-        <el-col :xs="{ span: 16, offset: 4 }" :sm="12" :md="12" :lg="10">
+        <el-col :xs="{ span: 22, offset: 1 }" :sm="12" :md="12" :lg="10">
           <div class="price-wrapper">
             <div class="price-tag-wrapper">
               <p>
@@ -53,6 +55,8 @@
         <AddToCartDialog ref="dialog" :product="product" />
       </el-row>
     </div>
+
+    <RelativeProduct ref="relative" />
   </div>
 </template>
 
@@ -61,11 +65,13 @@ import customerAPI from "../apis/customer";
 import { Toast } from "../utils/helper";
 import cartMixin from "../utils/cartMixin";
 import AddToCartDialog from "../components/AddToCartDialog";
+import RelativeProduct from "../components/RelatvieProduct";
 
 export default {
   name: "product",
   components: {
     AddToCartDialog,
+    RelativeProduct,
   },
   data() {
     return {
@@ -90,6 +96,11 @@ export default {
     const { id } = this.$route.params;
     this.fetchProduct(id);
   },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params;
+    this.fetchProduct(id);
+    next();
+  },
   methods: {
     async fetchProduct(id) {
       try {
@@ -99,7 +110,8 @@ export default {
           throw new Error();
         }
         // 處理描述
-        const descript = response.data.product.description.split("#").slice(0);
+        const description = response.data.product.description;
+        const descript = description ? description.split("#").slice(0) : [];
         const descriptTitle = [];
         const descriptInfo = [];
         descript.forEach((item, index) => {
@@ -110,7 +122,7 @@ export default {
             descriptInfo.push(items);
           }
         });
-        const desctiption = descriptTitle.map((title, index) => {
+        const desctiptionFormat = descriptTitle.map((title, index) => {
           return {
             title: title,
             infos: descriptInfo[index],
@@ -119,8 +131,11 @@ export default {
         this.product = {
           ...this.product,
           ...response.data.product,
-          description: desctiption,
+          description: desctiptionFormat,
         };
+        this.$refs.relative.category = this.product.category;
+        this.$refs.relative.currId = this.product.id;
+        console.log("product", this.product.category);
         this.isLoading = false;
       } catch (error) {
         console.log(error);
@@ -168,6 +183,14 @@ export default {
 
 .el-image {
   height: 50vh;
+}
+
+.image-slot {
+  width: 50%;
+  object-position: center;
+  position: relative;
+  top: 50px;
+  left: 30%;
 }
 
 .info-wrapper .info {

@@ -4,7 +4,14 @@
       <el-card>
         <div class="image-wrapper">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
-            <img :src="product.image" class="image" />
+            <img v-if="product.image" :src="product.image" class="image" />
+            <el-image v-else>
+              <img
+                slot="error"
+                class="image-slot"
+                src="https://i.imgur.com/I4HLm86.png"
+              />
+            </el-image>
             <div class="mask">
               <el-button
                 class="favorite-icon"
@@ -35,7 +42,7 @@
               {{ product.title }}
             </h3>
           </router-link>
-          <p class="price-tag">NT$ {{ product.price }}{{ product.unit }}</p>
+          <p class="price-tag">NT$ {{ product.price }} / {{ product.unit }}</p>
         </div>
       </el-card>
     </el-col>
@@ -87,6 +94,14 @@ export default {
 
 .el-card.is-always-shadow {
   box-shadow: none;
+}
+
+.image-slot {
+  width: 100%;
+  height: 40vh;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(0.5);
 }
 
 /* Card Image */
