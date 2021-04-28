@@ -4,7 +4,7 @@
     <el-main>
       <loading :active.sync="isLoading"></loading>
       <el-table stripe :data="productsList">
-        <el-table-column fixed prop="title" label="產品名稱" min-width="180">
+        <el-table-column fixed prop="title" label="產品名稱" min-width="150">
         </el-table-column>
         <el-table-column prop="category" label="分類" min-width="80">
         </el-table-column>
@@ -14,7 +14,7 @@
             <p>{{ props.row.description }}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="簡介" min-width="180">
+        <el-table-column prop="content" label="簡介" min-width="250">
         </el-table-column>
         <el-table-column prop="origin_price" label="原價" min-width="80">
         </el-table-column>
@@ -30,7 +30,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column align="left" min-width="180">
+        <el-table-column align="left" min-width="80">
           <template slot="header">
             <el-button
               size="small"
@@ -184,35 +184,6 @@ export default {
           message: "取消刪除",
         });
       }
-    },
-    // 上傳前確認格式、大小，並整理成formData
-    beforeAvatarUpload(file) {
-      console.log(this.$refs.upload.input);
-      if (!file) return;
-      const isLt1M = file.size < 1 * 1024 * 1024;
-      const isJPG = file.type === "image/jpeg";
-      if (!isLt1M) {
-        this.$message.error("檔案必須小於 1 MB");
-        return isLt1M;
-      }
-      if (!isJPG) {
-        this.$message.error("檔案格式錯誤");
-        return isJPG;
-      }
-      const formData = new FormData();
-      return formData.append("file-to-upload", file);
-    },
-    // 上傳成功則存下回傳的url
-    handleAvatarSuccess(res, file) {
-      console.log("成功", res, file);
-      if (res.success !== true) {
-        return this.$message.error(`${res.message}`);
-      }
-      this.editTarget.image = res.imageUrl;
-    },
-    // 上傳失敗回傳錯誤訊息
-    handleError(err) {
-      return this.$message.error(`${err.message}`);
     },
   },
 };

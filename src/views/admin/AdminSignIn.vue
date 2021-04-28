@@ -15,6 +15,7 @@
             type="text"
             placeholder="請輸入您的密碼"
             v-model="signInForm.password"
+            show-password
           ></el-input>
         </el-form-item>
         <el-form-item>

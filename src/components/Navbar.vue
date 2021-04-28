@@ -12,32 +12,34 @@
         </el-submenu>
         <el-menu-item index="/favorites">收藏清單</el-menu-item>
         <el-menu-item index="/orders">我的訂單</el-menu-item>
-        <el-menu-item @click="drawer = true">
+        <el-menu-item @click="openDrawer">
           <i class="el-icon-goods"></i>
         </el-menu-item>
       </el-menu>
     </el-header>
-    <el-drawer title="購物車" :visible.sync="drawer">
-      <span>購物車空空的</span>
-    </el-drawer>
+    <CartDrawer ref="drawer" />
   </el-container>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import CartDrawer from "./CartDrawer";
 
 export default {
   name: "Navbar",
+  components: {
+    CartDrawer,
+  },
   computed: {
     ...mapState({
       cartLength: (state) =>
         state.cartInfo.cartList ? state.cartInfo.cartList.length : 0,
     }),
   },
-  data() {
-    return {
-      drawer: false,
-    };
+  methods: {
+    openDrawer() {
+      this.$refs.drawer.drawer = true;
+    },
   },
 };
 </script>

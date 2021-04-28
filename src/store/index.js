@@ -12,7 +12,7 @@ export default new Vuex.Store({
     productsList: [], // 存放API拿到的產品資料
     isLoading: false,
     cartInfo: {
-      cartList: [], // API拿到的購物車資料
+      cartList: [], // 拿到的購物車資料
       total: 0,
       final_total: 0
     },
@@ -28,6 +28,7 @@ export default new Vuex.Store({
       return state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
     },
     categoryList(state) {
+      console.log('cate change')
       return state.productsList.reduce((prev, curr) => {
         if (!prev.includes(curr.category)) {
           prev.push(curr.category)
@@ -189,9 +190,11 @@ export default new Vuex.Store({
 
     // 紀錄商品數量及總金額
     addItemToRecordCart({ state, commit }, addData) {
-      // 如果購物紀錄沒有商品，直接新增
+      // 如果購物紀錄沒有商品，直接新增並返回
       if (!state.cartInfo.cartList.length) {
         commit('pushProductToCart', { addData })
+        commit('updateCartTotal')
+        return
       }
       // 如果記錄中有商品，則尋找是否有相同商品
       const recordCartItem = state.cartInfo.cartList.find(record => record.product_id === addData.product_id && record.date === addData.date && record.time === addData.time)
@@ -207,6 +210,7 @@ export default new Vuex.Store({
     },
     // 更新商品數量
     updateCartRecord(context, { cartItem, action }) {
+      console.log(cartItem, action)
       if (action === 'REDUCE') {
         console.log('REDUCE')
         context.commit('handleReduceQty', cartItem)

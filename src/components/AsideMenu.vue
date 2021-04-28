@@ -1,43 +1,29 @@
 <template>
   <el-menu mode="vertical" default-active="1">
-    <el-menu-item index="1">
-      <span>所有活動</span>
-    </el-menu-item>
-    <el-menu-item index="2">
-      <span>體驗系列</span>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <span>水肺潛水</span>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <span>自由潛水</span>
-    </el-menu-item>
-    <el-menu-item index="5">
-      <span>潛水旅遊</span>
-    </el-menu-item>
+    <template v-for="(item, index) in categoryList">
+      <el-menu-item
+        :index="(index + 1).toString()"
+        :key="index + 1"
+        @click="handleSelect(item)"
+      >
+        <span>{{ item }}</span>
+      </el-menu-item>
+    </template>
   </el-menu>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "AsideMenu",
-  data() {
-    return {
-      category: "all",
-    };
+  computed: {
+    ...mapGetters(["categoryList"]),
   },
-  // methods: {
-  //   handleSelect(value) {
-  //     console.log(value);
-  //     this.$store.commit("setCategory", value);
-  //   },
-  // },
-};
-</script>
-
-<script>
-export default {
-  name: "AsideMenu",
+  methods: {
+    handleSelect(item) {
+      this.$store.commit("setCategory", item);
+    },
+  },
 };
 </script>
 

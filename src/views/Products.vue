@@ -26,9 +26,7 @@
       >
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
-          <el-breadcrumb-item>{{
-            category === "all" ? "所有活動" : category
-          }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ category }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
       <!-- < lg Selector -->
@@ -55,6 +53,7 @@
       <el-col :lg="3" class="hidden-md-and-down">
         <AsideMenu />
       </el-col>
+
       <!-- Cards -->
       <el-col :md="24" :lg="20">
         <el-row :gutter="0">

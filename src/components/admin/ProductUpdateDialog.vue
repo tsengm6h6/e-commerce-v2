@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     title="編輯 / 新增產品"
-    :visible.sync="editDialogVisible"
+    :visible.sync="UpdateDialogVisible"
     width="70%"
     @close="handleDialogClosed"
   >
@@ -146,13 +146,26 @@
             </el-input>
           </el-form-item>
           <el-form-item label="產品描述" prop="description">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 3, maxRows: 4 }"
-              placeholder="請輸入產品描述"
-              v-model="editTarget.description"
+            <el-popover
+              placement="top-start"
+              title="輸入格式：標題及結尾用 # 隔開，內容用 | 分開"
+              width="400"
+              trigger="hover"
             >
-            </el-input>
+              <div>
+                <p>費用包含 # [內容1] | [內容2] | [內容3] #</p>
+                <p>行程內容 # [內容1] | [內容2] | [內容3] | [內容4] #</p>
+                <p>報名條件 # [內容1] | [內容2] | [內容3] #</p>
+              </div>
+              <el-input
+                slot="reference"
+                type="textarea"
+                :autosize="{ minRows: 3, maxRows: 4 }"
+                placeholder="請輸入產品描述"
+                v-model="editTarget.description"
+              >
+              </el-input>
+            </el-popover>
           </el-form-item>
           <el-form-item label="是否啟用" prop="is_enabled">
             <el-checkbox
@@ -202,7 +215,7 @@ export default {
       },
       addCategory: false,
       cacheCategory: "",
-      editDialogVisible: false,
+      UpdateDialogVisible: false,
       imageHeader: {
         Authorization: document.cookie.replace(
           /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -252,16 +265,18 @@ export default {
     ...mapGetters(["categoryList"]),
   },
   methods: {
+    // ***** 對話框開關 ****** //
     handleOpenDialog(product) {
       this.editTarget = {
         ...product,
       };
-      this.editDialogVisible = true;
+      this.UpdateDialogVisible = true;
     },
     handleDialogClosed() {
       this.resetForm("editForm");
-      this.editDialogVisible = false;
+      this.UpdateDialogVisible = false;
     },
+    // ***** 表單行為 ****** //
     handleConfirmAddCategory() {
       this.editTarget = {
         ...this.editTarget,
@@ -299,13 +314,13 @@ export default {
         // 通知父層重新取得產品列表（管理員列表更新）
         this.$emit("after-submit");
         this.resetForm("editForm");
-        this.editDialogVisible = false;
+        this.UpdateDialogVisible = false;
         this.isLoading = false;
         // 請store重新取得所有產品（客戶首頁產品更新）
         this.$store.dispatch("fetchProducts");
       } catch (error) {
         this.isLoading = false;
-        this.editDialogVisible = false;
+        this.UpdateDialogVisible = false;
         this.$message.error(`無法更新資料，請稍後再試`);
       }
     },
@@ -344,7 +359,8 @@ export default {
       this.addCategory = false;
       this.$refs[formName].resetFields();
     },
-    // 圖片相關
+    // ***** 圖片相關 ****** //
+
     // 上傳前確認格式、大小，並整理成formData
     beforeAvatarUpload(file) {
       console.log(this.$refs.upload.input);

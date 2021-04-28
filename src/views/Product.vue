@@ -18,42 +18,29 @@
       <el-row>
         <!-- 商品資訊、簡介 -->
         <el-col :xs="24" :sm="12" :md="12" :lg="14">
-          <!-- TODO: 內容待更新 -->
-          <div class="info">
-            <h3>費用包含</h3>
+          <div
+            class="info"
+            v-for="(descript, index) in product.description"
+            :key="index"
+          >
+            <h3>{{ descript.title }}</h3>
             <ul>
-              <li>遊艇船費（4~4.5小時）</li>
-              <li>船長、水手各（1位）</li>
-              <li>專業隨團海陸空攝影師（1位）</li>
-              <li>水下戒護導潛（1位）</li>
-            </ul>
-          </div>
-          <div class="info">
-            <h3>行程內容</h3>
-            <ul>
-              <li>遊艇船費（4~4.5小時）</li>
-              <li>船長、水手各（1位）</li>
-              <li>專業隨團海陸空攝影師（1位）</li>
-              <li>水下戒護導潛（1位）</li>
-            </ul>
-          </div>
-          <div class="info">
-            <h3>報名條件</h3>
-            <ul>
-              <li>遊艇船費（4~4.5小時）</li>
-              <li>船長、水手各（1位）</li>
-              <li>專業隨團海陸空攝影師（1位）</li>
-              <li>水下戒護導潛（1位）</li>
+              <li v-for="(info, index) in descript.infos" :key="index">
+                {{ info }}
+              </li>
             </ul>
           </div>
         </el-col>
 
         <el-col :xs="{ span: 16, offset: 4 }" :sm="12" :md="12" :lg="10">
           <div class="price-wrapper">
-            <p>
-              <span class="price-tag">${{ product.price }}</span
-              >{{ product.unit }}
-            </p>
+            <div class="price-tag-wrapper">
+              <p>
+                <span class="price-tag">${{ product.price }}</span
+                >{{ product.unit }}
+              </p>
+              <del>${{ product.origin_price }}{{ product.unit }}</del>
+            </div>
             <hr />
             <p>開放報名中</p>
             <el-button type="danger" @click.prevent.stop="handleOpenDialog"
@@ -111,9 +98,28 @@ export default {
         if (response.data.success !== true) {
           throw new Error();
         }
+        // 處理描述
+        const descript = response.data.product.description.split("#").slice(0);
+        const descriptTitle = [];
+        const descriptInfo = [];
+        descript.forEach((item, index) => {
+          if (index % 2 === 0) {
+            descriptTitle.push(item);
+          } else {
+            const items = item.split("|");
+            descriptInfo.push(items);
+          }
+        });
+        const desctiption = descriptTitle.map((title, index) => {
+          return {
+            title: title,
+            infos: descriptInfo[index],
+          };
+        });
         this.product = {
           ...this.product,
           ...response.data.product,
+          description: desctiption,
         };
         this.isLoading = false;
       } catch (error) {
@@ -201,6 +207,12 @@ export default {
 .price-wrapper .el-button {
   width: 100%;
   margin: 10px 0;
+}
+
+.price-tag-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 /* sm */

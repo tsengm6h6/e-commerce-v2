@@ -2,7 +2,7 @@ import { customerApi } from '../utils/helper'
 
 export default {
   getProducts() {
-    return customerApi.get('/products')
+    return customerApi.get('/products/all')
   },
   getProduct({ id }) {
     return customerApi.get(`/product/${id}`)

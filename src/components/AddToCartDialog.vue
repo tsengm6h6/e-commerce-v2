@@ -88,11 +88,11 @@ export default {
       this.resetDialogForm();
     },
     resetDialogForm() {
-      (this.selectedNum = ""),
-        (this.form = {
-          data: "",
-          time: "",
-        });
+      this.selectedNum = "";
+      this.form = {
+        data: "",
+        time: "",
+      };
     },
     handleClose(done) {
       this.$confirm("確定取消選購嗎?")
