@@ -4,17 +4,23 @@
     <main role="main">
       <router-view />
     </main>
+    <Footer v-if="!isLogin" />
   </div>
 </template>
 
 <script>
 import Navbar from "./components/Navbar";
-import { mapActions } from "vuex";
+import Footer from "./components/Footer";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "App",
   components: {
     Navbar,
+    Footer,
+  },
+  computed: {
+    ...mapState(["isLogin"]),
   },
   methods: {
     ...mapActions(["fetchProducts", "fetchCartProducts"]),

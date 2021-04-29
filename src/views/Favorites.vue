@@ -2,7 +2,7 @@
   <el-container direction="vertical">
     <div class="title">
       <h3>收藏清單</h3>
-      <p>不要再猶豫，快和我們一起出發去冒險！</p>
+      <p>不要再猶豫，趕快手刀報名！</p>
     </div>
     <el-row :gutter="20">
       <ProductCard

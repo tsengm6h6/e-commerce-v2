@@ -1,64 +1,63 @@
 <template>
-  <el-container>
+  <div>
     <!-- 產品列表 -->
-    <el-main>
-      <loading :active.sync="isLoading"></loading>
-      <el-table stripe :data="productsList">
-        <el-table-column fixed prop="title" label="產品名稱" min-width="150">
-        </el-table-column>
-        <el-table-column prop="category" label="分類" min-width="80">
-        </el-table-column>
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <p>描述：</p>
-            <p>{{ props.row.description }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column prop="content" label="簡介" min-width="250">
-        </el-table-column>
-        <el-table-column prop="origin_price" label="原價" min-width="80">
-        </el-table-column>
-        <el-table-column prop="price" label="售價" min-width="80">
-        </el-table-column>
-        <el-table-column prop="is_enabled" label="是否啟用" min-width="80">
-          <template slot-scope="scope">
-            <el-tag
-              size="small"
-              :type="scope.row.is_enabled === 1 ? 'success' : 'info'"
-              disable-transitions
-              >{{ scope.row.is_enabled === 1 ? "啟用" : "未啟用" }}</el-tag
-            >
-          </template>
-        </el-table-column>
-        <el-table-column align="left" min-width="80">
-          <template slot="header">
-            <el-button
-              size="small"
-              type="primary"
-              icon="el-icon-plus"
-              @click="showUpdateDialog(null)"
-              >新增產品</el-button
-            >
-          </template>
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              icon="el-icon-edit"
-              @click="showUpdateDialog(scope.row)"
-            ></el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              icon="el-icon-delete"
-              @click="confirmDelete(scope.row.id)"
-            ></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-main>
+
+    <loading :active.sync="isLoading"></loading>
+    <el-table stripe :data="productsList" height="80vh">
+      <el-table-column fixed prop="title" label="產品名稱" min-width="150">
+      </el-table-column>
+      <el-table-column prop="category" label="分類" min-width="80">
+      </el-table-column>
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>描述：</p>
+          <p>{{ props.row.description }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column prop="content" label="簡介" min-width="250">
+      </el-table-column>
+      <el-table-column prop="origin_price" label="原價" min-width="80">
+      </el-table-column>
+      <el-table-column prop="price" label="售價" min-width="80">
+      </el-table-column>
+      <el-table-column prop="is_enabled" label="是否啟用" min-width="80">
+        <template slot-scope="scope">
+          <el-tag
+            size="small"
+            :type="scope.row.is_enabled === 1 ? 'success' : 'info'"
+            disable-transitions
+            >{{ scope.row.is_enabled === 1 ? "啟用" : "未啟用" }}</el-tag
+          >
+        </template>
+      </el-table-column>
+      <el-table-column align="left" min-width="80">
+        <template slot="header">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-plus"
+            @click="showUpdateDialog(null)"
+            >新增產品</el-button
+          >
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="showUpdateDialog(scope.row)"
+          ></el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            icon="el-icon-delete"
+            @click="confirmDelete(scope.row.id)"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
     <ProductUpdateDialog ref="dialog" @after-submit="handleAfterSubmit" />
-  </el-container>
+  </div>
 </template>
 
 <style scoped>

@@ -1,52 +1,50 @@
 <template>
   <el-container direction="vertical">
-    <el-main>
-      <loading :active.sync="isLoading"></loading>
-      <el-table stripe :data="couponsList">
-        <el-table-column fixed prop="title" label="優惠券名稱" min-width="150">
-        </el-table-column>
-        <el-table-column prop="code" label="代碼" min-width="100">
-        </el-table-column>
-        <el-table-column prop="percent" label="折扣" min-width="100">
-        </el-table-column>
-        <el-table-column prop="due_date" label="期限" min-width="100">
-        </el-table-column>
-        <el-table-column prop="is_enabled" label="是否啟用" min-width="100">
-          <template slot-scope="scope">
-            <el-tag
-              size="small"
-              :type="scope.row.is_enabled === 1 ? 'success' : 'info'"
-              disable-transitions
-              >{{ scope.row.is_enabled === 1 ? "啟用" : "未啟用" }}</el-tag
-            >
-          </template>
-        </el-table-column>
-        <el-table-column align="left" min-width="180">
-          <template slot="header">
-            <el-button
-              size="small"
-              type="primary"
-              icon="el-icon-plus"
-              @click="showEditDialog(true, null)"
-              >新增產品</el-button
-            >
-          </template>
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              icon="el-icon-edit"
-              @click="showEditDialog(false, scope.row)"
-            ></el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              icon="el-icon-delete"
-              @click="showDeleteDialog(scope.row)"
-            ></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-main>
+    <loading :active.sync="isLoading"></loading>
+    <el-table stripe :data="couponsList">
+      <el-table-column fixed prop="title" label="優惠券名稱" min-width="150">
+      </el-table-column>
+      <el-table-column prop="code" label="代碼" min-width="100">
+      </el-table-column>
+      <el-table-column prop="percent" label="折扣" min-width="100">
+      </el-table-column>
+      <el-table-column prop="due_date" label="期限" min-width="100">
+      </el-table-column>
+      <el-table-column prop="is_enabled" label="是否啟用" min-width="100">
+        <template slot-scope="scope">
+          <el-tag
+            size="small"
+            :type="scope.row.is_enabled === 1 ? 'success' : 'info'"
+            disable-transitions
+            >{{ scope.row.is_enabled === 1 ? "啟用" : "未啟用" }}</el-tag
+          >
+        </template>
+      </el-table-column>
+      <el-table-column align="left" min-width="180">
+        <template slot="header">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-plus"
+            @click="showEditDialog(true, null)"
+            >新增產品</el-button
+          >
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="showEditDialog(false, scope.row)"
+          ></el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            icon="el-icon-delete"
+            @click="showDeleteDialog(scope.row)"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
     <!-- 修改產品內容 對話方塊  TODO: 上傳圖片-->
     <el-dialog

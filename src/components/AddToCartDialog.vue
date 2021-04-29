@@ -83,6 +83,11 @@ export default {
       this.dialogVisible = true;
     },
     handleAddToCart() {
+      if (!this.product || !this.selectedNum || !this.form) {
+        return this.$message.warning(
+          "所有欄位為必填，請確認選購日期、時段及人數"
+        );
+      }
       this.addToCart(this.product, this.selectedNum, this.form);
       this.dialogVisible = false;
       this.resetDialogForm();

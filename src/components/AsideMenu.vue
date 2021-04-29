@@ -24,6 +24,9 @@ export default {
       this.$store.commit("setCategory", item);
     },
   },
+  created() {
+    this.$store.commit("setCategory", "全部");
+  },
 };
 </script>
 

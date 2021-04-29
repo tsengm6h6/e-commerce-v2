@@ -1,8 +1,8 @@
 <template>
-  <el-container style="height: 100vh">
+  <el-container style="height: 90vh">
     <AdminSidebar @changeTable="changeTable" />
-    <el-container direction="vertical">
-      <AdminHeader />
+    <el-container direction="vertical" class="admin-section">
+      <!-- <AdminHeader /> -->
       <AdminProductsTable
         @renderPaginator="renderPaginator"
         ref="products"
@@ -34,7 +34,7 @@
 
 <script>
 import AdminSidebar from "../../components/admin/AdminSidebar";
-import AdminHeader from "../../components/admin/AdminHeader";
+// import AdminHeader from "../../components/admin/AdminHeader";
 import AdminProductsTable from "../../components/admin/AdminProductsTable";
 import AdminCouponsTable from "../../components/admin/AdminCouponsTable";
 import AdminOrdersTable from "../../components/admin/AdminOrdersTable";
@@ -44,7 +44,7 @@ export default {
   name: "AdminProducts",
   components: {
     AdminSidebar,
-    AdminHeader,
+    // AdminHeader,
     AdminProductsTable,
     AdminOrdersTable,
     AdminCouponsTable,
@@ -104,3 +104,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.admin-section {
+  margin: 0 20px;
+}
+
+.el-pagination {
+  margin-top: 20px;
+}
+</style>
+  

@@ -1,20 +1,37 @@
 <template>
   <el-container class="background">
     <el-header class="navbar">
-      <router-link to="/" class="nav-brand">品牌名稱</router-link>
+      <router-link to="/"
+        ><img class="nav-brand" src="https://i.imgur.com/akLAykW.png" alt=""
+      /></router-link>
       <el-menu class="el-menu-demo" mode="horizontal" default-active="/" router>
         <el-menu-item index="/">首頁</el-menu-item>
         <el-menu-item index="/products">所有活動</el-menu-item>
-        <el-submenu index="3">
-          <template slot="title">證照課程</template>
-          <el-menu-item index="3-1">水肺潛水</el-menu-item>
-          <el-menu-item index="3-2">自由潛水</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="/favorites">收藏清單</el-menu-item>
+        <el-menu-item index="/question">常見問答</el-menu-item>
+        <el-menu-item index="/policies">退換貨政策</el-menu-item>
         <el-menu-item index="/orders">我的訂單</el-menu-item>
-        <el-menu-item @click="openDrawer">
-          <i class="el-icon-goods"></i>
+        <el-menu-item index="/favorites">
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="收藏清單"
+            placement="bottom"
+          >
+            <img
+              class="img-icon"
+              src="https://i.imgur.com/jRFRLEQ.png"
+              alt=""
+            />
+          </el-tooltip>
         </el-menu-item>
+        <el-menu-item @click="openDrawer">
+          <i class="el-icon-goods"
+            ><div v-if="cartLength" class="badge"></div
+          ></i>
+        </el-menu-item>
+        <el-menu-item v-if="isLogin" index="/admin/dashboard"
+          >管理員後台</el-menu-item
+        >
       </el-menu>
     </el-header>
     <CartDrawer ref="drawer" />
@@ -32,6 +49,7 @@ export default {
   },
   computed: {
     ...mapState({
+      isLogin: (state) => state.isLogin,
       cartLength: (state) =>
         state.cartInfo.cartList ? state.cartInfo.cartList.length : 0,
     }),
@@ -55,14 +73,15 @@ export default {
   left: 0;
   width: 100%;
   z-index: 800;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255);
 }
 
 .nav-brand {
+  width: 100%;
   height: 60px;
-  line-height: 60px;
   cursor: pointer;
-  /* padding: 0 20px; */
+  object-fit: contain;
+  object-position: center;
 }
 
 .el-menu {
@@ -97,14 +116,21 @@ export default {
   padding-right: 0px;
 }
 
+.img-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  position: relative;
+  bottom: 4px;
+}
+
 .el-menu-item [class^="el-icon-"] {
   font-size: 24px;
   position: relative;
   bottom: 4px;
 }
 
-.el-menu-item [class^="el-icon-"]::after {
-  content: "";
+.badge {
   width: 8px;
   height: 8px;
   position: absolute;

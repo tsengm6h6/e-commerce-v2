@@ -1,45 +1,44 @@
 <template>
-  <el-row>
-    <el-col :span="18" :offset="3">
-      <loading :active.sync="isLoading"></loading>
-      <el-container>
-        <h4>訂單編號：{{ currOrderId }}</h4>
-        <div style="display: flex; align-items: center">
-          <el-button
-            v-if="!orderIsPaid"
-            @click="payOrder(currOrderId)"
-            type="warning"
-            size="small"
-            >確認付款</el-button
-          >
-        </div>
-      </el-container>
-      <el-divider></el-divider>
-      <p>訂購人資訊</p>
-      <el-table :data="orderList" style="width: 100%">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <p>信箱：{{ props.row.userEmail }}</p>
-            <p>電話：{{ props.row.userTel }}</p>
-            <p>地址：{{ props.row.userAddress }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="訂購人資訊"
-          prop="userName"
-          min-width="180"
-        ></el-table-column>
-        <el-table-column label="訂購日期" prop="orderDate" min-width="100">
-        </el-table-column>
-        <el-table-column label="訂單狀態" prop="isPaid" min-width="100">
-        </el-table-column>
-        <el-table-column
-          label="總金額"
-          prop="orderSum"
-          min-width="100"
-        ></el-table-column>
-      </el-table>
-      <p>訂單明細</p>
+  <div>
+    <loading :active.sync="isLoading"></loading>
+    <el-container>
+      <h4>訂單編號：{{ currOrderId }}</h4>
+      <el-button
+        v-if="!orderIsPaid && showPayBtn"
+        @click="payOrder(currOrderId)"
+        type="warning"
+        size="small"
+        :loading="isLoading"
+        >確認付款</el-button
+      >
+    </el-container>
+    <el-divider></el-divider>
+    <p class="title">訂購人資訊</p>
+    <el-table :data="orderList" style="width: 100%">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>信箱：{{ props.row.userEmail }}</p>
+          <p>電話：{{ props.row.userTel }}</p>
+          <p>地址：{{ props.row.userAddress }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="訂購人資訊"
+        prop="userName"
+        min-width="180"
+      ></el-table-column>
+      <el-table-column label="訂購日期" prop="orderDate" min-width="100">
+      </el-table-column>
+      <el-table-column label="訂單狀態" prop="isPaid" min-width="100">
+      </el-table-column>
+      <el-table-column
+        label="總金額"
+        prop="orderSum"
+        min-width="100"
+      ></el-table-column>
+    </el-table>
+    <div class="order-info">
+      <p class="title">訂單明細</p>
       <el-table :data="productsList" style="width: 100%">
         <el-table-column prop="productName" label="商品名稱" width="180">
         </el-table-column>
@@ -52,9 +51,35 @@
         <el-table-column prop="isCoupon" label="套用優惠券" min-width="100">
         </el-table-column>
       </el-table>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.el-button {
+  margin-left: 10px;
+}
+
+h4,
+.title {
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.title {
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+
+.order-info {
+  margin-top: 30px;
+}
+
+.el-table th > .cell {
+  letter-spacing: 3px;
+  font-weight: 500;
+}
+</style>
 
 <script>
 import customerAPI from "../apis/customer";
@@ -68,21 +93,19 @@ export default {
       type: String,
       require: true,
     },
-  },
-  watch: {
-    currOrderId: {
-      handler(newId) {
-        this.fetchOrder(newId);
-      },
+    fromCheckout: {
+      type: Boolean,
+      require: true,
     },
   },
   mixins: [mixin],
   data() {
     return {
-      orderIsPaid: null,
+      orderIsPaid: false,
       orderList: [],
       productsList: [],
       isLoading: false,
+      showPayBtn: false,
     };
   },
   methods: {
@@ -104,6 +127,11 @@ export default {
         } = response.data.order;
 
         this.orderIsPaid = isPaid;
+        if (this.fromCheckout) {
+          this.showPayBtn = false;
+        } else {
+          this.showPayBtn = !isPaid;
+        }
         this.orderList.push({
           id,
           orderDate: this.dateFormat(createdAt),
@@ -157,6 +185,7 @@ export default {
     },
   },
   created() {
+    console.log("created");
     this.fetchOrder(this.currOrderId);
   },
 };

@@ -28,9 +28,19 @@ const routes = [
     component: () => import('../views/Favorites.vue')
   },
   {
-    path: '/checkout/cart-list',
-    name: 'cart-list',
-    component: () => import('../views/CartList.vue')
+    path: '/question',
+    name: 'question',
+    component: () => import('../views/Question.vue')
+  },
+  {
+    path: '/policies',
+    name: 'policies',
+    component: () => import('../views/Policies.vue')
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('../views/CheckOut.vue')
   },
   {
     path: '/orders',
@@ -55,7 +65,10 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router

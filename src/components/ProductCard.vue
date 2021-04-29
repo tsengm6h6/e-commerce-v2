@@ -42,7 +42,7 @@
               {{ product.title }}
             </h3>
           </router-link>
-          <p class="price-tag">NT$ {{ product.price }} / {{ product.unit }}</p>
+          <p class="price-tag">NT$ {{ product.price }} {{ product.unit }}</p>
         </div>
       </el-card>
     </el-col>

@@ -41,7 +41,11 @@
         <p class="price">
           小計：<span>NT$ {{ total }}</span>
         </p>
-        <el-button type="success"> 前往結帳 </el-button>
+        <router-link to="/checkout">
+          <el-button type="success" @click="handleCheckout">
+            前往結帳
+          </el-button>
+        </router-link>
       </div>
     </div>
     <div class="empty-cart" v-else>購物車空空的</div>
@@ -57,6 +61,13 @@ export default {
       drawer: false,
     };
   },
+  // watch: {
+  //   total: {
+  //     handler() {
+  //       this.drawer = true; // 控制購物車自動打開
+  //     },
+  //   },
+  // },
   computed: {
     ...mapState({
       cartList: (state) =>
@@ -67,6 +78,9 @@ export default {
   },
   methods: {
     ...mapActions(["updateCartRecord"]),
+    handleCheckout() {
+      this.drawer = false;
+    },
   },
   created() {
     console.log(this.cartList);

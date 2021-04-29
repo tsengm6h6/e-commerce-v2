@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import Loading from 'vue-loading-overlay'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
+import VueScrollTo from 'vue-scrollto'
 
 // 表單驗證
 import {
@@ -32,6 +33,8 @@ configure({
     invalid: 'is-invalid'
   }
 })
+
+Vue.use(VueScrollTo)
 
 Vue.use(ElementUI)
 // TODO: 處理繁體中文問題

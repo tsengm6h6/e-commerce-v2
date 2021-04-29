@@ -10,7 +10,10 @@
         <el-table stripe :data="orders" style="width: 100%">
           <el-table-column type="expand">
             <template slot-scope="props">
-              <OrderTwo :currOrderId="props.row.id" />
+              <OrderTwo
+                :currOrderId="props.row.id"
+                @after-pay-order="afterPayOrder"
+              />
             </template>
           </el-table-column>
 
@@ -170,6 +173,10 @@ export default {
     },
     filterTag(value, row) {
       return row.is_paid === value;
+    },
+    afterPayOrder() {
+      const { page } = this.$route.query;
+      this.fetchOrders(page);
     },
   },
   created() {

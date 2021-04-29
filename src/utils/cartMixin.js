@@ -13,6 +13,7 @@ export default {
       };
       console.log(addData)
       this.$store.dispatch('addItemToRecordCart', addData)
+      this.$message.success('商品已加入購物車')
     }
   }
 }

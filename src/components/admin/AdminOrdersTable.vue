@@ -1,55 +1,53 @@
 <template>
   <el-container direction="vertical">
-    <el-main>
-      <loading :active.sync="isLoading"></loading>
-      <el-table height="100%" stripe :data="OrdersList">
-        <el-table-column fixed prop="id" label="訂單編號" min-width="180">
-        </el-table-column>
-        <el-table-column prop="createdAt" label="日期" min-width="100">
-        </el-table-column>
-        <el-table-column prop="total" label="總金額" min-width="100">
-        </el-table-column>
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <p>訂購人資訊</p>
-            <p>姓名：{{ props.row.user.name }}</p>
-            <p>信箱：{{ props.row.user.email }}</p>
-            <p>電話：{{ props.row.user.tel }}</p>
-            <p>地址：{{ props.row.user.address }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column prop="user.name" label="購買人" min-width="100">
-        </el-table-column>
-        <el-table-column prop="is_paid" label="付款狀態" min-width="100">
-          <template slot-scope="scope">
-            <el-tag
-              size="small"
-              :type="scope.row.is_paid ? 'info' : 'danger'"
-              disable-transitions
-              >{{ scope.row.is_paid ? "已付款" : "尚未付款" }}</el-tag
-            >
-          </template>
-        </el-table-column>
-        <el-table-column prop="paid_date" label="付款日期" min-width="100">
-        </el-table-column>
-        <el-table-column align="left" min-width="180">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              icon="el-icon-edit"
-              @click="showEditDialog(scope.row)"
-            ></el-button>
-            <el-button
-              size="mini"
-              type="info"
-              icon="el-icon-show"
-              @click="showDetailDialog(scope.row)"
-              >訂單明細</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-main>
+    <loading :active.sync="isLoading"></loading>
+    <el-table height="100%" stripe :data="OrdersList">
+      <el-table-column fixed prop="id" label="訂單編號" min-width="180">
+      </el-table-column>
+      <el-table-column prop="createdAt" label="日期" min-width="100">
+      </el-table-column>
+      <el-table-column prop="total" label="總金額" min-width="100">
+      </el-table-column>
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>訂購人資訊</p>
+          <p>姓名：{{ props.row.user.name }}</p>
+          <p>信箱：{{ props.row.user.email }}</p>
+          <p>電話：{{ props.row.user.tel }}</p>
+          <p>地址：{{ props.row.user.address }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column prop="user.name" label="購買人" min-width="100">
+      </el-table-column>
+      <el-table-column prop="is_paid" label="付款狀態" min-width="100">
+        <template slot-scope="scope">
+          <el-tag
+            size="small"
+            :type="scope.row.is_paid ? 'info' : 'danger'"
+            disable-transitions
+            >{{ scope.row.is_paid ? "已付款" : "尚未付款" }}</el-tag
+          >
+        </template>
+      </el-table-column>
+      <el-table-column prop="paid_date" label="付款日期" min-width="100">
+      </el-table-column>
+      <el-table-column align="left" min-width="180">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="showEditDialog(scope.row)"
+          ></el-button>
+          <el-button
+            size="mini"
+            type="info"
+            icon="el-icon-show"
+            @click="showDetailDialog(scope.row)"
+            >訂單明細</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
 
     <!-- Detail顯示方塊 -->
     <el-dialog title="訂單明細" :visible.sync="detailDialogVisible">

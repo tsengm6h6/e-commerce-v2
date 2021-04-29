@@ -1,7 +1,7 @@
 <template>
-  <el-main>
-    <el-row>
-      <el-col :span="18" :offset="3">
+  <div>
+    <el-row type="flex" justify="center">
+      <el-col :xs="24">
         <el-table
           stripe
           :data="cartList"
@@ -9,21 +9,20 @@
           show-summary
           style="width: 100%"
         >
-          <el-table-column min-width="50" align="center">
+          <el-table-column min-width="80" align="center">
             <!-- TODO: 圖片待處理 -->
             <template slot-scope="scope">
               <div class="block">
                 <el-avatar
-                  style="width: 100%"
                   shape="square"
                   :size="50"
                   :src="scope.row.image"
-                  fit="cover"
+                  fit="fill"
                 ></el-avatar>
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="100" prop="title" label="商品名稱">
+          <el-table-column min-width="120" prop="title" label="商品名稱">
           </el-table-column>
           <el-table-column
             min-width="100"
@@ -33,7 +32,7 @@
           >
           </el-table-column>
           <el-table-column
-            min-width="100"
+            min-width="80"
             prop="time"
             label="時段"
             align="center"
@@ -42,7 +41,7 @@
           <el-table-column
             prop="qty"
             label="數量"
-            min-width="100"
+            min-width="80"
             align="center"
           >
             <template slot-scope="scope">
@@ -69,18 +68,18 @@
           <el-table-column
             prop="unit"
             label="單位"
-            min-width="50"
+            min-width="80"
             align="center"
           >
           </el-table-column>
           <el-table-column
             prop="price"
             label="單價"
-            min-width="50"
+            min-width="80"
             align="center"
           >
           </el-table-column>
-          <el-table-column label="小計" min-width="50" align="center">
+          <el-table-column label="小計" min-width="80" align="center">
             <template slot-scope="scope">
               {{ scope.row.price * scope.row.qty }}
             </template>
@@ -111,7 +110,7 @@
         </el-table>
       </el-col>
     </el-row>
-    <el-row>
+    <!-- <el-row>
       <el-col :span="18" :offset="3">
         <el-input placeholder="請輸入優惠碼" v-model="couponCode">
           <template slot="append">
@@ -121,19 +120,19 @@
           </template>
         </el-input>
       </el-col>
-    </el-row>
-  </el-main>
+    </el-row> -->
+  </div>
 </template>
 
 <script>
-import customerAPI from "../../apis/customer";
+// import customerAPI from "../../apis/customer";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "CartInfo",
   data() {
     return {
-      couponCode: "",
+      // couponCode: "",
     };
   },
   computed: {
@@ -159,35 +158,30 @@ export default {
         })
       );
     },
-    async addCoupon() {
-      try {
-        await this.beforeAddCoupon();
-        const addData = {
-          code: this.couponCode,
-        };
-        const response = await customerAPI.postCoupon({ data: addData });
-        if (response.data.success !== true) {
-          throw new Error(response.data.message);
-        }
-        console.log(response);
-        this.couponCode = ""; // 清空優惠券欄位
-        this.$store.dispatch("fetchCartProducts");
-        console.log("addCoupon dispatch fexthProducts");
-      } catch (error) {
-        console.log(error);
-        this.$message.error(`${error.message}，請重新輸入`);
-        this.couponCode = ""; // 清空優惠券欄位
-      }
-    },
+    // async addCoupon() {
+    //   try {
+    //     await this.beforeAddCoupon();
+    //     const addData = {
+    //       code: this.couponCode,
+    //     };
+    //     const response = await customerAPI.postCoupon({ data: addData });
+    //     if (response.data.success !== true) {
+    //       throw new Error(response.data.message);
+    //     }
+    //     console.log(response);
+    //     this.couponCode = ""; // 清空優惠券欄位
+    //     this.$store.dispatch("fetchCartProducts");
+    //     console.log("addCoupon dispatch fexthProducts");
+    //   } catch (error) {
+    //     console.log(error);
+    //     this.$message.error(`${error.message}，請重新輸入`);
+    //     this.couponCode = ""; // 清空優惠券欄位
+    //   }
+    // },
     // TODO: 總價重新計算
     getSummaries() {
-      if (this.final_total !== this.total) {
-        const sums = ["", "", "總價", this.total, "折扣價", this.final_total];
-        return sums;
-      } else {
-        const sums = ["", "", "", "", "總價", this.total];
-        return sums;
-      }
+      const sums = ["", "", "", "", "", "", "總價", this.total];
+      return sums;
     },
   },
 };

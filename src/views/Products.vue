@@ -26,6 +26,9 @@
       >
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/products' }"
+            >所有活動</el-breadcrumb-item
+          >
           <el-breadcrumb-item>{{ category }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>

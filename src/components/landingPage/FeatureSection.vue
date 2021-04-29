@@ -8,25 +8,18 @@
       </p>
     </div>
     <el-row class="feature-card">
-      <el-col :xs="24" :sm="8" :md="8" :lg="8" class="card">
-        <img src="https://i.imgur.com/o50G2Df.png" alt="" />
+      <el-col
+        :xs="24"
+        :sm="8"
+        :md="8"
+        :lg="8"
+        class="card"
+        v-for="(feature, index) in featureList"
+        :key="index"
+      >
+        <img :src="feature.image" alt="" />
         <div class="info">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
-          ullam ducimus ipsum ratione molestiae eos, reiciendis
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="8" :md="8" :lg="8" class="card">
-        <img src="https://i.imgur.com/o50G2Df.png" alt="" />
-        <div class="info">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
-          ullam ducimus ipsum ratione molestiae eos, reiciendis
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="8" :md="8" :lg="8" class="card">
-        <img src="https://i.imgur.com/o50G2Df.png" alt="" />
-        <div class="info">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
-          ullam ducimus ipsum ratione molestiae eos, reiciendis
+          {{ feature.info }}
         </div>
       </el-col>
     </el-row>
@@ -36,6 +29,27 @@
 <script>
 export default {
   name: "FeatureSection",
+  data() {
+    return {
+      featureList: [
+        {
+          image: "https://i.imgur.com/1ex8OSw.png",
+          info:
+            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+        },
+        {
+          image: "https://i.imgur.com/dTCWG3a.png",
+          info:
+            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+        },
+        {
+          image: "https://i.imgur.com/nlAq9In.png",
+          info:
+            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+        },
+      ],
+    };
+  },
 };
 </script>
 

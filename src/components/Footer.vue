@@ -1,21 +1,14 @@
 <template>
   <footer class="footer">
     <section class="company-info">
-      <div class="brand-name">DIVE IN</div>
+      <router-link to="/"
+        ><img class="brand-name" src="https://i.imgur.com/XZFFSvE.png" alt=""
+      /></router-link>
       <div class="info-wrapper">
         <div class="left">
-          <div class="info">
-            <img src="https://i.imgur.com/OfcGXdW.png" alt="" />
-            電話：0123 - 45678
-          </div>
-          <div class="info">
-            <img src="https://i.imgur.com/1feqMlf.png" alt="" />
-            地址：0123 - 45678
-          </div>
-          <div class="info">
-            <img src="https://i.imgur.com/wmPfs6q.png" alt="" />
-            信箱：0123 - 45678
-          </div>
+          <div class="info">電話：0123 - 45678</div>
+          <div class="info">地址：新北市某區某路某巷某號</div>
+          <div class="info">信箱：letsdivein@gmail.com</div>
         </div>
         <div class="right">
           <div class="links">
@@ -25,9 +18,10 @@
           </div>
           <div class="action">
             <div class="icons">
-              <img src="https://i.imgur.com/OQCCFnv.png" alt="" />
-              <img src="https://i.imgur.com/lo6U4xv.png" alt="" />
-              <img src="https://i.imgur.com/sou7Yi8.png" alt="" />
+              <img src="https://i.imgur.com/b2bpXra.png" alt="" />
+              <img src="https://i.imgur.com/0wSCxhy.png" alt="" />
+              <img src="https://i.imgur.com/Fbg65MS.png" alt="" />
+              <img src="https://i.imgur.com/YIy9TrF.png" alt="" />
             </div>
             <el-button type="danger">立即報名</el-button>
           </div>
@@ -49,13 +43,11 @@ export default {
 
 <style scoped>
 .company-info {
-  background-color: #00c9c8;
+  /* background-color: #00c9c8; */
   padding: 30px;
 }
 
 .brand-name {
-  font-size: 26px;
-  font-weight: 600;
   margin-bottom: 10px;
 }
 
@@ -71,17 +63,16 @@ export default {
   display: flex;
   align-items: center;
   line-height: 30px;
-}
-
-.info img {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
+  padding-left: 20px;
 }
 
 /****** Right *******/
 .links {
   display: none;
+}
+
+.right {
+  padding-left: 20px;
 }
 
 .icons {
@@ -95,6 +86,9 @@ export default {
 .icons img {
   width: 32px;
   height: 32px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
 }
 
 .icons img:not(:last-child) {
