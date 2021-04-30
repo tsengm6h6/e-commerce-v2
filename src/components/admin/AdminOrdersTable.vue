@@ -19,7 +19,16 @@
       </el-table-column>
       <el-table-column prop="user.name" label="購買人" min-width="100">
       </el-table-column>
-      <el-table-column prop="is_paid" label="付款狀態" min-width="100">
+      <el-table-column
+        prop="is_paid"
+        label="付款狀態"
+        min-width="100"
+        :filters="[
+          { text: '已付款', value: true },
+          { text: '尚未付款', value: !true },
+        ]"
+        :filter-method="filterTag"
+      >
         <template slot-scope="scope">
           <el-tag
             size="small"
@@ -223,6 +232,9 @@ export default {
     this.fetchOrdersList(page);
   },
   methods: {
+    filterTag(value, row) {
+      return row.is_paid === value;
+    },
     async fetchOrdersList(page = 1) {
       try {
         this.isLoading = true;
