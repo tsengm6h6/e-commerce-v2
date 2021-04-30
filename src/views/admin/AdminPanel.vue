@@ -34,7 +34,6 @@
 
 <script>
 import AdminSidebar from "../../components/admin/AdminSidebar";
-// import AdminHeader from "../../components/admin/AdminHeader";
 import AdminProductsTable from "../../components/admin/AdminProductsTable";
 import AdminCouponsTable from "../../components/admin/AdminCouponsTable";
 import AdminOrdersTable from "../../components/admin/AdminOrdersTable";
@@ -44,7 +43,6 @@ export default {
   name: "AdminProducts",
   components: {
     AdminSidebar,
-    // AdminHeader,
     AdminProductsTable,
     AdminOrdersTable,
     AdminCouponsTable,
@@ -88,7 +86,7 @@ export default {
       };
     },
     handlePageChange(val) {
-      if (this.activeIndex === 1) this.$refs.products.fetchProductsList;
+      if (this.activeIndex === 1) this.$refs.products.fetchProductsList(val);
       if (this.activeIndex === 2) this.$refs.orders.fetchOrdersList(val);
       if (this.activeIndex === 3) this.$refs.products.fetchCouponsList(val);
 
@@ -100,7 +98,6 @@ export default {
         },
       });
     },
-    // TODO: beforeRouteUpdate
   },
 };
 </script>

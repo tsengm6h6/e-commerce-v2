@@ -30,7 +30,9 @@
           ></i>
         </el-menu-item>
         <el-menu-item v-if="isLogin" index="/admin/dashboard"
-          >管理員後台</el-menu-item
+          ><el-button size="small" type="info" plain
+            >管理員後台</el-button
+          ></el-menu-item
         >
       </el-menu>
     </el-header>
