@@ -1,6 +1,12 @@
 <template>
   <el-row type="flex" justify="center" class="question-section">
     <el-col :xs="24" :md="20" :lg="16">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>
+          <a href="/">首頁</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>常見問答</el-breadcrumb-item>
+      </el-breadcrumb>
       <div class="question" v-for="(qa, index) in questionList" :key="index">
         <h3>{{ qa.question }}</h3>
         <p v-html="qa.answer"></p>
@@ -59,6 +65,10 @@ export default {
 <style scoped>
 .question-section {
   padding: 30px;
+}
+
+.el-breadcrumb {
+  margin-bottom: 20px;
 }
 
 h3 {

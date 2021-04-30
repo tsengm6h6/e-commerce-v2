@@ -4,6 +4,12 @@
       <h3>收藏清單</h3>
       <p>不要再猶豫，趕快手刀報名！</p>
     </div>
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item>
+        <a href="/">首頁</a>
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>收藏清單</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-row :gutter="20">
       <ProductCard
         v-for="product in favoriteList"
@@ -18,6 +24,11 @@
 <style scoped>
 .el-container {
   padding: 30px;
+}
+
+.el-breadcrumb {
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .title {

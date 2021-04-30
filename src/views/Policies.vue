@@ -1,6 +1,12 @@
 <template>
   <el-row type="flex" justify="center" class="question-section">
     <el-col :xs="24" :md="20" :lg="16">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>
+          <a href="/">首頁</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>政策與條款</el-breadcrumb-item>
+      </el-breadcrumb>
       <h3>非證照課程規範 ( 體驗 / 導潛 )</h3>
       <div class="question" v-for="(policy, index) in Experience" :key="index">
         <h4>{{ policy.title }}</h4>
@@ -93,6 +99,10 @@ export default {
 <style scoped>
 .question-section {
   padding: 30px;
+}
+
+.el-breadcrumb {
+  margin-bottom: 20px;
 }
 
 h3 {

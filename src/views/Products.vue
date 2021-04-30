@@ -11,32 +11,27 @@
         </div>
       </el-col>
     </el-row>
-    <el-row
-      type="flex"
-      justify="space-between"
-      align="middle"
-      class="bread-crumb-and-select"
-    >
+    <el-row align="bottom" class="bread-crumb-and-select">
       <!-- BreadCrumb -->
       <el-col
-        :xs="{ span: 10, offset: 0 }"
-        :sm="{ span: 6, offset: 0 }"
+        :xs="{ span: 22, offset: 1 }"
+        :sm="{ span: 12, offset: 0 }"
         :md="{ span: 12, offset: 0 }"
         :lg="{ span: 24, offset: 3 }"
       >
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/products' }"
-            >所有活動</el-breadcrumb-item
-          >
+          <el-breadcrumb-item>
+            <a href="/">首頁</a>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item>所有活動</el-breadcrumb-item>
           <el-breadcrumb-item>{{ category }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
       <!-- < lg Selector -->
       <el-col
-        :xs="{ span: 10, offset: 0 }"
-        :sm="{ span: 8, offset: 0 }"
-        :md="{ span: 6, offset: 0 }"
+        :xs="{ span: 22, offset: 1 }"
+        :sm="{ span: 8, offset: 4 }"
+        :md="{ span: 7, offset: 5 }"
         class="hidden-lg-and-up"
       >
         <el-select v-model="category">
@@ -141,7 +136,11 @@ export default {
 }
 
 .bread-crumb-and-select {
-  margin: 120px 0 35px;
+  margin: 120px 0 20px;
+}
+
+.el-breadcrumb {
+  line-height: 40px;
 }
 
 /* sm */
@@ -149,12 +148,20 @@ export default {
   .products-section {
     padding: 80px;
   }
+
+  .bread-crumb-and-select {
+    margin: 120px 10px 20px;
+  }
 }
 
 /* md */
 @media only screen and (min-width: 992px) {
   .products-section {
     padding: 120px;
+  }
+
+  .bread-crumb-and-select {
+    margin: 120px 20px 20px;
   }
 }
 </style>
