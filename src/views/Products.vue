@@ -1,5 +1,6 @@
 <template>
   <el-container direction="vertical" class="products-section">
+    <Animation />
     <el-row>
       <el-col :span="24">
         <div class="title">
@@ -71,12 +72,14 @@
 import ProductCard from "../components/ProductCard";
 import AsideMenu from "../components/AsideMenu";
 import { mapGetters, mapState } from "vuex";
+import Animation from "../components/Animation";
 
 export default {
   name: "Products",
   components: {
     ProductCard,
     AsideMenu,
+    Animation,
   },
   data() {
     return {

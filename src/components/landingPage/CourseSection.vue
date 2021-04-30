@@ -7,7 +7,9 @@
       <div class="right">
         <h2>龍洞浮潛體驗</h2>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, eum?
+          {{ currCoupon.title }}，現在報名即可享{{
+            currCoupon.percent / 10
+          }}折，立馬輸入{{ currCoupon.code }}領取優惠！
         </p>
         <div class="info">
           <div class="detail">
@@ -24,8 +26,8 @@
           </div>
         </div>
         <div class="button">
-          <el-button type="success" plain>
-            <h4>更多體驗</h4>
+          <el-button type="success" plain @click="doCopy">
+            <h4>點我領取優惠</h4>
           </el-button>
           <el-button type="success">
             <h4>立即報名</h4>
@@ -70,8 +72,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "CourseSection",
+  computed: {
+    ...mapState(["currCoupon"]),
+  },
+  methods: {
+    async doCopy() {
+      try {
+        await this.$copyText(this.currCoupon.code);
+        this.$message.success("成功複製優惠碼！");
+      } catch (err) {
+        this.$message.danger("無法複製優惠碼，請稍後再試");
+        console.log(err);
+      }
+    },
+  },
 };
 </script>
 

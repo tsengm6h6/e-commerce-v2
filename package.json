@@ -16,6 +16,7 @@
     "sweetalert2": "^10.16.3",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.12",
+    "vue-clipboard2": "^0.3.1",
     "vue-i18n": "^8.24.3",
     "vue-loading-overlay": "^3.4.2",
     "vue-router": "^3.5.1",

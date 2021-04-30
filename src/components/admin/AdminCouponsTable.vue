@@ -228,6 +228,10 @@ export default {
         }
         this.couponsList = response.data.coupons;
         this.$emit("renderPaginator", response.data.pagination);
+        const activeCoupon = this.couponsList.filter(
+          (coupon) => coupon.is_enabled === 1
+        )[0];
+        this.$state.commit("setCurrCoupon", activeCoupon);
         this.isLoading = false;
       } catch (error) {
         console.log(error);
@@ -287,7 +291,7 @@ export default {
           console.log(response);
         }
         // 重新取得優惠列表
-        await this.fetchCouponsList();
+        await this.fetchCouponsList(1);
         // 重置表單（欄位清空、驗證重置）
         this.resetForm("editForm");
         // 關閉對話方塊

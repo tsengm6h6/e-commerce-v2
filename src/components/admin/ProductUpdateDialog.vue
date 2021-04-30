@@ -3,6 +3,7 @@
     title="編輯 / 新增產品"
     :visible.sync="UpdateDialogVisible"
     width="70%"
+    :before-close="handleBeforeClose"
     @close="handleDialogClosed"
   >
     <!-- 表單 -->
@@ -271,6 +272,15 @@ export default {
         ...product,
       };
       this.UpdateDialogVisible = true;
+    },
+    async handleBeforeClose(done) {
+      try {
+        await this.$confirm("確定不存檔關閉嗎？");
+        this.handleDialogClosed();
+        done();
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleDialogClosed() {
       this.resetForm("editForm");

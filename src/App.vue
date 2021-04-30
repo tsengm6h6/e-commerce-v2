@@ -25,7 +25,7 @@ export default {
     ...mapState(["isLogin"]),
   },
   methods: {
-    ...mapActions(["fetchProducts", "fetchCartProducts"]),
+    ...mapActions(["fetchProducts", "fetchCartProducts", "fetchCouponsList"]),
   },
   mounted() {
     this.fetchProducts();
@@ -33,6 +33,7 @@ export default {
     const { isPost = null } = this.getLocalStorage();
     console.log("App.vue 購物車isPost");
     if (isPost) this.$message.warning("上次購物未完成，請盡快完成訂單");
+    this.fetchCouponsList(1);
   },
 };
 </script>

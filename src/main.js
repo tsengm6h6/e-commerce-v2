@@ -10,6 +10,7 @@ import Loading from 'vue-loading-overlay'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VueScrollTo from 'vue-scrollto'
+import VueClipboard from 'vue-clipboard2'
 
 // 表單驗證
 import {
@@ -35,6 +36,7 @@ configure({
 })
 
 Vue.use(VueScrollTo)
+Vue.use(VueClipboard)
 
 Vue.use(ElementUI)
 // TODO: 處理繁體中文問題
