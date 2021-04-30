@@ -6,7 +6,13 @@
     <el-table stripe :data="productsList" height="80vh">
       <el-table-column fixed prop="title" label="產品名稱" min-width="150">
       </el-table-column>
-      <el-table-column prop="category" label="分類" min-width="80">
+      <el-table-column
+        prop="category"
+        label="分類"
+        min-width="80"
+        :filters="categoryFilter"
+        :filter-method="filterCategory"
+      >
       </el-table-column>
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -20,7 +26,16 @@
       </el-table-column>
       <el-table-column prop="price" label="售價" min-width="80">
       </el-table-column>
-      <el-table-column prop="is_enabled" label="是否啟用" min-width="80">
+      <el-table-column
+        prop="is_enabled"
+        label="是否啟用"
+        min-width="80"
+        :filters="[
+          { text: '已啟用', value: 1 },
+          { text: '未啟用', value: 0 },
+        ]"
+        :filter-method="filterIsEnabled"
+      >
         <template slot-scope="scope">
           <el-tag
             size="small"
@@ -81,6 +96,24 @@ export default {
     return {
       productsList: [],
       isLoading: false,
+      categoryFilter: [
+        {
+          text: "水肺潛水",
+          value: "水肺潛水",
+        },
+        {
+          text: "自由潛水",
+          value: "自由潛水",
+        },
+        {
+          text: "潛水旅遊",
+          value: "潛水旅遊",
+        },
+        {
+          text: "體驗系列",
+          value: "體驗系列",
+        },
+      ],
     };
   },
   created() {
@@ -88,6 +121,13 @@ export default {
     this.fetchProductsList(page);
   },
   methods: {
+    filterCategory(value, row, column) {
+      const property = column["property"];
+      return row[property] === value;
+    },
+    filterIsEnabled(value, row) {
+      return row.is_enabled === value;
+    },
     async fetchProductsList(page = 1) {
       try {
         this.isLoading = true;
