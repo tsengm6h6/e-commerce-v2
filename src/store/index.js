@@ -63,36 +63,36 @@ export default new Vuex.Store({
     },
     // set購物車資料
     setCartInfo(state, cartInfo) {
-      console.log('serCartInfo')
+      console.log('setCartInfo', cartInfo)
       state.cartInfo = { ...cartInfo }
-    },
-    pushProductToCart(state, { addData }) {
-      state.cartInfo.cartList.push(addData)
-    },
-    incrementItemQty(state, { addData }) {
-      const product = state.cartInfo.cartList.find(item => item.product_id === addData.product_id)
-      product.qty += addData.qty
-    },
-    handleReduceQty(state, cartItem) {
-      const product = state.cartInfo.cartList.find(item => item.product_id === cartItem.product_id)
-      if (product.qty === 1) return
-      product.qty--
-    },
-    handleIncreaseQty(state, cartItem) {
-      const product = state.cartInfo.cartList.find(item => item.product_id === cartItem.product_id) // TODO: warning有問題
-      if (product.qty === 10) return this.$message.warning('10 人以上報名，請聯繫專人客服')
-      product.qty++
-    },
-    updateCartTotal(state) {
-      state.cartInfo.total = state.cartInfo.cartList.reduce((total, product) => {
-        return total + product.price * product.qty
-      }, 0)
-      state.cartInfo.final_total = state.cartInfo.total // 預設沒有 postAPI 才要計算
-    },
-    // 移除紀錄的商品
-    handleRemove(state, cartItem) {
-      state.cartInfo.cartList = state.cartInfo.cartList.filter(item => item.product_id !== cartItem.product_id)
     }
+    // pushProductToCart(state, { addData }) {
+    //   state.cartInfo.cartList.push(addData)
+    // },
+    // incrementItemQty(state, { addData }) {
+    //   const product = state.cartInfo.cartList.find(item => item.product_id === addData.product_id)
+    //   product.qty += addData.qty
+    // },
+    // handleReduceQty(state, cartItem) {
+    //   const product = state.cartInfo.cartList.find(item => item.product_id === cartItem.product_id)
+    //   if (product.qty === 1) return
+    //   product.qty--
+    // },
+    // handleIncreaseQty(state, cartItem) {
+    //   const product = state.cartInfo.cartList.find(item => item.product_id === cartItem.product_id) 
+    //   if (product.qty === 10) return this.$message.warning('10 人以上報名，請聯繫專人客服')
+    //   product.qty++
+    // },
+    // updateCartTotal(state) {
+    //   state.cartInfo.total = state.cartInfo.cartList.reduce((total, product) => {
+    //     return total + product.price * product.qty
+    //   }, 0)
+    //   state.cartInfo.final_total = state.cartInfo.total // 預設沒有 postAPI 才要計算
+    // },
+    // 移除紀錄的商品
+    // handleRemove(state, cartItem) {
+    //   state.cartInfo.cartList = state.cartInfo.cartList.filter(item => item.product_id !== cartItem.product_id)
+    // }
   },
   actions: {
     // 切換頁面時確認登入狀態
@@ -189,40 +189,40 @@ export default new Vuex.Store({
     },
 
     // 紀錄商品數量及總金額
-    addItemToRecordCart({ state, commit }, addData) {
-      // 如果購物紀錄沒有商品，直接新增並返回
-      if (!state.cartInfo.cartList.length) {
-        commit('pushProductToCart', { addData })
-        commit('updateCartTotal')
-        return
-      }
-      // 如果記錄中有商品，則尋找是否有相同商品
-      const recordCartItem = state.cartInfo.cartList.find(record => record.product_id === addData.product_id && record.date === addData.date && record.time === addData.time)
-      // 沒有相同商品 pushProductToCart
-      if (!recordCartItem) {
-        commit('pushProductToCart', { addData })
-      } else {
-        // 已有此商品 incrementItemQty
-        commit('incrementItemQty', { addData })
-      }
-      // updateCartTotal & 折扣價
-      commit('updateCartTotal')
-    },
+    // addItemToRecordCart({ state, commit }, addData) {
+    //   // 如果購物紀錄沒有商品，直接新增並返回
+    //   if (!state.cartInfo.cartList.length) {
+    //     commit('pushProductToCart', { addData })
+    //     commit('updateCartTotal')
+    //     return
+    //   }
+    //   // 如果記錄中有商品，則尋找是否有相同商品
+    //   const recordCartItem = state.cartInfo.cartList.find(record => record.product_id === addData.product_id && record.date === addData.date && record.time === addData.time)
+    //   // 沒有相同商品 pushProductToCart
+    //   if (!recordCartItem) {
+    //     commit('pushProductToCart', { addData })
+    //   } else {
+    //     // 已有此商品 incrementItemQty
+    //     commit('incrementItemQty', { addData })
+    //   }
+    //   // updateCartTotal & 折扣價
+    //   commit('updateCartTotal')
+    // },
     // 更新商品數量
-    updateCartRecord(context, { cartItem, action }) {
-      console.log(cartItem, action)
-      if (action === 'REDUCE') {
-        console.log('REDUCE')
-        context.commit('handleReduceQty', cartItem)
-      } else if (action === 'INCREASE') {
-        console.log('INCREASE')
-        context.commit('handleIncreaseQty', cartItem)
-      } else {
-        console.log('REMOVE')
-        context.commit('handleRemove', cartItem)
-      }
-      context.commit('updateCartTotal')
-    },
+    // updateCartRecord(context, { cartItem, action }) {
+    //   console.log(cartItem, action)
+    //   if (action === 'REDUCE') {
+    //     console.log('REDUCE')
+    //     context.commit('handleReduceQty', cartItem)
+    //   } else if (action === 'INCREASE') {
+    //     console.log('INCREASE')
+    //     context.commit('handleIncreaseQty', cartItem)
+    //   } else {
+    //     console.log('REMOVE')
+    //     context.commit('handleRemove', cartItem)
+    //   }
+    //   context.commit('updateCartTotal')
+    // },
 
     // 刪除購物車商品、更新商品總金額
     // async removeCartItem(context, itemId) {
@@ -248,32 +248,30 @@ export default new Vuex.Store({
     // },
 
     // 新增購物車清單到API
-    async postToCart(context, { addData }) {
-      try {
-        context.commit('setLoading', true)
-        // addData 只需要id、qty
-        const response = await customerAPI.postToCart({ data: addData })
-        if (response.data.success !== true || !response.data.data.id) {
-          throw new Error(response.data.message);
-        }
-        console.log('postToCart response', response)
-        // Toast.fire({
-        //   icon: 'success',
-        //   title: '商品已加入購物車',
-        // });
-        // 重新取得購物車資料，Loading狀態由fetchCartProducts更新
-        // context.dispatch('fetchCartProducts')
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法加入購物車，請稍後再試'
-        });
-        context.commit('setLoading', false)
-      }
-    }
-
-    // 套用優惠券到API，更新總金額與折扣價
+    // async postToCart(context, { addData }) {
+    //   try {
+    //     context.commit('setLoading', true)
+    //     // addData 只需要id、qty
+    //     const response = await customerAPI.postToCart({ data: addData })
+    //     if (response.data.success !== true || !response.data.data.id) {
+    //       throw new Error(response.data.message);
+    //     }
+    //     console.log('postToCart response', response)
+    //     // Toast.fire({
+    //     //   icon: 'success',
+    //     //   title: '商品已加入購物車',
+    //     // });
+    //     // 重新取得購物車資料，Loading狀態由fetchCartProducts更新
+    //     // context.dispatch('fetchCartProducts')
+    //   } catch (error) {
+    //     console.log(error)
+    //     Toast.fire({
+    //       icon: 'error',
+    //       title: '無法加入購物車，請稍後再試'
+    //     });
+    //     context.commit('setLoading', false)
+    //   }
+    // }
   },
   modules: {
   }

@@ -41,7 +41,7 @@
           <el-table-column
             prop="qty"
             label="數量"
-            min-width="80"
+            min-width="100"
             align="center"
           >
             <template slot-scope="scope">
@@ -84,16 +84,6 @@
               {{ scope.row.price * scope.row.qty }}
             </template>
           </el-table-column>
-          <el-table-column min-width="100" align="center">
-            <template slot="header">
-              <span>備註</span>
-            </template>
-            <template>
-              <el-tag type="success" v-if="final_total !== total"
-                >已套用優惠券</el-tag
-              >
-            </template>
-          </el-table-column>
           <el-table-column width="50" align="center">
             <template slot="header"></template>
             <template slot-scope="scope">
@@ -110,45 +100,44 @@
         </el-table>
       </el-col>
     </el-row>
-    <!-- <el-row>
-      <el-col :span="18" :offset="3">
-        <el-input placeholder="請輸入優惠碼" v-model="couponCode">
-          <template slot="append">
-            <el-button :loading="isLoading" @click.prevent.stop="addCoupon">
-              套用優惠碼
-            </el-button>
-          </template>
-        </el-input>
-      </el-col>
-    </el-row> -->
   </div>
 </template>
 
 <script>
-// import customerAPI from "../../apis/customer";
-import { mapState, mapActions } from "vuex";
+import customerAPI from "../../apis/customer";
+import { mapState } from "vuex";
+import cartMixin from "../../utils/cartMixin";
 
 export default {
   name: "CartInfo",
-  data() {
-    return {
-      // couponCode: "",
-    };
+  mixins: [cartMixin],
+  watch: {
+    cartList: {
+      handler() {
+        if (!this.cartList.length) {
+          this.$message.success("購物車空空的，歡迎繼續購物");
+          return this.$router.push("/products");
+        }
+      },
+    },
+  },
+  created() {
+    if (!this.cartList.length) return this.$router.push("/products");
   },
   computed: {
     ...mapState({
       cartList: (state) => state.cartInfo.cartList,
       total: (state) => state.cartInfo.total,
-      final_total: (state) => state.cartInfo.final_total,
       isLoading: (state) => state.isLoading,
     }),
   },
   methods: {
-    ...mapActions(["updateCartRecord", "postToCart"]),
-    async beforeAddCoupon() {
+    // ...mapActions(["postToCart"]),
+    async postLocalCartListToCart() {
+      this.$store.commit("setLoading", true);
       await Promise.all(
         Array.from(this.cartList, async (item) => {
-          console.log("beforeAddCoupon", item);
+          console.log("postLocalToAPICart", item);
           const addData = {
             product_id: item.product_id,
             qty: item.qty,
@@ -157,6 +146,23 @@ export default {
           await this.postToCart({ addData });
         })
       );
+      this.updateLocalCartStatus("isPost", true);
+      this.$store.commit("setLoading", false);
+      console.log("All post!");
+    },
+    async postToCart({ addData }) {
+      try {
+        // addData 只需要id、qty
+        const response = await customerAPI.postToCart({ data: addData });
+        if (response.data.success !== true || !response.data.data.id) {
+          throw new Error(response.data.message);
+        }
+        console.log("postToCart response", response);
+      } catch (error) {
+        console.log(error);
+        this.$message.error("無法確認購物車數量，請稍後再試");
+        this.$store.commit("setLoading", false);
+      }
     },
     // async addCoupon() {
     //   try {
@@ -178,7 +184,6 @@ export default {
     //     this.couponCode = ""; // 清空優惠券欄位
     //   }
     // },
-    // TODO: 總價重新計算
     getSummaries() {
       const sums = ["", "", "", "", "", "", "總價", this.total];
       return sums;

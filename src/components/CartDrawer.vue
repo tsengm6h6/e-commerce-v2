@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+import cartMixin from "../utils/cartMixin";
 export default {
   name: "CartDrawer",
   data() {
@@ -61,6 +62,7 @@ export default {
       drawer: false,
     };
   },
+  mixins: [cartMixin],
   // watch: {
   //   total: {
   //     handler() {
@@ -77,7 +79,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["updateCartRecord"]),
+    // ...mapActions(["updateCartRecord"]),
     handleCheckout() {
       this.drawer = false;
     },

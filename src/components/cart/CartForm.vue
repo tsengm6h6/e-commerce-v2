@@ -7,31 +7,32 @@
         <div class="collapse-table">
           <ol>
             <li v-for="(item, index) in cartList" :key="index">
-              {{ item.date }} - {{ item.time }} * {{ item.qty }}
-              {{ item.unit }} {{ item.title }} - NT$
+              {{ index + 1 }}. {{ item.date }} {{ item.time }} {{ item.title }}*
+              {{ item.qty }} {{ item.unit }} - NT$
               {{ item.price * item.qty }} 元
             </li>
           </ol>
           <p>總價：NT$ {{ total }} 元</p>
-          <span v-if="total !== final_total"
-            >折扣價：NT$ {{ final_total }} 元</span
-          >
+          <span v-if="final_total">折扣價：NT$ {{ final_total }} 元</span>
         </div>
       </el-collapse-item>
     </el-collapse>
     <!-- coupon & form -->
     <div class="coupon">
-      <h3>套用優惠碼</h3>
+      <h3>
+        套用優惠碼<el-tag v-if="isCoupon" type="success">已套用優惠券</el-tag>
+      </h3>
+
       <el-input
         placeholder="請輸入優惠碼"
         v-model="couponCode"
-        :disabled="isDiscount"
+        :disabled="isCoupon"
       >
         <template slot="append">
           <el-button
             :loading="isLoading"
             @click.prevent.stop="addCoupon"
-            :disabled="isDiscount"
+            :disabled="isCoupon"
           >
             套用優惠碼
           </el-button>
@@ -117,7 +118,7 @@ li {
   list-style: decimal;
 }
 
-span {
+.collapse-table span {
   font-size: 18px;
   font-style: italic;
   line-height: 24px;
@@ -132,6 +133,13 @@ h3 {
   margin-top: 20px;
 }
 
+.el-tag {
+  margin: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
 /* md */
 @media only screen and (min-width: 992px) {
   .collapse,
@@ -144,14 +152,15 @@ h3 {
 
 <script>
 import customerAPI from "../../apis/customer";
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+import cartMixin from "../../utils/cartMixin";
 
 export default {
   name: "CartForm",
   data() {
     return {
       couponCode: "",
-      isDiscount: false,
+      isCoupon: false,
       userForm: {
         name: "",
         email: "",
@@ -204,6 +213,7 @@ export default {
       },
     };
   },
+  mixins: [cartMixin],
   computed: {
     ...mapState({
       cartList: (state) => state.cartInfo.cartList,
@@ -213,23 +223,23 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["postToCart"]),
-    async beforeAddCoupon() {
-      await Promise.all(
-        Array.from(this.cartList, async (item) => {
-          console.log("beforeAddCoupon", item);
-          const addData = {
-            product_id: item.product_id,
-            qty: item.qty,
-          };
-          console.log(addData);
-          await this.postToCart({ addData });
-        })
-      );
-    },
+    // ...mapActions(["postToCart"]),
+    // async beforeAddCoupon() {
+    //   await Promise.all(
+    //     Array.from(this.cartList, async (item) => {
+    //       console.log("beforeAddCoupon", item);
+    //       const addData = {
+    //         product_id: item.product_id,
+    //         qty: item.qty,
+    //       };
+    //       console.log(addData);
+    //       await this.postToCart({ addData });
+    //     })
+    //   );
+    // },
     async addCoupon() {
       try {
-        await this.beforeAddCoupon();
+        this.$store.commit("setLoading", true);
         const addData = {
           code: this.couponCode,
         };
@@ -239,14 +249,17 @@ export default {
         }
         console.log(response);
         // this.couponCode = ""; // 清空優惠券欄位
-        this.isDiscount = true;
-        this.$store.dispatch("fetchCartProducts");
-        this.$message.success("已套用優惠券");
+        this.isCoupon = true;
+        await this.$store.dispatch("fetchCartProducts");
+        this.updateLocalCartStatus("final_total", this.final_total);
+        this.$message.success("購物明細已更新");
         console.log("addCoupon dispatch fexthProducts");
+        this.$store.commit("setLoading", false);
       } catch (error) {
         console.log(error);
         this.$message.error(`${error.message}，請重新輸入`);
         this.couponCode = ""; // 清空優惠券欄位
+        this.$store.commit("setLoading", false);
       }
     },
     validateForm(formName) {
@@ -262,6 +275,7 @@ export default {
     },
     async confirmOrder() {
       try {
+        this.$store.commit("setLoading", true);
         const { name, email, tel, address, message } = this.userForm;
         const user = {
           name,
@@ -277,19 +291,26 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        const cartInfo = {
-          cartList: [],
-          total: 0,
-          final_total: 0,
-        };
-        // 清空state購物車資料
-        this.$store.commit("setCartInfo", cartInfo);
+        // Reset store及local的購物車資料
+        this.resetCartInfo();
+        this.$store.commit("setLoading", false);
         // 通知父層更新
         this.$emit("after-form-submit", response.data.orderId);
       } catch (error) {
         console.log(error);
         this.$message.warning(`${error.message}，請再次確認`);
+        this.$store.commit("setLoading", false);
       }
+    },
+    resetCartInfo() {
+      // 清空state購物車資料
+      this.$store.commit("setCartInfo", {
+        cartList: [],
+        total: 0,
+        final_total: 0,
+      });
+      // 清空LocalStorage購物車資料
+      this.setLocalStorage({ cartList: [], total: 0 });
     },
   },
 };

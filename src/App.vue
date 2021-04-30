@@ -12,6 +12,7 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { mapActions, mapState } from "vuex";
+import cartMixin from "./utils/cartMixin";
 
 export default {
   name: "App",
@@ -19,6 +20,7 @@ export default {
     Navbar,
     Footer,
   },
+  mixins: [cartMixin],
   computed: {
     ...mapState(["isLogin"]),
   },
@@ -27,7 +29,10 @@ export default {
   },
   mounted() {
     this.fetchProducts();
-    this.fetchCartProducts();
+    this.fetchLocalCart();
+    const { isPost = null } = this.getLocalStorage();
+    console.log("App.vue 購物車isPost");
+    if (isPost) this.$message.warning("上次購物未完成，請盡快完成訂單");
   },
 };
 </script>

@@ -83,11 +83,11 @@ h4,
 
 <script>
 import customerAPI from "../apis/customer";
-import { Toast } from "../utils/helper";
 import mixin from "../utils/mixin";
+import { mapState } from "vuex";
 
 export default {
-  name: "Order",
+  name: "OrderTwo",
   props: {
     currOrderId: {
       type: String,
@@ -104,14 +104,16 @@ export default {
       orderIsPaid: false,
       orderList: [],
       productsList: [],
-      isLoading: false,
       showPayBtn: false,
     };
+  },
+  computed: {
+    ...mapState(["isLoading"]),
   },
   methods: {
     async fetchOrder(orderId) {
       try {
-        this.isLoading = true;
+        this.$store.commit("setLoading", true);
         const response = await customerAPI.getOrder(orderId);
         if (response.data.success !== true) {
           throw new Error();
@@ -149,20 +151,17 @@ export default {
           productName: item.product.title,
           productUnit: item.product.unit,
         }));
-        this.isLoading = false;
+        this.$store.commit("setLoading", false);
         this.$emit("openDialog");
       } catch (error) {
         console.log(error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得訂單，請稍後再試",
-        });
-        this.isLoading = false;
+        this.$message.error("無法取得訂單，請稍後再試");
+        this.$store.commit("setLoading", false);
       }
     },
     async payOrder(orderId) {
       try {
-        this.isLoading = true;
+        this.$store.commit("setLoading", true);
         const response = await customerAPI.payOrder(orderId);
         if (response.data.success !== true) {
           throw new Error();
@@ -172,15 +171,12 @@ export default {
           isPaid: "已付款",
         }));
         this.orderIsPaid = true;
-        this.isLoading = false;
+        this.$store.commit("setLoading", false);
         this.$emit("after-pay-order");
       } catch (error) {
         console.log(error);
-        Toast.fire({
-          icon: "error",
-          title: "無法完成付款，請稍後再試",
-        });
-        this.isLoading = false;
+        this.$message.error("無法完成付款，請稍後再試");
+        this.$store.commit("setLoading", false);
       }
     },
   },
