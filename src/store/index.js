@@ -86,15 +86,14 @@ export default new Vuex.Store({
         if (response.data.success !== true) {
           throw new Error()
         }
-        console.log('fetch Products')
 
-        // 先對產品清單的isFavorite進行處理
+        // 先對產品清單的isFavorite進行處理，再篩選啟用的產品
         const favoriteIdList =
           JSON.parse(window.localStorage.getItem('favorite_products')) || []
         const productsList = response.data.products.map((item) => ({
           ...item,
           isFavorite: favoriteIdList.includes(item.id) // 如果包含在收藏清單中則為true
-        }))
+        })).filter(product => product.is_enabled === 1)
 
         // 提交給 mutation 去改變state
         commit('setProductsList', productsList)
