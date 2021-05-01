@@ -1,5 +1,6 @@
 <template>
   <el-row type="flex" justify="center" class="question-section">
+    <TurtleFlat />
     <el-col :xs="24" :md="20" :lg="16">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
@@ -30,8 +31,12 @@
 </template>
 
 <script>
+import TurtleFlat from "../components/animation/TurtleFlat";
 export default {
   name: "Policies",
+  components: {
+    TurtleFlat,
+  },
   data() {
     return {
       Experience: [
@@ -99,6 +104,7 @@ export default {
 <style scoped>
 .question-section {
   padding: 30px;
+  position: relative;
 }
 
 .el-breadcrumb {

@@ -90,6 +90,7 @@ export default {
 /* Card */
 .el-card {
   border: none;
+  background-color: transparent;
 }
 
 .el-card.is-always-shadow {

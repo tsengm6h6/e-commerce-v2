@@ -42,8 +42,15 @@ export default {
 </script>
 
 <style scoped>
+footer {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.5)
+  );
+}
+
 .company-info {
-  /* background-color: #00c9c8; */
   padding: 30px;
 }
 

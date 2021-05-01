@@ -1,6 +1,5 @@
 <template>
   <el-container direction="vertical" class="products-section">
-    <Animation />
     <el-row>
       <el-col :span="24">
         <div class="title">
@@ -65,6 +64,7 @@
         </el-row>
       </el-col>
     </el-row>
+    <img src="https://i.imgur.com/6DYXwRJ.png" alt="" class="coral-bg" />
   </el-container>
 </template>
 
@@ -72,14 +72,12 @@
 import ProductCard from "../components/ProductCard";
 import AsideMenu from "../components/AsideMenu";
 import { mapGetters, mapState } from "vuex";
-import Animation from "../components/Animation";
 
 export default {
   name: "Products",
   components: {
     ProductCard,
     AsideMenu,
-    Animation,
   },
   data() {
     return {
@@ -123,6 +121,19 @@ export default {
 <style scoped>
 .products-section {
   padding: 30px;
+  position: relative;
+}
+
+.coral-bg {
+  width: 150%;
+  height: 100vh;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: -2;
+  opacity: 0.5;
+  object-fit: cover;
+  object-position: -15% bottom;
 }
 
 .title {
@@ -150,6 +161,11 @@ export default {
 @media only screen and (min-width: 768px) {
   .products-section {
     padding: 80px;
+  }
+
+  .coral-bg {
+    width: 100%;
+    right: -3%;
   }
 
   .bread-crumb-and-select {
