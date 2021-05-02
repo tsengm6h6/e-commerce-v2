@@ -66,7 +66,7 @@ export default {
 
 .el-button {
   padding: 12px 40px;
-  margin-right: 10px;
+  margin: 0 10px 10px 0;
   letter-spacing: 1px;
   font-weight: 600;
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar />
+    <Navbar id="navbar" />
     <main role="main">
       <router-view />
     </main>
@@ -43,6 +43,8 @@ export default {
 
 body {
   font-family: "Work Sans", "Noto Sans TC", sans-serif;
+  color: #242323;
+  letter-spacing: 1px;
 }
 
 * {

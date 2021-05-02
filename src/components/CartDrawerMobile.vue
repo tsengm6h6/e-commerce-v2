@@ -1,5 +1,5 @@
 <template>
-  <el-drawer title="購物車" :visible.sync="drawer">
+  <el-drawer title="購物車" :visible.sync="drawer" size="80%">
     <div class="drawer-container" v-if="cartList.length">
       <div class="item-wrapper">
         <div class="item" v-for="item in cartList" :key="item.product_id">
@@ -56,7 +56,7 @@
 import { mapState } from "vuex";
 import cartMixin from "../utils/cartMixin";
 export default {
-  name: "CartDrawer",
+  name: "CartDrawerMobile",
   data() {
     return {
       drawer: false,

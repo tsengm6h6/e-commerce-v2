@@ -41,7 +41,9 @@
                 <span class="price-tag">${{ product.price }}</span
                 >{{ product.unit }}
               </p>
-              <del>${{ product.origin_price }}{{ product.unit }}</del>
+              <del v-if="product.origin_price"
+                >${{ product.origin_price }}{{ product.unit }}</del
+              >
             </div>
             <hr />
             <p>開放報名中</p>
@@ -160,7 +162,6 @@ export default {
 
 .title-wrapper {
   padding-top: 60px;
-  color: #414141;
 }
 
 .title-wrapper > h1 {
@@ -196,7 +197,11 @@ export default {
 .info-wrapper .info {
   font-weight: 400;
   letter-spacing: 1px;
-  margin: 20px;
+  margin: 0 20px 20px;
+}
+
+.info-wrapper .info:not(:first-child) {
+  margin-top: 20px;
 }
 
 .info-wrapper .info li:first-child {
@@ -205,6 +210,7 @@ export default {
 .info-wrapper li {
   position: relative;
   left: 15px;
+  line-height: 30px;
 }
 
 .price-wrapper {
@@ -234,6 +240,7 @@ export default {
 
 .price-tag-wrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
 }

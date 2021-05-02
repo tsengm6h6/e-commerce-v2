@@ -2,69 +2,96 @@
   <section class="course-section">
     <div class="part">
       <div class="left">
-        <img class="image" src="https://i.imgur.com/xPuN8BH.jpg" alt="" />
+        <!-- <img class="image" src="https://i.imgur.com/xPuN8BH.jpg" alt="" /> -->
+
+        <img class="image" src="https://i.imgur.com/WQfD7tT.jpg" alt="" />
       </div>
       <div class="right">
-        <h2>龍洞浮潛體驗</h2>
+        <h2>本月主打：龍洞秘境浮潛體驗</h2>
         <p>
-          {{ currCoupon.title }}，現在報名即可享{{
-            currCoupon.percent / 10
-          }}折，立馬輸入{{ currCoupon.code }}領取優惠！
+          每位教練帶 5~7
+          位學員的小團制安排，確保活動品質不打折，不會游泳、沒有經驗也可以！隱藏在龍洞灣內的浮潛秘境，讓你和大海的第一次接觸零負擔
         </p>
         <div class="info">
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-sunrise-1"></i>
+            </div>
+            <p>暑假親子出遊首選，大人小孩都開心</p>
           </div>
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-camera"></i>
+            </div>
+            <p>免費贈送活動側拍</p>
           </div>
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-date"></i>
+            </div>
+            <p>每日出團，可彈性安排包團</p>
           </div>
         </div>
+        <p>
+          現在報名即可享{{ currCoupon.percent / 10 }}折優惠，輸入{{
+            currCoupon.code
+          }}取得折扣價！
+        </p>
         <div class="button">
           <el-button type="success" plain @click="doCopy">
             <h4>點我領取優惠</h4>
           </el-button>
-          <el-button type="success">
-            <h4>立即報名</h4>
-          </el-button>
+          <router-link to="/product/-MYiT0lf4ZlryXj6uGLM">
+            <el-button type="success">
+              <h4>立即報名</h4>
+            </el-button>
+          </router-link>
         </div>
       </div>
     </div>
     <div class="part reverse">
       <div class="left">
-        <img class="image" src="https://i.imgur.com/ROCTxjU.jpg" alt="" />
+        <img class="image" src="https://i.imgur.com/mIUfJva.jpg" alt="" />
       </div>
       <div class="right">
-        <h2>龍洞浮潛體驗</h2>
+        <h2>全新推出：獨木舟日出早餐饗宴</h2>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, eum?
+          龍洞灣岸弧形如蛟龍盤據，巨石臨海矗立，氣勢如虹。清澈的龍洞灣海域內更有最古老的岩石及海崖峭壁，晨光熹微之時划行獨木舟緩緩出發，日出海景與四周奇岩相映成趣，來一份早餐，忘卻生活煩憂與時間流轉
         </p>
         <div class="info">
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-sunrise-1"></i>
+            </div>
+            <p>東北角絕美的日出</p>
           </div>
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-camera"></i>
+            </div>
+            <p>早起鳥兒有早餐，免費贈送自選野餐籃</p>
           </div>
           <div class="detail">
-            <div class="icon"></div>
-            <p>Lorem, ipsum.</p>
+            <div class="icon">
+              <i class="el-icon-date"></i>
+            </div>
+            <p>限定出團，欲報從速！</p>
           </div>
         </div>
+        <p>
+          現在報名即可享{{ currCoupon.percent / 10 }}折優惠，輸入{{
+            currCoupon.code
+          }}取得折扣價！
+        </p>
         <div class="button">
-          <el-button type="success" plain>
-            <h4>更多體驗</h4>
+          <el-button type="success" plain @click="doCopy">
+            <h4>點我領取優惠</h4>
           </el-button>
-          <el-button type="success">
-            <h4>立即報名</h4>
-          </el-button>
+          <router-link to="/product/-MZhd0J1hOoo3gshsehc">
+            <el-button type="success">
+              <h4>立即報名</h4>
+            </el-button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -111,6 +138,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
 }
 .left::after {
   content: "";
@@ -133,21 +161,31 @@ export default {
   margin-bottom: 22px;
 }
 .right > p {
-  margin-bottom: 48px;
+  margin-bottom: 35px;
+  line-height: 30px;
 }
 
 .detail {
   display: flex;
   align-items: center;
   margin-bottom: 23px;
+  letter-spacing: 1px;
 }
 .detail .icon {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  background: #c4c4c4;
   margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.detail .icon i {
+  width: 100%;
+  color: #00c9c8;
+  font-size: 24px;
+}
+
 .detail:not(:last-child) {
   margin-bottom: 10px;
 }
@@ -155,6 +193,12 @@ export default {
 .button {
   margin-top: 20px;
 }
+
+.el-button {
+  margin-right: 10px;
+  letter-spacing: 1px;
+}
+
 /* md */
 @media only screen and (min-width: 992px) {
   .course-section {

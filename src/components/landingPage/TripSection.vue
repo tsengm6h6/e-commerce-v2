@@ -1,12 +1,10 @@
 <template>
   <section class="trip-section">
     <div class="descript">
-      <h1>準備好了，我們一起去冒險</h1>
+      <h1>潛旅，旅行到繽紛的海底</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-        dolore, sit perspiciatis eum aliquid eligendi natus, eos incidunt,
-        officiis laudantium ex! Voluptas explicabo dignissimos ab sit corrupti
-        incidunt, aperiam aspernatur!
+        每年不定期釋出的潛旅行程，是 DIVE IN
+        最搶手的活動，由專業教練群配合當地導潛，帶領學員一起在國內外各潛點進行水下導覽。參與潛旅必須取得水肺初階潛水員證照（OW），世界很大、海底遼闊，只要你準備好了，隨時可以跟著我們出發！
       </p>
     </div>
     <el-row :gutter="20" class="trip-card">
@@ -75,6 +73,7 @@ export default {
 
 .trip-section .descript h1 {
   margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 .trip-section .descript p {
@@ -113,6 +112,7 @@ export default {
 
 .card-content .product-title {
   margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 /* sm */
@@ -121,6 +121,7 @@ export default {
     padding: 80px;
   }
   .trip-section .descript {
+    margin: 0 0 50px;
     padding: 0 80px;
   }
 

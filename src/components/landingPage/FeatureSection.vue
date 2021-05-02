@@ -1,10 +1,10 @@
 <template>
   <section class="feature-section">
     <div class="descript">
-      <h1>Dive in ocean | Dive in Life</h1>
+      <h1>DIVE IN ocean <span>|</span> DIVE IN Life</h1>
       <p>
-        Dive
-        In由一群冒險愛好者組成，以海洋為主的戶外活動起家，為提供專業的知識及更多樣的課程，在東北角龍洞成立潛水中心，不僅提供專業潛水課程，更要帶各位夥伴一起上山下海，一起加入冒險的行列！
+        DIVE IN
+        由一群冒險愛好者組成，以海洋為主的戶外活動起家，為提供專業的知識及更多樣的活動，在東北角成立潛水中心，不僅提供專業潛水課程，更要帶各位夥伴一起上山下海，一起加入冒險的行列！
       </p>
     </div>
     <el-row class="feature-card">
@@ -18,6 +18,9 @@
         :key="index"
       >
         <img :src="feature.image" alt="" />
+        <h3 class="title">
+          {{ feature.title }}
+        </h3>
         <div class="info">
           {{ feature.info }}
         </div>
@@ -34,18 +37,21 @@ export default {
       featureList: [
         {
           image: "https://i.imgur.com/1ex8OSw.png",
+          title: "專業、安全為優先",
           info:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+            "為 PADI 認證五星潛水中心，小班制的專業教學及活動安排，活動期間遵守教練指示，都能放膽玩、安心玩",
         },
         {
           image: "https://i.imgur.com/dTCWG3a.png",
+          title: "夥伴同行不孤單",
           info:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+            "創造學員社群，只要參與過 DIVE IN 的課程都可以加入，不論是尋找潛伴或是揪團冒險，不怕沒有伴、只怕你不來",
         },
         {
           image: "https://i.imgur.com/nlAq9In.png",
+          title: "精采生活零設限",
           info:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatisullam ducimus ipsum ratione molestiae eos, reiciendis",
+            "不定期推出國內外潛水旅遊或探險新企劃，哪裡好玩我們就去哪裡，拋開壓力與煩惱，玩樂生活自己創造",
         },
       ],
     };
@@ -74,10 +80,15 @@ export default {
   margin-bottom: 20px;
 }
 
+.feature-section .descript span {
+  font-weight: 400;
+  margin: 0 10px;
+}
+
 .feature-section .descript p {
   font-weight: 400;
   letter-spacing: 1px;
-  line-height: 26px;
+  line-height: 30px;
 }
 
 .card {
@@ -91,12 +102,19 @@ export default {
 .card img {
   width: 120px;
   height: 120px;
-  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin: 25px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .card .info {
   width: 80%;
   text-align: center;
+  letter-spacing: 1px;
+  line-height: 30px;
 }
 
 /* sm */

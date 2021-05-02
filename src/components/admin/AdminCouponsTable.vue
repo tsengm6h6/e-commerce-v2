@@ -231,7 +231,7 @@ export default {
         const activeCoupon = this.couponsList.filter(
           (coupon) => coupon.is_enabled === 1
         )[0];
-        this.$state.commit("setCurrCoupon", activeCoupon);
+        this.$store.commit("setCurrCoupon", activeCoupon);
         this.isLoading = false;
       } catch (error) {
         console.log(error);

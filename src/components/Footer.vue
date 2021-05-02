@@ -12,9 +12,17 @@
         </div>
         <div class="right">
           <div class="links">
-            <a href="" class="link">所有活動</a>
-            <a href="" class="link">常見問答</a>
-            <a href="" class="link">聯絡我們</a>
+            <router-link to="/products" v-scroll-to="'#navbar'"
+              ><el-button type="text" class="link"
+                >所有活動</el-button
+              ></router-link
+            >
+            <router-link to="/question" v-scroll-to="'#navbar'">
+              <el-button type="text" class="link">常見問答</el-button>
+            </router-link>
+            <router-link to="/policies" v-scroll-to="'#navbar'">
+              <el-button type="text" class="link"> 政策與條款 </el-button>
+            </router-link>
           </div>
           <div class="action">
             <div class="icons">
@@ -23,7 +31,9 @@
               <img src="https://i.imgur.com/Fbg65MS.png" alt="" />
               <img src="https://i.imgur.com/YIy9TrF.png" alt="" />
             </div>
-            <el-button type="danger">立即報名</el-button>
+            <router-link to="/products" v-scroll-to="'#navbar'">
+              <el-button type="danger">立即報名</el-button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -32,6 +42,8 @@
       <span>&#169;</span
       >本網站為作業練習，非商業用途｜部分圖片版權所有，轉載必究
     </div>
+    <img src="https://i.imgur.com/6DYXwRJ.png" alt="" class="coral-bg" />
+    <el-button class="back" v-scroll-to="'#navbar'">Top</el-button>
   </footer>
 </template>
 
@@ -48,6 +60,17 @@ footer {
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0.5)
   );
+  position: relative;
+}
+
+.coral-bg {
+  width: 70%;
+  position: absolute;
+  bottom: 0;
+  right: -15px;
+  z-index: -2;
+  opacity: 0.5;
+  object-fit: cover;
 }
 
 .company-info {
@@ -111,8 +134,21 @@ footer {
 .copyright {
   text-align: start;
   font-size: 12px;
-  padding: 5px;
+  padding: 5px 0 5px 30px;
 }
+
+.back {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+  color: #44607a;
+}
+
 /* sm */
 @media only screen and (min-width: 768px) {
   .company-info {
@@ -136,11 +172,18 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
   }
 
-  .link {
-    margin: 0 50px 10px;
+  .el-button--text {
+    color: #242323;
+    font-family: "Work Sans", "Noto Sans TC", sans-serif;
+    font-weight: 400;
+    padding: 6px 30px;
+  }
+
+  .el-button--text:hover {
+    color: #44607a;
   }
 
   .icons {
