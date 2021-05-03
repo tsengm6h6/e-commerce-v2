@@ -1,10 +1,11 @@
 <template>
   <section class="feature-section">
     <div class="descript">
-      <h1>DIVE IN ocean <span>|</span> DIVE IN Life</h1>
+      <h1>DIVE IN Life</h1>
       <p>
         DIVE IN
-        由一群冒險愛好者組成，以海洋為主的戶外活動起家，為提供專業的知識及更多樣的活動，在東北角成立潛水中心，不僅提供專業潛水課程，更要帶各位夥伴一起上山下海，一起加入冒險的行列！
+        由一群冒險愛好者組成，以海洋為主的戶外活動起家，為提供專業的知識及更多樣的活動，在東北角成立潛水中心，不僅提供專業潛水課程，更要帶各位夥伴一起上山下海，DIVE
+        IN ocean DIVE IN life！
       </p>
     </div>
     <el-row class="feature-card">

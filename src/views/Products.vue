@@ -128,7 +128,7 @@ export default {
     },
     async doCopy() {
       try {
-        await this.$copyText(this.currCoupon.code);
+        await this.$copyText("summervibe");
         this.$message.success("成功複製優惠碼！");
       } catch (err) {
         this.$message.danger("無法複製優惠碼，請稍後再試");

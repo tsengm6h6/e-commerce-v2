@@ -2,8 +2,6 @@
   <section class="course-section">
     <div class="part">
       <div class="left">
-        <!-- <img class="image" src="https://i.imgur.com/xPuN8BH.jpg" alt="" /> -->
-
         <img class="image" src="https://i.imgur.com/WQfD7tT.jpg" alt="" />
       </div>
       <div class="right">
@@ -32,11 +30,7 @@
             <p>每日出團，可彈性安排包團</p>
           </div>
         </div>
-        <p>
-          現在報名即可享{{ currCoupon.percent / 10 }}折優惠，輸入{{
-            currCoupon.code
-          }}取得折扣價！
-        </p>
+        <p>現在報名即可享 8 折優惠，輸入 summervibe 取得折扣價！</p>
         <div class="button">
           <el-button type="success" plain @click="doCopy">
             <h4>領取優惠</h4>
@@ -78,11 +72,7 @@
             <p>限定出團，欲報從速！</p>
           </div>
         </div>
-        <p>
-          現在報名即可享{{ currCoupon.percent / 10 }}折優惠，輸入{{
-            currCoupon.code
-          }}取得折扣價！
-        </p>
+        <p>現在報名即可享 8 折優惠，輸入 summervibe 取得折扣價！</p>
         <div class="button">
           <el-button type="success" plain @click="doCopy">
             <h4>領取優惠</h4>
@@ -99,16 +89,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "CourseSection",
-  computed: {
-    ...mapState(["currCoupon"]),
-  },
   methods: {
     async doCopy() {
       try {
-        await this.$copyText(this.currCoupon.code);
+        await this.$copyText("summervibe");
         this.$message.success("成功複製優惠碼！");
       } catch (err) {
         this.$message.danger("無法複製優惠碼，請稍後再試");

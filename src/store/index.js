@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authorizationAPI from '../apis/authorization'
 import customerAPI from '../apis/customer'
-import adminAPI from '../apis/admin'
 import { Toast } from '../utils/helper';
 
 Vue.use(Vuex)
@@ -17,8 +16,7 @@ export default new Vuex.Store({
       total: 0,
       final_total: 0
     },
-    category: '全部',
-    currCoupon: {}
+    category: '全部'
   },
   getters: {
     favoriteList(state) {
@@ -73,10 +71,6 @@ export default new Vuex.Store({
     setCartInfo(state, cartInfo) {
       console.log('setCartInfo', cartInfo)
       state.cartInfo = { ...cartInfo }
-    },
-    setCurrCoupon(state, coupon) {
-      console.log('setCurrCoupon', coupon.title)
-      state.currCoupon = { ...coupon }
     }
   },
   actions: {
@@ -170,29 +164,7 @@ export default new Vuex.Store({
         })
         commit('setLoading', false)
       }
-    },
-
-    // 取得優惠券
-    async fetchCouponsList({ commit }, page) {
-      try {
-        commit('setLoading', true)
-        const response = await adminAPI.getCoupons(page);
-        console.log('store', response);
-        if (response.data.success !== true) {
-          throw new Error()
-        }
-        const activeCoupon = response.data.coupons.filter(coupon => coupon.is_enabled === 1)[0] // 只取一個
-        commit('setCurrCoupon', activeCoupon)
-        commit('setLoading', false)
-      } catch (error) {
-        console.log(error)
-        commit('setLoading', false)
-        return Toast.fire({
-          icon: 'error',
-          title: '無法取得資料，請稍後再試'
-        })
-      }
-    },
+    }
   },
   modules: {
   }

@@ -1,10 +1,6 @@
 <template>
   <!-- Cart Dialog -->
-  <el-dialog
-    :visible.sync="dialogVisible"
-    width="75%"
-    :before-close="handleClose"
-  >
+  <el-dialog :visible.sync="dialogVisible" width="75%">
     <el-row>
       <el-col :xs="24" :md="12">
         <img :src="product.image" alt="" class="dialog-image" />
@@ -106,13 +102,13 @@ export default {
         time: "",
       };
     },
-    handleClose(done) {
-      this.$confirm("確定取消選購嗎?")
-        .then(() => {
-          done();
-        })
-        .catch(() => {});
-    },
+    // handleClose(done) {
+    //   this.$confirm("確定取消選購嗎?")
+    //     .then(() => {
+    //       done();
+    //     })
+    //     .catch(() => {});
+    // },
   },
 };
 </script>

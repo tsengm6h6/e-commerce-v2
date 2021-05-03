@@ -172,7 +172,7 @@ export default {
       } catch (error) {
         console.log(error);
         this.isLoading = false;
-        this.$message.error("無法取得資料，請稍後再試");
+        this.$message.error("無法取得產品資料，請稍後再試");
       }
     },
     async confirmDelete(productId) {

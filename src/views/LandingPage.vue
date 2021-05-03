@@ -39,25 +39,26 @@ export default {
 
 <style scoped>
 .background {
-  width: 100%;
-  height: 120vh;
+  width: 120%;
+  height: 60vh;
   position: relative;
   background-image: url("https://i.imgur.com/zOPciZH.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: 60%;
 }
 
 .display-wrapper {
   position: absolute;
-  top: 30%;
-  left: 15%;
+  top: 41%;
+  left: 6%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .display {
-  font-size: 56px;
+  font-size: 30px;
   font-weight: 600;
   color: #fcfcfc;
   text-transform: uppercase;
@@ -65,9 +66,43 @@ export default {
 }
 
 .el-button {
-  padding: 12px 40px;
+  padding: 10px 20px;
   margin: 0 10px 10px 0;
+  font-size: 16px;
   letter-spacing: 1px;
   font-weight: 600;
+}
+
+@media only screen and (min-width: 500px) {
+  .background {
+    width: 100%;
+    height: 80vh;
+  }
+
+  .display-wrapper {
+    top: 35%;
+    left: 10%;
+  }
+}
+
+/* 大螢幕 */
+@media only screen and (min-width: 768px) {
+  .background {
+    height: 120vh;
+  }
+
+  .display-wrapper {
+    top: 30%;
+    left: 15%;
+  }
+
+  .display {
+    font-size: 56px;
+  }
+
+  .el-button {
+    padding: 12px 40px;
+    font-size: 20px;
+  }
 }
 </style>

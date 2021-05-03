@@ -25,7 +25,7 @@ export default {
     ...mapState(["isLogin"]),
   },
   methods: {
-    ...mapActions(["fetchProducts", "fetchCartProducts", "fetchCouponsList"]),
+    ...mapActions(["fetchProducts", "fetchCartProducts"]),
   },
   mounted() {
     this.fetchProducts();
@@ -33,7 +33,6 @@ export default {
     const { isPost = null } = this.getLocalStorage();
     console.log("App.vue 購物車isPost");
     if (isPost) this.$message.warning("上次購物未完成，請盡快完成訂單");
-    this.fetchCouponsList(1);
   },
 };
 </script>
@@ -45,6 +44,7 @@ body {
   font-family: "Work Sans", "Noto Sans TC", sans-serif;
   color: #242323;
   letter-spacing: 1px;
+  overflow-x: hidden;
 }
 
 * {
