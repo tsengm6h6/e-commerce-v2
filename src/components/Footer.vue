@@ -43,7 +43,7 @@
       >本網站為作業練習，非商業用途｜部分圖片版權所有，轉載必究
     </div>
     <img src="https://i.imgur.com/6DYXwRJ.png" alt="" class="coral-bg" />
-    <el-button class="back" v-scroll-to="'#navbar'">Top</el-button>
+    <a class="back" v-scroll-to="'#navbar'">Top</a>
   </footer>
 </template>
 
@@ -64,7 +64,7 @@ footer {
 }
 
 .coral-bg {
-  width: 70%;
+  width: 110%;
   position: absolute;
   bottom: 0;
   right: -15px;
@@ -144,9 +144,20 @@ footer {
   width: 50px;
   height: 50px;
   text-align: center;
+  line-height: 50px;
   padding: 0;
-  border-radius: 50%;
-  color: #44607a;
+  color: #242323;
+  font-weight: 500;
+  background-image: url("https://i.imgur.com/vwY9eok.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.back:hover {
+  opacity: 1;
 }
 
 /* sm */
@@ -194,12 +205,20 @@ footer {
     text-align: center;
     padding: 5px;
   }
+
+  .coral-bg {
+    width: 80%;
+  }
 }
 
 /* md */
 @media only screen and (min-width: 992px) {
   .company-info {
     padding: 30px 120px;
+  }
+
+  .coral-bg {
+    width: 70%;
   }
 }
 </style>

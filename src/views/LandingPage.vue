@@ -42,7 +42,7 @@ export default {
   width: 100%;
   height: 120vh;
   position: relative;
-  background-image: url("https://i.imgur.com/SDKxaOF.png");
+  background-image: url("https://i.imgur.com/zOPciZH.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

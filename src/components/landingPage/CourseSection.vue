@@ -39,7 +39,7 @@
         </p>
         <div class="button">
           <el-button type="success" plain @click="doCopy">
-            <h4>點我領取優惠</h4>
+            <h4>領取優惠</h4>
           </el-button>
           <router-link to="/product/-MYiT0lf4ZlryXj6uGLM">
             <el-button type="success">
@@ -85,9 +85,9 @@
         </p>
         <div class="button">
           <el-button type="success" plain @click="doCopy">
-            <h4>點我領取優惠</h4>
+            <h4>領取優惠</h4>
           </el-button>
-          <router-link to="/product/-MZhd0J1hOoo3gshsehc">
+          <router-link to="/product/-MZi5l3OYnpErDOqCnMg">
             <el-button type="success">
               <h4>立即報名</h4>
             </el-button>
@@ -195,7 +195,7 @@ export default {
 }
 
 .el-button {
-  margin-right: 10px;
+  margin: 0 10px 10px 0;
   letter-spacing: 1px;
 }
 

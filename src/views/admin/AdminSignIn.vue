@@ -33,7 +33,6 @@
 
 <script>
 import authorizationAPI from "../../apis/authorization";
-import { Toast } from "../../utils/helper";
 
 export default {
   name: "signin",
@@ -74,10 +73,7 @@ export default {
           // 通過驗證才送出
           this.handleSubmit();
         } else {
-          Toast.fire({
-            icon: "warning",
-            title: "請再次確認資料內容",
-          });
+          this.$message.error("請再次確認資料內容");
           return false;
         }
       });

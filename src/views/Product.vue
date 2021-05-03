@@ -1,62 +1,64 @@
 <template>
   <div class="product-section">
-    <loading :active.sync="isLoading"></loading>
-    <div class="title-wrapper">
-      <h1>{{ product.title }}</h1>
-      <p>{{ product.content }}</p>
-    </div>
+    <Loading v-if="isLoading" />
+    <template v-else>
+      <div class="title-wrapper">
+        <h1>{{ product.title }}</h1>
+        <p>{{ product.content }}</p>
+      </div>
 
-    <!-- 大圖 -->
-    <el-image :src="product.image" fit="cover">
-      <img
-        slot="error"
-        class="image-slot"
-        src="https://i.imgur.com/m4YOpWy.png"
-      />
-    </el-image>
+      <!-- 大圖 -->
+      <el-image :src="product.image" fit="cover">
+        <img
+          slot="error"
+          class="image-slot"
+          src="https://i.imgur.com/m4YOpWy.png"
+        />
+      </el-image>
 
-    <div class="info-wrapper">
-      <!-- Info -->
-      <el-row>
-        <!-- 商品資訊、簡介 -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="14">
-          <div
-            class="info"
-            v-for="(descript, index) in product.description"
-            :key="index"
-          >
-            <h3>{{ descript.title }}</h3>
-            <ul>
-              <li v-for="(info, index) in descript.infos" :key="index">
-                {{ info }}
-              </li>
-            </ul>
-          </div>
-        </el-col>
-
-        <el-col :xs="{ span: 22, offset: 1 }" :sm="12" :md="12" :lg="10">
-          <div class="price-wrapper">
-            <div class="price-tag-wrapper">
-              <p>
-                <span class="price-tag">${{ product.price }}</span
-                >{{ product.unit }}
-              </p>
-              <del v-if="product.origin_price"
-                >${{ product.origin_price }}{{ product.unit }}</del
-              >
-            </div>
-            <hr />
-            <p>開放報名中</p>
-            <el-button type="danger" @click.prevent.stop="handleOpenDialog"
-              >立即報名</el-button
+      <div class="info-wrapper">
+        <!-- Info -->
+        <el-row>
+          <!-- 商品資訊、簡介 -->
+          <el-col :xs="24" :sm="12" :md="12" :lg="14">
+            <div
+              class="info"
+              v-for="(descript, index) in product.description"
+              :key="index"
             >
-            <p>三人團報、平日班，享有每人$500折扣優惠，最多可折$1000每人。</p>
-          </div>
-        </el-col>
+              <h3>{{ descript.title }}</h3>
+              <ul>
+                <li v-for="(info, index) in descript.infos" :key="index">
+                  {{ info }}
+                </li>
+              </ul>
+            </div>
+          </el-col>
 
-        <AddToCartDialog ref="dialog" :product="product" />
-      </el-row>
-    </div>
+          <el-col :xs="{ span: 22, offset: 1 }" :sm="12" :md="12" :lg="10">
+            <div class="price-wrapper">
+              <div class="price-tag-wrapper">
+                <p>
+                  <span class="price-tag">${{ product.price }}</span
+                  >{{ product.unit }}
+                </p>
+                <del v-if="product.origin_price"
+                  >${{ product.origin_price }}{{ product.unit }}</del
+                >
+              </div>
+              <hr />
+              <p>開放報名中</p>
+              <el-button type="danger" @click.prevent.stop="handleOpenDialog"
+                >立即報名</el-button
+              >
+              <p>三人團報、平日班，享有每人$500折扣優惠，最多可折$1000每人。</p>
+            </div>
+          </el-col>
+
+          <AddToCartDialog ref="dialog" :product="product" />
+        </el-row>
+      </div>
+    </template>
 
     <RelativeProduct ref="relative" />
   </div>
@@ -64,16 +66,17 @@
 
 <script>
 import customerAPI from "../apis/customer";
-import { Toast } from "../utils/helper";
 import cartMixin from "../utils/cartMixin";
 import AddToCartDialog from "../components/AddToCartDialog";
 import RelativeProduct from "../components/RelatvieProduct";
+import Loading from "../components/Loading";
 
 export default {
   name: "product",
   components: {
     AddToCartDialog,
     RelativeProduct,
+    Loading,
   },
   data() {
     return {
@@ -135,16 +138,14 @@ export default {
           ...response.data.product,
           description: desctiptionFormat,
         };
+        console.log(this.product);
+        this.isLoading = false;
         this.$refs.relative.category = this.product.category;
         this.$refs.relative.currId = this.product.id;
         console.log("product", this.product.category);
-        this.isLoading = false;
       } catch (error) {
         console.log(error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得頁面，請稍後再試",
-        });
+        this.$message.error("無法取得頁面，請稍後再試");
         this.isLoading = false;
       }
     },

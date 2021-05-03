@@ -238,7 +238,7 @@ export default {
         this.isLoading = false;
         return Toast.fire({
           icon: "error",
-          title: "無法取得資料，請稍後再試",
+          title: "無法取得優惠券資料，請稍後再試",
         });
       }
     },
@@ -332,7 +332,7 @@ export default {
         this.isDeleting = false;
         return Toast.fire({
           icon: "error",
-          title: "無法刪除產品，請稍後再試",
+          title: "無法刪除優惠券，請稍後再試",
         });
       }
     },

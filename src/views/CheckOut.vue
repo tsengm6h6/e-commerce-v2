@@ -20,16 +20,27 @@
           ref="cartForm"
           @after-form-submit="afterFormSubmit"
         />
-        <OrderTwo
+        <el-alert
+          v-if="active === 2 && !isLoading"
+          title="訂單尚未完成，請盡快完成付款，待款項確認後，將寄出預約確認信給您，報名才算成功呦！"
+          type="info"
+          show-icon
+        >
+        </el-alert>
+        <Order
           v-if="active === 2"
           ref="order"
           :currOrderId="currOrderId"
           :from-checkout="true"
           @after-pay-order="afterPayOrder"
         />
-        <el-container v-if="active === 3">
-          <p>訂單已完成，感謝您的預訂</p>
-        </el-container>
+        <el-alert
+          v-if="active === 3"
+          title="感謝您的預訂，報名確認信將於3日內寄出，期待與您相見：)"
+          type="success"
+          show-icon
+        >
+        </el-alert>
       </el-col>
     </el-row>
 
@@ -41,6 +52,7 @@
           @click="handleConfirmCart"
           type="primary"
           :loading="isLoading"
+          v-scroll-to="'#navbar'"
           >確認商品</el-button
         >
         <el-button
@@ -48,6 +60,7 @@
           type="primary"
           @click="handleSubmit"
           :loading="isLoading"
+          v-scroll-to="'#navbar'"
           >送出訂單</el-button
         >
         <el-button
@@ -55,11 +68,24 @@
           @click="handlePayOrder"
           type="primary"
           :loading="isLoading"
+          v-scroll-to="'#navbar'"
           >確認付款</el-button
         >
-        <el-button v-if="active === 3" @click="next" type="success" plain
-          >回首頁</el-button
-        >
+
+        <el-row v-if="active === 3" :gutter="10" type="flex" justify="end">
+          <el-col :xs="24">
+            <router-link to="/orders" v-scroll-to="'#navbar'">
+              <el-button @click="next" type="primary" plain
+                >查看訂單紀錄</el-button
+              >
+            </router-link>
+          </el-col>
+          <el-col :xs="24">
+            <router-link to="/" v-scroll-to="'#navbar'">
+              <el-button @click="next" type="primary">回首頁</el-button>
+            </router-link>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -80,6 +106,11 @@
   margin-top: 50px;
 }
 
+.el-alert {
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
 /* sm */
 @media only screen and (min-width: 768px) {
   .checkout-section {
@@ -97,7 +128,7 @@
 
 <script>
 import { mapState } from "vuex";
-import OrderTwo from "../components/OrderTwo";
+import Order from "../components/Order";
 import CartInfo from "../components/cart/CartInfo";
 import CartForm from "../components/cart/CartForm";
 import cartMixin from "../utils/cartMixin";
@@ -105,7 +136,7 @@ import cartMixin from "../utils/cartMixin";
 export default {
   name: "CartList",
   components: {
-    OrderTwo,
+    Order,
     CartInfo,
     CartForm,
   },
@@ -119,18 +150,10 @@ export default {
   computed: {
     ...mapState(["isLoading"]),
   },
-  // computed: {
-  //   ...mapState({
-  //     cartList: (state) => state.cartInfo.cartList,
-  //     total: (state) => state.cartInfo.total,
-  //     final_total: (state) => state.cartInfo.final_total,
-  //     isLoading: (state) => state.isLoading,
-  //   }),
-  // },
   created() {
     const { isPost = null } = this.getLocalStorage();
     console.log("Checkout created", isPost);
-    // TODO: 如果已經Post過，直接進入Step 2
+    // 如果已經Post過，直接進入Step 2
     if (isPost) this.next();
   },
   methods: {
@@ -138,22 +161,17 @@ export default {
       this.active++;
       console.log("current step", this.active);
       if (this.active > 3) {
-        this.$router.push("/");
         this.active = 0;
       }
     },
     async handleConfirmCart() {
       try {
-        await this.$confirm(
-          "請再次確認商品數量及內容，下一步後將無法更改",
-          "Warning",
-          {
-            confirmButtonText: "確認",
-            cancelButtonText: "取消",
-            type: "warning",
-            center: true,
-          }
-        );
+        await this.$confirm("請再次確認商品，下一步後將無法更改", "Warning", {
+          confirmButtonText: "確認",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true,
+        });
         await this.$refs.cartInfo.postLocalCartListToCart();
         console.log("商品已全數加入API，執行下一步");
         this.next();

@@ -1,19 +1,16 @@
 <template>
   <div class="container">
-    <!-- <PufferFish /> -->
-    <Octopus />
-    <p>404 找不到網頁</p>
+    <PufferFish />
+    <p>網頁載入中</p>
   </div>
 </template>
 
 <script>
-// import PufferFish from "../components/animation/PufferFish";
-import Octopus from "../components/animation/Octopus";
+import PufferFish from "../components/animation/PufferFish";
 export default {
-  name: "notFound",
+  name: "Loading",
   components: {
-    // PufferFish,
-    Octopus,
+    PufferFish,
   },
 };
 </script>
@@ -21,7 +18,7 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +31,6 @@ export default {
 }
 
 p {
-  /* margin-top: 20px; */
   font-weight: 500;
   letter-spacing: 2px;
   color: #44607a;

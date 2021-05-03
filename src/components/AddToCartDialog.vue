@@ -12,7 +12,7 @@
       <el-col :xs="24" :md="12" class="dialog-info">
         <h1>{{ product.title }}</h1>
         <p>NT$ {{ product.price }}</p>
-        <span class="info-link">
+        <span class="info-link" @click="dialogVisible = false">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
             更多資訊
           </router-link>
@@ -46,9 +46,12 @@
             選購 {{ num }} {{ product.unit }}
           </el-option>
         </el-select>
-        <el-button type="primary" @click="handleAddToCart"
-          >加入購物車</el-button
-        >
+        <div class="btn-wrapper">
+          <el-button type="primary" @click="handleAddToCart"
+            >加入購物車</el-button
+          >
+          <el-button type="danger" @click="handleBuyNow">立即購買</el-button>
+        </div>
       </el-col>
     </el-row>
   </el-dialog>
@@ -92,6 +95,10 @@ export default {
       this.dialogVisible = false;
       this.resetDialogForm();
     },
+    handleBuyNow() {
+      this.handleAddToCart();
+      this.$router.push("/checkout");
+    },
     resetDialogForm() {
       this.selectedNum = "";
       this.form = {
@@ -111,9 +118,6 @@ export default {
 </script>
 
 <style scoped>
-/* Dialog */
-
-/* TODO:改不到 */
 .el-dialog {
   width: 80%;
 }
@@ -135,6 +139,7 @@ export default {
 }
 
 .dialog-info > h1 {
+  font-size: 26px;
   margin-top: 20px;
 }
 
@@ -158,6 +163,7 @@ export default {
 
 .dialog-info .el-button {
   width: 100%;
+  margin: 0 0 10px;
 }
 
 /* md */
@@ -168,11 +174,22 @@ export default {
 
   .dialog-info > h1 {
     margin-top: 0;
+    font-size: 32px;
     letter-spacing: 1px;
   }
 
   .dialog-image {
-    height: 365px;
+    height: 376px;
+  }
+
+  .btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+  }
+
+  .dialog-info .el-button {
+    width: 48%;
   }
 }
 </style>

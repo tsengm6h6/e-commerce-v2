@@ -79,7 +79,8 @@ export default {
       this.$refs.dialog.handleOpen(this.product);
     },
     toggleFavorite(productId) {
-      console.log("toggle");
+      console.log("card toggle");
+      this.product.isFavorite = !this.product.isFavorite;
       this.$emit("toggle-favorite", productId);
     },
   },

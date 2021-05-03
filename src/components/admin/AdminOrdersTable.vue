@@ -263,7 +263,7 @@ export default {
         this.isLoading = false;
         return Toast.fire({
           icon: "error",
-          title: "無法取得資料，請稍後再試",
+          title: "無法取得訂單資料，請稍後再試",
         });
       }
     },

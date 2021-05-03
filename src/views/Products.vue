@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Loading v-if="spinner" />
+  <div v-else>
     <div class="banner">
       <div class="banner-text">
         <h1 class="title">夏日限定</h1>
@@ -72,18 +73,29 @@
 import ProductCard from "../components/ProductCard";
 import AsideMenu from "../components/AsideMenu";
 import { mapGetters, mapState } from "vuex";
+import Loading from "../components/Loading";
 
 export default {
   name: "Products",
   components: {
     ProductCard,
     AsideMenu,
+    Loading,
   },
   data() {
     return {
       pagination: {},
+      spinner: false,
     };
   },
+  // watch: {
+  //   filterProductsList: {
+  //     deep: true,
+  //     handler(newVal) {
+  //       this.filterProductsList = newVal;
+  //     },
+  //   },
+  // },
   computed: {
     ...mapState(["productsList", "isLoading", "category", "currCoupon"]),
     ...mapGetters(["filterProductsList", "categoryList"]),
@@ -99,9 +111,9 @@ export default {
   },
   methods: {
     toggleFavorite(productId) {
+      console.log("emit toggle");
       // 提交mutation去改變商品狀態
       this.$store.commit("UpdateFavorite", productId);
-      console.log("emit toggle");
       // 更新localStorage的資料
       const favoriteIdList =
         JSON.parse(window.localStorage.getItem("favorite_products")) || [];
@@ -123,6 +135,13 @@ export default {
         console.log(err);
       }
     },
+  },
+  created() {
+    const vm = this;
+    vm.spinner = true;
+    setTimeout(function () {
+      vm.spinner = false;
+    }, 1000);
   },
 };
 </script>

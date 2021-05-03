@@ -22,12 +22,16 @@ export default new Vuex.Store({
   },
   getters: {
     favoriteList(state) {
+      console.log('products', state.productsList)
+      const favoriteList = state.productsList.filter(item => item.isFavorite)
       // 當productList裡的isFavorite改變時，同步更新收藏清單（有用到才會console.log）
-      return state.productsList.filter(item => item.isFavorite)
+      console.log('favorite list', favoriteList)
+      return favoriteList
     },
     filterProductsList(state) {
-      console.log('store category', state.category)
-      return state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
+      const filterProductsList = state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
+      console.log('filter list', filterProductsList)
+      return filterProductsList
     },
     categoryList(state) {
       console.log('cate change')
@@ -54,8 +58,10 @@ export default new Vuex.Store({
       state.category = category
     },
     UpdateFavorite(state, productId) {
-      state.productsList = state.productsList.map((item) => {
+      console.log('update favorite')
+      return state.productsList.map((item) => {
         if (item.id === productId) {
+          console.log('update item isFavorite', item.isFavorite)
           return {
             ...item,
             isFavorite: !item.isFavorite
@@ -114,7 +120,7 @@ export default new Vuex.Store({
       }
     },
 
-    // 取得購物車清單、總計價錢 TODO:可能可以刪掉
+    // 取得購物車清單、總計價錢
     async fetchCartProducts({ state, commit }) {
       try {
         commit('setLoading', true)

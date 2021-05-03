@@ -2,7 +2,7 @@
   <el-container direction="vertical">
     <div class="title">
       <h3>收藏清單</h3>
-      <p>不要再猶豫，趕快手刀報名！</p>
+      <p v-if="favoriteList.length">不要再猶豫，趕快手刀報名！</p>
     </div>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>
@@ -11,6 +11,10 @@
       <el-breadcrumb-item>收藏清單</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row :gutter="20">
+      <div class="wrapper" v-if="!favoriteList.length">
+        <Octopus />
+        <p>目前沒有收藏唷</p>
+      </div>
       <ProductCard
         v-for="product in favoriteList"
         :key="product.id"
@@ -20,6 +24,39 @@
     </el-row>
   </el-container>
 </template>
+
+<script>
+import ProductCard from "../components/ProductCard";
+import Octopus from "../components/animation/Octopus";
+import { mapGetters } from "vuex";
+
+export default {
+  name: "Favorites",
+  components: {
+    ProductCard,
+    Octopus,
+  },
+  computed: {
+    ...mapGetters(["favoriteList"]),
+  },
+  methods: {
+    toggleFavorite(productId) {
+      // 提交mutation去改變商品狀態
+      this.$store.commit("UpdateFavorite", productId);
+
+      const favoriteIdList =
+        JSON.parse(window.localStorage.getItem("favorite_products")) || [];
+
+      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId);
+      itemIndex === -1
+        ? favoriteIdList.push(productId)
+        : favoriteIdList.splice(itemIndex, 1);
+
+      localStorage.setItem("favorite_products", JSON.stringify(favoriteIdList));
+    },
+  },
+};
+</script>
 
 <style scoped>
 .el-container {
@@ -45,6 +82,27 @@
   margin-bottom: 10px;
 }
 
+.wrapper {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+p {
+  /* margin-top: 20px; */
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #44607a;
+}
+
 /* sm */
 @media only screen and (min-width: 768px) {
   .el-container {
@@ -59,34 +117,3 @@
   }
 }
 </style>
-
-<script>
-import ProductCard from "../components/ProductCard";
-import { mapGetters } from "vuex";
-
-export default {
-  name: "Favorites",
-  components: {
-    ProductCard,
-  },
-  computed: {
-    ...mapGetters(["favoriteList"]),
-  },
-  methods: {
-    toggleFavorite(productId) {
-      // 提交mutation去改變商品狀態
-      this.$store.commit("UpdateFavorite", productId);
-
-      const favoriteIdList =
-        JSON.parse(window.localStorage.getItem("favorite_products")) || [];
-
-      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId);
-      itemIndex === -1
-        ? favoriteIdList.push(productId)
-        : favoriteIdList.splice(itemIndex, 1);
-
-      localStorage.setItem("favorite_products", JSON.stringify(favoriteIdList));
-    },
-  },
-};
-</script>
