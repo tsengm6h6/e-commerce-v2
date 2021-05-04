@@ -20,13 +20,18 @@
           :md="{ span: 12, offset: 0 }"
           :lg="{ span: 24, offset: 3 }"
         >
-          <el-breadcrumb separator="/">
+          <div class="breadcrumb">
+            <Breadcrumb />
+            <span class="category">{{ category }}</span>
+          </div>
+
+          <!-- <el-breadcrumb separator="/">
             <el-breadcrumb-item>
               <a href="/">首頁</a>
             </el-breadcrumb-item>
             <el-breadcrumb-item>所有活動</el-breadcrumb-item>
             <el-breadcrumb-item>{{ category }}</el-breadcrumb-item>
-          </el-breadcrumb>
+          </el-breadcrumb> -->
         </el-col>
         <!-- < lg Selector -->
         <el-col
@@ -74,6 +79,7 @@ import ProductCard from "../components/ProductCard";
 import AsideMenu from "../components/AsideMenu";
 import { mapGetters, mapState } from "vuex";
 import Loading from "../components/Loading";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default {
   name: "Products",
@@ -81,6 +87,7 @@ export default {
     ProductCard,
     AsideMenu,
     Loading,
+    Breadcrumb,
   },
   data() {
     return {
@@ -88,14 +95,6 @@ export default {
       spinner: false,
     };
   },
-  // watch: {
-  //   filterProductsList: {
-  //     deep: true,
-  //     handler(newVal) {
-  //       this.filterProductsList = newVal;
-  //     },
-  //   },
-  // },
   computed: {
     ...mapState(["productsList", "isLoading", "category", "currCoupon"]),
     ...mapGetters(["filterProductsList", "categoryList"]),
@@ -194,8 +193,18 @@ h1 {
   margin: 0 0 20px;
 }
 
-.el-breadcrumb {
-  line-height: 40px;
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+}
+
+.category {
+  font-size: 14px;
+}
+
+.category::before {
+  content: "/";
+  margin: 5px;
 }
 
 /* sm */
@@ -235,7 +244,7 @@ h1 {
   }
 
   .bread-crumb-and-select {
-    margin: 30px 20px 20px;
+    margin: 30px 20px 10px;
   }
 }
 </style>

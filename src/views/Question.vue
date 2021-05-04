@@ -2,12 +2,13 @@
   <el-row type="flex" justify="center" class="question-section">
     <TurtleFlat />
     <el-col :xs="24" :md="20" :lg="16">
-      <el-breadcrumb separator="/">
+      <Breadcrumb />
+      <!-- <el-breadcrumb separator="/">
         <el-breadcrumb-item>
           <a href="/">首頁</a>
         </el-breadcrumb-item>
         <el-breadcrumb-item>常見問答</el-breadcrumb-item>
-      </el-breadcrumb>
+      </el-breadcrumb> -->
       <div class="question" v-for="(qa, index) in questionList" :key="index">
         <h3>{{ qa.question }}</h3>
         <p v-html="qa.answer"></p>
@@ -18,10 +19,13 @@
 
 <script>
 import TurtleFlat from "../components/animation/TurtleFlat";
+import Breadcrumb from "../components/Breadcrumb";
+
 export default {
   name: "Question",
   components: {
     TurtleFlat,
+    Breadcrumb,
   },
   data() {
     return {

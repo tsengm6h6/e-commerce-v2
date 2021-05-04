@@ -4,12 +4,13 @@
       <h3>收藏清單</h3>
       <p v-if="favoriteList.length">不要再猶豫，趕快手刀報名！</p>
     </div>
-    <el-breadcrumb separator="/">
+    <Breadcrumb class="breadcrumb" />
+    <!-- <el-breadcrumb separator="/">
       <el-breadcrumb-item>
         <a href="/">首頁</a>
       </el-breadcrumb-item>
       <el-breadcrumb-item>收藏清單</el-breadcrumb-item>
-    </el-breadcrumb>
+    </el-breadcrumb> -->
     <el-row :gutter="20">
       <div class="wrapper" v-if="!favoriteList.length">
         <Octopus />
@@ -29,12 +30,14 @@
 import ProductCard from "../components/ProductCard";
 import Octopus from "../components/animation/Octopus";
 import { mapGetters } from "vuex";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default {
   name: "Favorites",
   components: {
     ProductCard,
     Octopus,
+    Breadcrumb,
   },
   computed: {
     ...mapGetters(["favoriteList"]),
@@ -63,8 +66,8 @@ export default {
   padding: 30px;
 }
 
-.el-breadcrumb {
-  margin-left: 20px;
+.breadcrumb {
+  margin-left: 15px;
   margin-bottom: 20px;
 }
 

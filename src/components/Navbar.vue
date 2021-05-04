@@ -14,37 +14,6 @@
         <span class="burger"></span>
       </label>
 
-      <!-- <el-menu default-active="/" router>
-          <el-menu-item index="/">首頁</el-menu-item>
-          <el-menu-item index="/products">所有活動</el-menu-item>
-          <el-menu-item index="/question">常見問答</el-menu-item>
-          <el-menu-item index="/policies">退換貨政策</el-menu-item>
-          <el-menu-item index="/orders">我的訂單</el-menu-item>
-          <el-menu-item index="/favorites">
-            <el-tooltip
-              class="item"
-              effect="light"
-              content="收藏清單"
-              placement="bottom"
-            >
-              <img
-                class="img-icon"
-                src="https://i.imgur.com/jRFRLEQ.png"
-                alt=""
-              />
-            </el-tooltip>
-          </el-menu-item>
-          <el-menu-item @click="openDrawer">
-            <i class="el-icon-goods"
-              ><div v-if="cartLength" class="badge"></div
-            ></i>
-          </el-menu-item>
-          <el-menu-item v-if="isLogin" index="/admin/dashboard"
-            ><el-button size="small" type="info" plain
-              >管理員後台</el-button
-            ></el-menu-item
-          >
-        </el-menu> -->
       <el-collapse-transition>
         <div class="nav-menu" v-if="showMenu">
           <ul class="nav-list">
@@ -95,7 +64,7 @@
           </ul>
         </div>
       </el-collapse-transition>
-      <el-menu mode="horizontal" default-active="/" router>
+      <el-menu mode="horizontal" :default-active="$route.path" router>
         <el-menu-item index="/">首頁</el-menu-item>
         <el-menu-item index="/products">所有活動</el-menu-item>
         <el-menu-item index="/question">常見問答</el-menu-item>

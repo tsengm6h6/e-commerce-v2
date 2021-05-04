@@ -6,12 +6,13 @@
         <h3>訂單列表</h3>
         <p>如有任何問題，請洽專人客服</p>
       </div>
-      <el-breadcrumb separator="/">
+      <Breadcrumb class="breadcrumb" />
+      <!-- <el-breadcrumb separator="/">
         <el-breadcrumb-item>
           <a href="/">首頁</a>
         </el-breadcrumb-item>
         <el-breadcrumb-item>我的訂單</el-breadcrumb-item>
-      </el-breadcrumb>
+      </el-breadcrumb> -->
       <el-row>
         <el-col :span="24">
           <el-table stripe :data="orders" style="width: 100%">
@@ -90,6 +91,10 @@
   padding: 30px;
 }
 
+.breadcrumb {
+  margin-left: 10px;
+}
+
 .title {
   width: 100%;
   display: flex;
@@ -124,12 +129,14 @@ import Order from "../components/Order";
 import customerAPI from "../apis/customer";
 import mixin from "../utils/mixin";
 import Loading from "../components/Loading";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default {
   name: "orders",
   components: {
     Order,
     Loading,
+    Breadcrumb,
   },
   data() {
     return {

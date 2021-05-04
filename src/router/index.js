@@ -10,12 +10,25 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: LandingPage
+    component: LandingPage,
+    meta: {
+      breadcrumb: [{
+        name: '首頁'
+      }]
+    }
   },
   {
     path: '/products',
     name: 'products',
-    component: Products
+    component: Products,
+    meta: {
+      breadcrumb: [{
+        name: '首頁',
+        link: 'home'
+      }, {
+        name: '所有活動'
+      }]
+    }
   },
   {
     path: '/product/:id',
@@ -25,17 +38,41 @@ const routes = [
   {
     path: '/favorites',
     name: 'favorites',
-    component: () => import('../views/Favorites.vue')
+    component: () => import('../views/Favorites.vue'),
+    meta: {
+      breadcrumb: [{
+        name: '首頁',
+        link: 'home'
+      }, {
+        name: '收藏清單'
+      }]
+    }
   },
   {
     path: '/question',
     name: 'question',
-    component: () => import('../views/Question.vue')
+    component: () => import('../views/Question.vue'),
+    meta: {
+      breadcrumb: [{
+        name: '首頁',
+        link: 'home'
+      }, {
+        name: '常見問題'
+      }]
+    }
   },
   {
     path: '/policies',
     name: 'policies',
-    component: () => import('../views/Policies.vue')
+    component: () => import('../views/Policies.vue'),
+    meta: {
+      breadcrumb: [{
+        name: '首頁',
+        link: 'home'
+      }, {
+        name: '政策與條款'
+      }]
+    }
   },
   {
     path: '/checkout',
@@ -45,7 +82,15 @@ const routes = [
   {
     path: '/orders',
     name: 'orders',
-    component: () => import('../views/Orders.vue')
+    component: () => import('../views/Orders.vue'),
+    meta: {
+      breadcrumb: [{
+        name: '首頁',
+        link: 'home'
+      }, {
+        name: '我的訂單'
+      }]
+    }
   },
   {
     path: '/admin/signIn',

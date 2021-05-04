@@ -1,8 +1,7 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const apiPath = 'myvueable'
-const baseURL = `https://vue-course-api.hexschool.io/api/${apiPath}`
+const baseURL = `https://vue-course-api.hexschool.io/api/${VUE_APP_API_PATH}`
 
 export const authorizationApi = axios.create({
   baseURL: 'https://vue-course-api.hexschool.io'

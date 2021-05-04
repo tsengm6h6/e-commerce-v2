@@ -2,12 +2,13 @@
   <el-row type="flex" justify="center" class="question-section">
     <TurtleFlat />
     <el-col :xs="24" :md="20" :lg="16">
-      <el-breadcrumb separator="/">
+      <Breadcrumb />
+      <!-- <el-breadcrumb separator="/">
         <el-breadcrumb-item>
           <a href="/">首頁</a>
         </el-breadcrumb-item>
         <el-breadcrumb-item>政策與條款</el-breadcrumb-item>
-      </el-breadcrumb>
+      </el-breadcrumb> -->
       <h3>非證照課程規範 ( 體驗 / 導潛 )</h3>
       <div class="question" v-for="(policy, index) in Experience" :key="index">
         <h4>{{ policy.title }}</h4>
@@ -32,10 +33,13 @@
 
 <script>
 import TurtleFlat from "../components/animation/TurtleFlat";
+import Breadcrumb from "../components/Breadcrumb";
+
 export default {
   name: "Policies",
   components: {
     TurtleFlat,
+    Breadcrumb,
   },
   data() {
     return {
@@ -105,10 +109,6 @@ export default {
 .question-section {
   padding: 30px;
   position: relative;
-}
-
-.el-breadcrumb {
-  margin-bottom: 20px;
 }
 
 h3 {
