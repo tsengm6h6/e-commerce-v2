@@ -21,7 +21,7 @@
           <el-form-item label="或" prop="image">
             <el-upload
               ref="upload"
-              action="https://vue-course-api.hexschool.io/api/myvueable/admin/upload"
+              :action="uploadPath"
               :headers="imageHeader"
               :before-upload="beforeAvatarUpload"
               :on-success="handleUplaodSuccess"
@@ -223,6 +223,7 @@ export default {
           "$1"
         ),
       },
+      uploadPath: process.env.VUE_APP_UPLOAD_URL,
       rules: {
         title: [
           {
@@ -373,7 +374,6 @@ export default {
 
     // 上傳前確認格式、大小，並整理成formData
     beforeAvatarUpload(file) {
-      console.log(this.$refs.upload.input);
       if (!file) return;
       const isLt1M = file.size < 1 * 1024 * 1024;
       const isJPG = file.type === "image/jpeg";

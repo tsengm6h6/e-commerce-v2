@@ -228,10 +228,6 @@ export default {
         }
         this.couponsList = response.data.coupons;
         this.$emit("renderPaginator", response.data.pagination);
-        const activeCoupon = this.couponsList.filter(
-          (coupon) => coupon.is_enabled === 1
-        )[0];
-        this.$store.commit("setCurrCoupon", activeCoupon);
         this.isLoading = false;
       } catch (error) {
         console.log(error);
