@@ -3,12 +3,6 @@
     <TurtleFlat />
     <el-col :xs="24" :md="20" :lg="16">
       <Breadcrumb />
-      <!-- <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <a href="/">首頁</a>
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>常見問答</el-breadcrumb-item>
-      </el-breadcrumb> -->
       <div class="question" v-for="(qa, index) in questionList" :key="index">
         <h3>{{ qa.question }}</h3>
         <p v-html="qa.answer"></p>
@@ -75,6 +69,11 @@ export default {
 .question-section {
   padding: 30px;
   position: relative;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 .el-breadcrumb {

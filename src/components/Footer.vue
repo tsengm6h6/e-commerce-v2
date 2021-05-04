@@ -134,7 +134,7 @@ footer {
 .copyright {
   text-align: start;
   font-size: 12px;
-  padding: 5px 0 5px 30px;
+  padding: 5px 75px 5px 30px;
 }
 
 .back {

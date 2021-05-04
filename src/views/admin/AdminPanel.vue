@@ -2,7 +2,6 @@
   <el-container style="height: 90vh">
     <AdminSidebar @changeTable="changeTable" />
     <el-container direction="vertical" class="admin-section">
-      <!-- <AdminHeader /> -->
       <AdminProductsTable
         @renderPaginator="renderPaginator"
         ref="products"

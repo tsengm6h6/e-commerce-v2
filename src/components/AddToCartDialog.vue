@@ -102,13 +102,6 @@ export default {
         time: "",
       };
     },
-    // handleClose(done) {
-    //   this.$confirm("確定取消選購嗎?")
-    //     .then(() => {
-    //       done();
-    //     })
-    //     .catch(() => {});
-    // },
   },
 };
 </script>

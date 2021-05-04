@@ -1,7 +1,6 @@
 <template>
   <div class="cart-form">
     <!-- 訂單 -->
-
     <el-collapse class="collapse">
       <el-collapse-item title="購物車明細">
         <div class="collapse-table">
@@ -90,8 +89,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <!-- </el-col> -->
-    <!-- </el-row> -->
   </div>
 </template>
 
@@ -223,20 +220,6 @@ export default {
     }),
   },
   methods: {
-    // ...mapActions(["postToCart"]),
-    // async beforeAddCoupon() {
-    //   await Promise.all(
-    //     Array.from(this.cartList, async (item) => {
-    //       console.log("beforeAddCoupon", item);
-    //       const addData = {
-    //         product_id: item.product_id,
-    //         qty: item.qty,
-    //       };
-    //       console.log(addData);
-    //       await this.postToCart({ addData });
-    //     })
-    //   );
-    // },
     async addCoupon() {
       try {
         this.$store.commit("setLoading", true);
@@ -248,12 +231,10 @@ export default {
           throw new Error(response.data.message);
         }
         console.log(response);
-        // this.couponCode = ""; // 清空優惠券欄位
         this.isCoupon = true;
         await this.$store.dispatch("fetchCartProducts");
         this.updateLocalCartStatus("final_total", this.final_total);
         this.$message.success("購物明細已更新");
-        console.log("addCoupon dispatch fexthProducts");
         this.$store.commit("setLoading", false);
       } catch (error) {
         console.log(error);

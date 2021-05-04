@@ -24,14 +24,6 @@
             <Breadcrumb />
             <span class="category">{{ category }}</span>
           </div>
-
-          <!-- <el-breadcrumb separator="/">
-            <el-breadcrumb-item>
-              <a href="/">首頁</a>
-            </el-breadcrumb-item>
-            <el-breadcrumb-item>所有活動</el-breadcrumb-item>
-            <el-breadcrumb-item>{{ category }}</el-breadcrumb-item>
-          </el-breadcrumb> -->
         </el-col>
         <!-- < lg Selector -->
         <el-col

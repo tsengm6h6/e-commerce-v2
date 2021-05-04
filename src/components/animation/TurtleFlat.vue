@@ -175,19 +175,18 @@ export default {
   position: fixed;
   top: 60vh;
   left: -15%;
-  animation: turtleFlat 30s ease-in-out 3s infinite;
+  animation: turtleFlat 30s linear 3s infinite;
 }
 
 .pink-turtle {
   position: fixed;
   top: 60vh;
   right: -15%;
-  animation: turtlePink 30s ease-in-out 3s infinite;
+  animation: turtlePink 30s linear 3s infinite;
 }
 
 #left-hand {
   animation: leftHand 3s ease-out infinite alternate-reverse;
-  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
   transform-origin: center;
 }
 
@@ -319,65 +318,6 @@ export default {
   }
 }
 
-/* 偶數% 小動、奇數% 大動、6秒滑一次 */
-
-/* @keyframes mymove {
-  0% {
-    top: 60vh;
-    left: -15%;
-    transform: rotate(10deg);
-  }
-  10% {
-    top: 44vh;
-    left: -3%;
-    transform: rotate(0deg);
-  }
-  20% {
-    top: 40vh;
-    left: 5%;
-  }
-
-  30% {
-    top: 33vh;
-    left: 17%;
-    transform: rotate(24deg);
-  }
-
-  40% {
-    top: 29vh;
-    left: 25%;
-  }
-
-  50% {
-    top: 22vh;
-    left: 37%;
-  }
-
-  60% {
-    top: 18vh;
-    left: 45%;
-  }
-
-  70% {
-    top: 8vh;
-    left: 57%;
-  }
-  80% {
-    top: 4vh;
-    left: 65%;
-    transform: rotate(0deg);
-  }
-  90% {
-    top: -6vh;
-    left: 77%;
-    transform: rotate(-10deg);
-  }
-  100% {
-    top: -10vh;
-    left: 85%;
-  }
-} */
-
 @keyframes turtleFlat {
   0% {
     top: 60vh;
@@ -439,28 +379,26 @@ export default {
   0% {
     top: 80vh;
     right: -10%;
-    /* transform: rotate(10deg); */
-  }
-  10% {
-    top: 80vh;
-    right: 5%;
     transform: rotate(-20deg);
   }
+  10% {
+    top: 68vh;
+    right: 0%;
+  }
   20% {
-    top: 64vh;
+    top: 58vh;
     right: 10%;
-    transform: rotate(-10deg);
   }
 
   30% {
     top: 52vh;
     right: 15%;
+    transform: rotate(15deg);
   }
 
   40% {
-    top: 48vh;
+    top: 46vh;
     right: 20%;
-    /* transform: rotate(-10deg); */
   }
 
   50% {
@@ -471,26 +409,22 @@ export default {
   60% {
     top: 26vh;
     right: 30%;
-
     transform: rotate(0deg);
   }
 
   70% {
-    top: 28vh;
-    right: 34%;
-
+    top: 20vh;
+    right: 30%;
     transform: rotate(45deg);
   }
   80% {
-    top: 18vh;
-    right: 22%;
-    transform: rotate(58deg);
+    top: 16vh;
+    right: 25%;
+    transform: rotate(60deg);
   }
   90% {
-    top: 14vh;
-    right: 17%;
-
-    transform: rotate(60deg);
+    top: 10vh;
+    right: 15%;
   }
   100% {
     top: -5vh;

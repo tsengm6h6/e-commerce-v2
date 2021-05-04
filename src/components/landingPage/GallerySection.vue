@@ -53,7 +53,7 @@ export default {
 }
 
 h3 {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   color: #fcfcfc;
 }
 
@@ -82,6 +82,10 @@ h3 {
 @media only screen and (min-width: 768px) {
   .gallery {
     padding: 80px;
+  }
+
+  h3 {
+    margin-bottom: 50px;
   }
 }
 

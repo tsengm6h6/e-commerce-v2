@@ -46,7 +46,7 @@
       </el-table-column>
     </el-table>
 
-    <!-- 修改產品內容 對話方塊  TODO: 上傳圖片-->
+    <!-- 修改產品內容 對話方塊-->
     <el-dialog
       title="編輯 / 新增產品"
       :visible.sync="editDialogVisible"
@@ -56,7 +56,6 @@
       <!-- 表單 -->
       <el-form ref="editForm" :rules="rules" :model="editCoupon" status-icon>
         <el-row>
-          <!-- 文字區 -->
           <el-col :span="24">
             <el-form-item label="標題" prop="title">
               <el-input
@@ -133,17 +132,6 @@
         >
       </span>
     </el-dialog>
-
-    <!-- Pagination -->
-    <!-- <el-row type="flex" class="row-bg" justify="center">
-      <el-pagination
-        :page-count="pagination.total_pages"
-        :current-page.sync="pagination.current_page"
-        @current-change="handleCurrentChange"
-        layout="prev, pager, next"
-      >
-      </el-pagination>
-    </el-row> -->
   </el-container>
 </template>
 
@@ -293,7 +281,6 @@ export default {
         // 關閉對話方塊
         this.editDialogVisible = false;
         this.isLoading = false;
-        // this.$store.dispatch("fetchProducts");
       } catch (error) {
         console.log(error);
       }

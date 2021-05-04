@@ -200,12 +200,6 @@ export default {
 }
 
 /* Dialog */
-
-/* TODO:改不到 */
-.el-dialog {
-  width: 80%;
-}
-
 .dialog-image {
   width: 100%;
   height: 30vh;

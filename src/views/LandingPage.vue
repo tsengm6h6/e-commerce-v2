@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <section class="background">
       <div class="display-wrapper">
         <div class="display">跨出冒險的第一步 <br />Let's Dive In !</div>
@@ -38,6 +38,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  overflow: hidden;
+}
+
 .background {
   width: 120%;
   height: 60vh;

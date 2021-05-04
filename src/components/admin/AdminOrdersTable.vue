@@ -244,8 +244,6 @@ export default {
         }
         console.log("所有訂單", response.data);
         this.originOrder = response.data.orders;
-        // 暫時的（刪掉第一個資料不正確）
-        // this.originOrder.splice(0, 1);
         this.OrdersList = this.originOrder.map((item) => ({
           createdAt: this.dateFormat(item.create_at) || "",
           id: item.id || "",
@@ -307,7 +305,6 @@ export default {
           userAddress,
           userEmail,
         } = this.editOrder;
-        // TODO: 待處理 --> 有一筆沒id的訂單要刪除
         const originData = this.originOrder.find(
           (item) => item.id === this.editOrder.id
         );

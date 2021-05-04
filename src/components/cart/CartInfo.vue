@@ -10,7 +10,6 @@
           style="width: 100%"
         >
           <el-table-column min-width="80" align="center">
-            <!-- TODO: 圖片待處理 -->
             <template slot-scope="scope">
               <div class="block">
                 <el-avatar
@@ -132,17 +131,14 @@ export default {
     }),
   },
   methods: {
-    // ...mapActions(["postToCart"]),
     async postLocalCartListToCart() {
       this.$store.commit("setLoading", true);
       await Promise.all(
         Array.from(this.cartList, async (item) => {
-          console.log("postLocalToAPICart", item);
           const addData = {
             product_id: item.product_id,
             qty: item.qty,
           };
-          console.log(addData);
           await this.postToCart({ addData });
         })
       );
@@ -164,26 +160,6 @@ export default {
         this.$store.commit("setLoading", false);
       }
     },
-    // async addCoupon() {
-    //   try {
-    //     await this.beforeAddCoupon();
-    //     const addData = {
-    //       code: this.couponCode,
-    //     };
-    //     const response = await customerAPI.postCoupon({ data: addData });
-    //     if (response.data.success !== true) {
-    //       throw new Error(response.data.message);
-    //     }
-    //     console.log(response);
-    //     this.couponCode = ""; // 清空優惠券欄位
-    //     this.$store.dispatch("fetchCartProducts");
-    //     console.log("addCoupon dispatch fexthProducts");
-    //   } catch (error) {
-    //     console.log(error);
-    //     this.$message.error(`${error.message}，請重新輸入`);
-    //     this.couponCode = ""; // 清空優惠券欄位
-    //   }
-    // },
     getSummaries() {
       const sums = ["", "", "", "", "", "", "總價", this.total];
       return sums;

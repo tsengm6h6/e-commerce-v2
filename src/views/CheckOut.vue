@@ -11,7 +11,7 @@
       </el-col>
     </el-row>
 
-    <!-- main: 購物車 -> form -> 完成訂單 -->
+    <!-- panel: 購物車 -> form -> 完成訂單 -->
     <el-row type="flex" justify="center" class="main-section">
       <el-col :xs="24">
         <CartInfo ref="cartInfo" v-if="active === 0" />
@@ -97,7 +97,6 @@
 }
 
 .main-section {
-  /* min-height: 120vh; */
   margin-top: 30px;
 }
 

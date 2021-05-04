@@ -337,8 +337,6 @@ export default {
     },
     async submitEdit({ id, data }) {
       try {
-        console.log("submit edit");
-        // 將 editTarget 資料更新到後端 API（非同步）
         const response = await adminAPI.editProduct({
           id,
           data,

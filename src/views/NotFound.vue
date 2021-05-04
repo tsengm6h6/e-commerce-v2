@@ -1,18 +1,15 @@
 <template>
   <div class="container">
-    <!-- <PufferFish /> -->
     <Octopus />
     <p>404 找不到網頁</p>
   </div>
 </template>
 
 <script>
-// import PufferFish from "../components/animation/PufferFish";
 import Octopus from "../components/animation/Octopus";
 export default {
   name: "notFound",
   components: {
-    // PufferFish,
     Octopus,
   },
 };

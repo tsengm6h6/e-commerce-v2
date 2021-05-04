@@ -7,12 +7,6 @@
         <p>如有任何問題，請洽專人客服</p>
       </div>
       <Breadcrumb class="breadcrumb" />
-      <!-- <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <a href="/">首頁</a>
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>我的訂單</el-breadcrumb-item>
-      </el-breadcrumb> -->
       <el-row>
         <el-col :span="24">
           <el-table stripe :data="orders" style="width: 100%">
