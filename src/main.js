@@ -7,7 +7,6 @@ import 'element-ui/lib/theme-chalk/display.css';
 import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css' 原始CSS
 import Loading from 'vue-loading-overlay'
-// Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VueScrollTo from 'vue-scrollto'
 import VueClipboard from 'vue-clipboard2'
@@ -39,7 +38,6 @@ Vue.use(VueScrollTo)
 Vue.use(VueClipboard)
 
 Vue.use(ElementUI)
-// TODO: 處理繁體中文問題
 
 Vue.component('Loading', Loading)
 Vue.component('ValidationProvider', ValidationProvider)
