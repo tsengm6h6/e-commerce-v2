@@ -81,11 +81,11 @@ export default {
 }
 
 .display span.top {
-  animation: displayTop 0.5s ease-out;
+  animation: displayTop 0.8s ease-out 1s both;
 }
 
 .display span.bottom {
-  animation: displayBottom 0.5s cubic-bezier(0.21, 0.16, 0.59, 1.69);
+  animation: displayBottom 1s cubic-bezier(0.21, 0.16, 0.59, 1.69) 1s both;
 }
 
 .el-button {
@@ -97,18 +97,17 @@ export default {
 }
 
 .el-button.left {
-  animation: opacity 0.5s ease-in-out 0.5s both,
-    showUp 0.5s ease-in-out 0.5s both;
+  animation: opacity 0.5s ease-in-out 2s both, showUp 0.5s ease-in-out 2s both;
 }
 
 .el-button.right {
-  animation: opacity 0.5s ease-in-out 0.6s both,
-    showUp 0.5s ease-in-out 0.6s both;
+  animation: opacity 0.5s ease-in-out 2.1s both,
+    showUp 0.5s ease-in-out 2.1s both;
 }
 
 @keyframes displayTop {
   from {
-    transform: translateX(-100%);
+    transform: translateX(-150%);
   }
   to {
     transform: translateX(0%);
@@ -117,7 +116,7 @@ export default {
 
 @keyframes displayBottom {
   from {
-    transform: translateX(100%);
+    transform: translateX(250%);
   }
   to {
     transform: translateX(0%);
