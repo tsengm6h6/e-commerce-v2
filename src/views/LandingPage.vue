@@ -2,13 +2,18 @@
   <div class="container">
     <section class="background">
       <div class="display-wrapper">
-        <div class="display">跨出冒險的第一步 <br />Let's Dive In !</div>
+        <div class="display">
+          <span class="top">跨出冒險的第一步</span>
+          <span class="bottom">Let's Dive In !</span>
+        </div>
         <div class="button">
           <router-link to="#" v-scroll-to="'#feature'"
-            ><el-button type="danger" plain>了解更多</el-button></router-link
+            ><el-button class="left" type="danger" plain
+              >了解更多</el-button
+            ></router-link
           >
           <router-link to="#" v-scroll-to="'#course'">
-            <el-button type="danger">立即報名</el-button>
+            <el-button class="right" type="danger">立即報名</el-button>
           </router-link>
         </div>
       </div>
@@ -51,6 +56,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 60%;
+  animation: opacity 1.5s ease;
 }
 
 .display-wrapper {
@@ -70,12 +76,71 @@ export default {
   margin-bottom: 10px;
 }
 
+.display span {
+  display: block;
+}
+
+.display span.top {
+  animation: displayTop 0.5s ease-out;
+}
+
+.display span.bottom {
+  animation: displayBottom 0.5s cubic-bezier(0.21, 0.16, 0.59, 1.69);
+}
+
 .el-button {
   padding: 10px 20px;
   margin: 0 10px 10px 0;
   font-size: 16px;
   letter-spacing: 1px;
   font-weight: 600;
+}
+
+.el-button.left {
+  animation: opacity 0.5s ease-in-out 0.5s both,
+    showUp 0.5s ease-in-out 0.5s both;
+}
+
+.el-button.right {
+  animation: opacity 0.5s ease-in-out 0.6s both,
+    showUp 0.5s ease-in-out 0.6s both;
+}
+
+@keyframes displayTop {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes displayBottom {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes showUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
 }
 
 @media only screen and (min-width: 500px) {
