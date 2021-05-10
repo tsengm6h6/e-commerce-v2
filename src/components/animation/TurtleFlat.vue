@@ -170,19 +170,18 @@ export default {
   z-index: -2;
 }
 
-/* 動畫 5秒 後進場 */
 .flat-turtle {
   position: fixed;
   top: 60vh;
   left: -15%;
-  animation: turtleFlat 30s linear 3s infinite;
+  animation: turtleFlat 30s linear infinite;
 }
 
 .pink-turtle {
   position: fixed;
   top: 60vh;
   right: -15%;
-  animation: turtlePink 30s linear 3s infinite;
+  animation: turtlePink 30s linear infinite;
 }
 
 #left-hand {
@@ -407,18 +406,18 @@ export default {
   }
 
   60% {
-    top: 26vh;
+    top: 32vh;
     right: 30%;
     transform: rotate(0deg);
   }
 
   70% {
-    top: 20vh;
+    top: 26vh;
     right: 30%;
     transform: rotate(45deg);
   }
   80% {
-    top: 16vh;
+    top: 20vh;
     right: 25%;
     transform: rotate(60deg);
   }
