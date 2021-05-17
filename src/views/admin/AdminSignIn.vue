@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import authorizationAPI from "../../apis/authorization";
+import authorizationAPI from "@/apis/authorization.js";
 
 export default {
   name: "signin",
@@ -70,7 +70,6 @@ export default {
     validateForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // 通過驗證才送出
           this.handleSubmit();
         } else {
           this.$message.error("請再次確認資料內容");
@@ -90,13 +89,11 @@ export default {
           throw new Error(response.data.message);
         }
         const { token, expired } = response.data;
-        // 儲存cookie
         document.cookie = `hexToken=${token}; expired=${new Date(expired)}`;
         this.$store.commit("setLoginStatus", response.data.success);
         this.isLoading = false;
         this.$router.push("/admin/dashboard?activeIndex=1&page=1");
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         this.$message.error(`${error.message}，請再試一次`);
       }

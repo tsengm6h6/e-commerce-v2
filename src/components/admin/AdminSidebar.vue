@@ -28,14 +28,9 @@
   </el-aside>
 </template>
 
-<style scoped>
-.el-aside {
-  color: #333;
-}
-</style>
 
 <script>
-import authorizationAPI from "../../apis/authorization";
+import authorizationAPI from "@/apis/authorization.js";
 
 export default {
   name: "AdminSidebar",
@@ -56,7 +51,6 @@ export default {
         this.$router.push("/admin/signin");
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         this.$message.error(`${error.message}，請再試一次`);
       }
@@ -64,3 +58,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.el-aside {
+  color: #333;
+}
+</style>

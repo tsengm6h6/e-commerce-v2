@@ -51,7 +51,6 @@ export default {
   watch: {
     currId: {
       handler(newId) {
-        console.log("watch", this.category, newId);
         this.relativeList = this.productsList
           .filter(
             (item) => item.category === this.category && item.id !== newId

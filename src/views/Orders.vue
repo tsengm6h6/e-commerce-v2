@@ -80,50 +80,12 @@
   </el-container>
 </template>
 
-<style scoped>
-.el-container {
-  padding: 30px;
-}
-
-.breadcrumb {
-  margin-left: 10px;
-}
-
-.title {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
-}
-
-.title h3 {
-  margin-bottom: 10px;
-}
-
-/* sm */
-@media only screen and (min-width: 768px) {
-  .el-container {
-    padding: 30px 80px;
-  }
-}
-
-/* md */
-@media only screen and (min-width: 992px) {
-  .el-container {
-    padding: 30px 120px;
-  }
-}
-</style>
-
 <script>
-import Order from "../components/Order";
-import customerAPI from "../apis/customer";
-import mixin from "../utils/mixin";
-import Loading from "../components/Loading";
-import Breadcrumb from "../components/Breadcrumb";
+import Order from "../components/Order.vue";
+import customerAPI from "../apis/customer.js";
+import mixin from "../utils/mixin.js";
+import Loading from "../components/Loading.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "orders",
@@ -131,6 +93,9 @@ export default {
     Order,
     Loading,
     Breadcrumb,
+  },
+  metaInfo: {
+    title: "我的訂單",
   },
   data() {
     return {
@@ -160,11 +125,9 @@ export default {
             userName: user ? user.name : "-",
           };
         });
-        console.log(this.orders);
         this.pagination = { ...response.data.pagination };
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.$message.error("無法取得訂單列表，請稍後再試");
         this.isLoading = false;
       }
@@ -194,6 +157,28 @@ export default {
 </script>
 
 <style scoped>
+.el-container {
+  padding: 30px;
+}
+
+.breadcrumb {
+  margin-left: 10px;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.title h3 {
+  margin-bottom: 10px;
+}
+
 .el-pagination {
   margin-top: 30px;
 }
@@ -206,5 +191,19 @@ export default {
 .el-checkbox__label,
 .el-table-filter__bottom button {
   font-size: 14px;
+}
+
+/* sm */
+@media only screen and (min-width: 768px) {
+  .el-container {
+    padding: 30px 80px;
+  }
+}
+
+/* md */
+@media only screen and (min-width: 992px) {
+  .el-container {
+    padding: 30px 120px;
+  }
 }
 </style>

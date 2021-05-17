@@ -26,14 +26,17 @@
 </template>
 
 <script>
-import TurtleFlat from "../components/animation/TurtleFlat";
-import Breadcrumb from "../components/Breadcrumb";
+import TurtleFlat from "../components/animation/TurtleFlat.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "Policies",
   components: {
     TurtleFlat,
     Breadcrumb,
+  },
+  metaInfo: {
+    title: "政策與條款",
   },
   data() {
     return {

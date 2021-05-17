@@ -103,9 +103,9 @@
 
 <script>
 import { mapState } from "vuex";
-import CartDrawer from "./CartDrawer";
-import CartDrawerMobile from "./CartDrawerMobile";
-import CollapseTransition from "element-ui/lib/transitions/collapse-transition";
+import CartDrawer from "./CartDrawer.vue";
+import CartDrawerMobile from "./CartDrawerMobile.vue";
+import CollapseTransition from "element-ui/lib/transitions/collapse-transition.js";
 import Vue from "vue";
 
 Vue.component(CollapseTransition.name, CollapseTransition);
@@ -137,7 +137,6 @@ export default {
       this.showMenu = false;
     },
     handleClickMenu() {
-      console.log("claose");
       this.showMenu = false;
     },
   },

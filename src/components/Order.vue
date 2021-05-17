@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import customerAPI from "../apis/customer";
-import mixin from "../utils/mixin";
+import customerAPI from "../apis/customer.js";
+import mixin from "../utils/mixin.js";
 import { mapState } from "vuex";
-import Loading from "../components/Loading";
+import Loading from "../components/Loading.vue";
 
 export default {
   name: "Order",
@@ -96,7 +96,6 @@ export default {
         if (response.data.success !== true) {
           throw new Error();
         }
-        console.log(response.data);
         const {
           create_at: createdAt,
           id,
@@ -132,7 +131,6 @@ export default {
         this.$store.commit("setLoading", false);
         this.$emit("openDialog");
       } catch (error) {
-        console.log(error);
         this.$message.error("無法取得訂單，請稍後再試");
         this.$store.commit("setLoading", false);
       }
@@ -152,14 +150,12 @@ export default {
         this.$store.commit("setLoading", false);
         this.$emit("after-pay-order");
       } catch (error) {
-        console.log(error);
         this.$message.error("無法完成付款，請稍後再試");
         this.$store.commit("setLoading", false);
       }
     },
   },
   created() {
-    console.log("created");
     this.fetchOrder(this.currOrderId);
   },
 };

@@ -91,6 +91,77 @@
   </div>
 </template>
 
+<script>
+import { mapState } from "vuex";
+import Order from "../components/Order.vue";
+import CartInfo from "../components/cart/CartInfo.vue";
+import CartForm from "../components/cart/CartForm.vue";
+import cartMixin from "../utils/cartMixin.js";
+
+export default {
+  name: "CartList",
+  components: {
+    Order,
+    CartInfo,
+    CartForm,
+  },
+  metaInfo: {
+    title: "購物車結帳",
+  },
+  mixins: [cartMixin],
+  data() {
+    return {
+      active: 0,
+      currOrderId: "",
+    };
+  },
+  computed: {
+    ...mapState(["isLoading"]),
+  },
+  created() {
+    const { isPost = null } = this.getLocalStorage();
+    // 如果已經Post過，直接進入Step 2
+    if (isPost) this.next();
+  },
+  methods: {
+    next() {
+      this.active++;
+
+      if (this.active > 3) {
+        this.active = 0;
+      }
+    },
+    async handleConfirmCart() {
+      try {
+        await this.$confirm("請再次確認商品，下一步後將無法更改", "Warning", {
+          confirmButtonText: "確認",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true,
+        });
+        await this.$refs.cartInfo.postLocalCartListToCart();
+        this.next();
+      } catch (error) {
+        this.$message.error("無法確認商品，請稍後再試");
+      }
+    },
+    handleSubmit() {
+      this.$refs.cartForm.validateForm("userForm");
+    },
+    afterFormSubmit(orderId) {
+      this.currOrderId = orderId;
+      this.next();
+    },
+    handlePayOrder() {
+      this.$refs.order.payOrder(this.currOrderId);
+    },
+    afterPayOrder() {
+      this.next();
+    },
+  },
+};
+</script>
+
 <style scoped>
 .checkout-section {
   padding: 50px 30px 30px;
@@ -124,74 +195,3 @@
   }
 }
 </style>
-
-<script>
-import { mapState } from "vuex";
-import Order from "../components/Order";
-import CartInfo from "../components/cart/CartInfo";
-import CartForm from "../components/cart/CartForm";
-import cartMixin from "../utils/cartMixin";
-
-export default {
-  name: "CartList",
-  components: {
-    Order,
-    CartInfo,
-    CartForm,
-  },
-  mixins: [cartMixin],
-  data() {
-    return {
-      active: 0,
-      currOrderId: "",
-    };
-  },
-  computed: {
-    ...mapState(["isLoading"]),
-  },
-  created() {
-    const { isPost = null } = this.getLocalStorage();
-    console.log("Checkout created", isPost);
-    // 如果已經Post過，直接進入Step 2
-    if (isPost) this.next();
-  },
-  methods: {
-    next() {
-      this.active++;
-      console.log("current step", this.active);
-      if (this.active > 3) {
-        this.active = 0;
-      }
-    },
-    async handleConfirmCart() {
-      try {
-        await this.$confirm("請再次確認商品，下一步後將無法更改", "Warning", {
-          confirmButtonText: "確認",
-          cancelButtonText: "取消",
-          type: "warning",
-          center: true,
-        });
-        await this.$refs.cartInfo.postLocalCartListToCart();
-        console.log("商品已全數加入API，執行下一步");
-        this.next();
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    handleSubmit() {
-      this.$refs.cartForm.validateForm("userForm");
-    },
-    afterFormSubmit(orderId) {
-      console.log(orderId);
-      this.currOrderId = orderId;
-      this.next();
-    },
-    handlePayOrder() {
-      this.$refs.order.payOrder(this.currOrderId);
-    },
-    afterPayOrder() {
-      this.next();
-    },
-  },
-};
-</script>

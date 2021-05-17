@@ -9,7 +9,6 @@ export default {
       }
     })
   },
-  // 刪除
   removeProduct(productId) {
     return adminApi.delete(`/admin/product/${productId}`, {
       headers: {

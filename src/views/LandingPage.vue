@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import FeatureSection from "../components/landingPage/FeatureSection";
-import TripSection from "../components/landingPage/TripSection";
-import CourseSection from "../components/landingPage/CourseSection";
-import GallerySection from "../components/landingPage/GallerySection";
+import FeatureSection from "../components/landingPage/FeatureSection.vue";
+import TripSection from "../components/landingPage/TripSection.vue";
+import CourseSection from "../components/landingPage/CourseSection.vue";
+import GallerySection from "../components/landingPage/GallerySection.vue";
 
 export default {
   name: "LandingPage",

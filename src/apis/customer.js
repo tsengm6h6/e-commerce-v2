@@ -16,15 +16,12 @@ export default {
   removeCartItem(id) {
     return customerApi.delete(`/cart/${id}`)
   },
-  // 套用優惠券
   postCoupon({ data }) {
     return customerApi.post('/coupon', { data })
   },
-  // 建立訂單
   confirmOrder({ data, message }) {
     return customerApi.post('/order', { data, message })
   },
-  // 取得訂單列表
   getOrders(page) {
     return customerApi.get(`orders?page=${page}`)
   },

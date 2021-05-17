@@ -53,7 +53,7 @@
 
 <script>
 import { mapState } from "vuex";
-import AddToCartDialog from "./AddToCartDialog";
+import AddToCartDialog from "./AddToCartDialog.vue";
 
 export default {
   name: "productCard",
@@ -79,7 +79,6 @@ export default {
       this.$refs.dialog.handleOpen(this.product);
     },
     toggleFavorite(productId) {
-      console.log("card toggle");
       this.product.isFavorite = !this.product.isFavorite;
       this.$emit("toggle-favorite", productId);
     },

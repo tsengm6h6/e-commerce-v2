@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import authorizationAPI from '../apis/authorization'
-import customerAPI from '../apis/customer'
-import { Toast } from '../utils/helper';
+import authorizationAPI from '../apis/authorization.js'
+import customerAPI from '../apis/customer.js'
+import { Toast } from '../utils/helper.js';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    productsList: [], // 存放API拿到的產品資料
+    productsList: [],
     isLoading: false,
     cartInfo: {
-      cartList: [], // 拿到的購物車資料
+      cartList: [],
       total: 0,
       final_total: 0
     },
@@ -20,19 +20,16 @@ export default new Vuex.Store({
   },
   getters: {
     favoriteList(state) {
-      console.log('products', state.productsList)
       const favoriteList = state.productsList.filter(item => item.isFavorite)
-      // 當productList裡的isFavorite改變時，同步更新收藏清單（有用到才會console.log）
-      console.log('favorite list', favoriteList)
       return favoriteList
     },
     filterProductsList(state) {
       const filterProductsList = state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
-      console.log('filter list', filterProductsList)
+
       return filterProductsList
     },
     categoryList(state) {
-      console.log('cate change')
+
       return state.productsList.reduce((prev, curr) => {
         if (!prev.includes(curr.category)) {
           prev.push(curr.category)
@@ -46,7 +43,7 @@ export default new Vuex.Store({
       state.isLogin = success
     },
     setProductsList(state, payload) {
-      console.log('mutations setProductList', payload)
+
       state.productsList = payload
     },
     setLoading(state, isLoading) {
@@ -56,10 +53,10 @@ export default new Vuex.Store({
       state.category = category
     },
     UpdateFavorite(state, productId) {
-      console.log('update favorite')
+
       return state.productsList.map((item) => {
         if (item.id === productId) {
-          console.log('update item isFavorite', item.isFavorite)
+
           return {
             ...item,
             isFavorite: !item.isFavorite
@@ -67,24 +64,22 @@ export default new Vuex.Store({
         } else return { ...item }
       })
     },
-    // set購物車資料
     setCartInfo(state, cartInfo) {
-      console.log('setCartInfo', cartInfo)
       state.cartInfo = { ...cartInfo }
     }
   },
   actions: {
-    // 切換頁面時確認登入狀態
     async fetchLoginStatus({ commit }) {
       try {
         const response = await authorizationAPI.checkLogin()
         commit('setLoginStatus', response.data.success)
       } catch (error) {
-        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法確認登入狀態，請重新登入'
+        })
       }
     },
-
-    // 取得所有產品
     async fetchProducts({ commit }) {
       try {
         commit('setLoading', true)
@@ -98,14 +93,11 @@ export default new Vuex.Store({
           JSON.parse(window.localStorage.getItem('favorite_products')) || []
         const productsList = response.data.products.map((item) => ({
           ...item,
-          isFavorite: favoriteIdList.includes(item.id) // 如果包含在收藏清單中則為true
+          isFavorite: favoriteIdList.includes(item.id)
         })).filter(product => product.is_enabled === 1)
-
-        // 提交給 mutation 去改變state
         commit('setProductsList', productsList)
         commit('setLoading', false)
       } catch (error) {
-        console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法取得頁面，請稍後再試'
@@ -119,8 +111,6 @@ export default new Vuex.Store({
       try {
         commit('setLoading', true)
         const response = await customerAPI.getCart()
-        console.log('fetchCartProducts')
-        console.log(response.data)
         if (response.data.success !== true) {
           throw new Error()
         }
@@ -132,14 +122,12 @@ export default new Vuex.Store({
         }
         // 如果 API 中有購物清單，整理成需要的資料再更新
         const newCartList = data.carts.map(item => {
-          console.log('newCartList', item)
-          // 找到原有紀錄中的product
           const recordCartItem = state.cartInfo.cartList.find(record => record.product_id === item.product_id)
           return {
             ...recordCartItem,
-            id: item.id, // 操作刪除API使用該筆商品資訊id
+            id: item.id,
             qty: item.qty,
-            product_id: item.product_id, // 商品本人的id
+            product_id: item.product_id,
             title: item.product.title,
             price: item.product.price,
             image: item.product.image,
@@ -150,14 +138,13 @@ export default new Vuex.Store({
           }
         })
         const cartInfo = {
-          cartList: newCartList, // 更新清單紀錄
+          cartList: newCartList,
           total: data.total,
           final_total: data.final_total
         }
         commit('setCartInfo', cartInfo)
         commit('setLoading', false)
       } catch (error) {
-        console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法取得購物車資料，請稍後再試'
@@ -165,7 +152,5 @@ export default new Vuex.Store({
         commit('setLoading', false)
       }
     }
-  },
-  modules: {
   }
 })

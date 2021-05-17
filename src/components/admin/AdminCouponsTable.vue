@@ -135,18 +135,15 @@
   </el-container>
 </template>
 
-<style scoped>
-.btn {
-  display: flex;
-  justify-content: center;
-}
-</style>
-
 <script>
-import adminAPI from "../../apis/admin";
-import { Toast } from "../../utils/helper";
+import adminAPI from "@/apis/admin.js";
+import { Toast } from "@/utils/helper.js";
 
 export default {
+  name: "AdminCouponsTable",
+  metaInfo: {
+    title: "優惠券列表",
+  },
   data() {
     return {
       couponsList: [],
@@ -210,7 +207,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await adminAPI.getCoupons(page);
-        console.log(response);
+
         if (response.data.success !== true) {
           throw new Error();
         }
@@ -218,7 +215,6 @@ export default {
         this.$emit("renderPaginator", response.data.pagination);
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         return Toast.fire({
           icon: "error",
@@ -230,9 +226,8 @@ export default {
       this.editCoupon = {
         ...coupon,
       };
-      console.log(isNew, this.editCoupon);
+
       this.editDialogVisible = true;
-      console.log(this.editCoupon.is_enabled);
     },
     editDialogClosed() {
       this.resetForm("editForm");
@@ -243,7 +238,6 @@ export default {
         if (valid) {
           this.handleSubmit();
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -251,10 +245,9 @@ export default {
     async handleSubmit() {
       try {
         this.isLoading = true;
-        console.log({ id: this.editCoupon.id, data: this.editCoupon });
+
         // 如果沒有id則新增、有id就編輯
         if (this.editCoupon.id) {
-          console.log("edit");
           const response = await adminAPI.editCoupon({
             id: this.editCoupon.id,
             data: this.editCoupon,
@@ -262,27 +255,24 @@ export default {
           if (response.data.success !== true) {
             throw new Error(response.data.message);
           }
-          console.log(response);
         } else {
-          console.log("add");
-          // 向後端 API 要求新增
           const response = await adminAPI.addCoupon({
             data: this.editCoupon,
           });
           if (response.data.success !== true) {
             throw new Error(response.data.message);
           }
-          console.log(response);
         }
-        // 重新取得優惠列表
+        // 重新取得優惠列表，重置表單並關閉對話框
         await this.fetchCouponsList(1);
-        // 重置表單（欄位清空、驗證重置）
         this.resetForm("editForm");
-        // 關閉對話方塊
         this.editDialogVisible = false;
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
+        return Toast.fire({
+          icon: "error",
+          title: "無法更新優惠券資料，請稍後再試",
+        });
       }
     },
     resetForm(formName) {
@@ -299,18 +289,16 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        console.log(response);
-        // 產品清單移除產品
+
+        // 畫面移除產品
         this.couponsList = this.couponsList.filter(
           (item) => item.id !== couponId
         );
-        // 重置
+        // 重置並關閉對話框
         this.deleteTargetId = "";
-        // 關閉對話框
         this.deleteDialogVisible = false;
         this.isDeleting = false;
       } catch (error) {
-        console.log(error);
         this.deleteDialogVisible = false;
         this.isDeleting = false;
         return Toast.fire({
@@ -322,3 +310,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn {
+  display: flex;
+  justify-content: center;
+}
+</style>

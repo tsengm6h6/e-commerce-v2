@@ -55,7 +55,7 @@
 
 
 <script>
-import cartMixin from "../utils/cartMixin";
+import cartMixin from "../utils/cartMixin.js";
 
 export default {
   name: "AddToCartDialog",

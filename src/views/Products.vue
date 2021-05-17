@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import ProductCard from "../components/ProductCard";
-import AsideMenu from "../components/AsideMenu";
+import ProductCard from "../components/ProductCard.vue";
+import AsideMenu from "../components/AsideMenu.vue";
 import { mapGetters, mapState } from "vuex";
-import Loading from "../components/Loading";
-import Breadcrumb from "../components/Breadcrumb";
+import Loading from "../components/Loading.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "Products",
@@ -80,6 +80,9 @@ export default {
     AsideMenu,
     Loading,
     Breadcrumb,
+  },
+  metaInfo: {
+    title: "所有活動",
   },
   data() {
     return {
@@ -95,22 +98,18 @@ export default {
         return this.$store.state.category;
       },
       set(value) {
-        console.log("set new Cat", value);
         this.$store.commit("setCategory", value);
       },
     },
   },
   methods: {
     toggleFavorite(productId) {
-      console.log("emit toggle");
-      // 提交mutation去改變商品狀態
       this.$store.commit("UpdateFavorite", productId);
-      // 更新localStorage的資料
+
       const favoriteIdList =
         JSON.parse(window.localStorage.getItem("favorite_products")) || [];
 
       const itemIndex = favoriteIdList.findIndex((Id) => Id === productId);
-      // 如果沒有item，就新增;有就移除
       itemIndex === -1
         ? favoriteIdList.push(productId)
         : favoriteIdList.splice(itemIndex, 1);
@@ -123,14 +122,13 @@ export default {
         this.$message.success("成功複製優惠碼！");
       } catch (err) {
         this.$message.danger("無法複製優惠碼，請稍後再試");
-        console.log(err);
       }
     },
   },
   created() {
     const vm = this;
     vm.spinner = true;
-    setTimeout(function () {
+    setTimeout(() => {
       vm.spinner = false;
     }, 1000);
   },

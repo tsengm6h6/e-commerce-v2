@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import NotFound from '../views/NotFound'
-import Products from '../views/Products'
-import LandingPage from '../views/LandingPage'
+import NotFound from '../views/NotFound.vue'
+import Products from '../views/Products.vue'
+import LandingPage from '../views/LandingPage.vue'
 
 Vue.use(VueRouter)
 

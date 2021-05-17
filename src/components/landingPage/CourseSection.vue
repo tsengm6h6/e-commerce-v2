@@ -98,7 +98,6 @@ export default {
         this.$message.success("成功複製優惠碼！");
       } catch (err) {
         this.$message.danger("無法複製優惠碼，請稍後再試");
-        console.log(err);
       }
     },
   },

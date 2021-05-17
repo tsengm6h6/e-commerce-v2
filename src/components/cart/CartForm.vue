@@ -92,65 +92,10 @@
   </div>
 </template>
 
-<style scoped>
-.cart-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-}
-
-.collapse,
-.coupon,
-.form {
-  width: 100%;
-}
-
-ol {
-  margin-bottom: 20px;
-}
-
-li {
-  list-style: decimal;
-}
-
-.collapse-table span {
-  font-size: 18px;
-  font-style: italic;
-  line-height: 24px;
-  color: #f56c6c;
-}
-
-h3 {
-  font-size: 16px;
-  line-height: 40px;
-  color: #44607a;
-  font-weight: 500;
-  margin-top: 20px;
-}
-
-.el-tag {
-  margin: 10px;
-  font-size: 14px;
-  letter-spacing: 1px;
-  font-weight: 400;
-}
-
-/* md */
-@media only screen and (min-width: 992px) {
-  .collapse,
-  .coupon,
-  .form {
-    width: 100%;
-  }
-}
-</style>
-
 <script>
-import customerAPI from "../../apis/customer";
+import customerAPI from "@/apis/customer.js";
 import { mapState } from "vuex";
-import cartMixin from "../../utils/cartMixin";
+import cartMixin from "@/utils/cartMixin.js";
 
 export default {
   name: "CartForm",
@@ -230,23 +175,20 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        console.log(response);
         this.isCoupon = true;
         await this.$store.dispatch("fetchCartProducts");
         this.updateLocalCartStatus("final_total", this.final_total);
         this.$message.success("購物明細已更新");
         this.$store.commit("setLoading", false);
       } catch (error) {
-        console.log(error);
         this.$message.error(`${error.message}，請重新輸入`);
-        this.couponCode = ""; // 清空優惠券欄位
+        this.couponCode = "";
         this.$store.commit("setLoading", false);
       }
     },
     validateForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("submit");
           this.confirmOrder();
         } else {
           this.$message.warning("請再次確認資料內容");
@@ -268,31 +210,84 @@ export default {
           data: { user },
           message: message.trim(),
         });
-        console.log(response);
+
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        // Reset store及local的購物車資料
+        // 重置購物車資料
         this.resetCartInfo();
         this.$store.commit("setLoading", false);
         // 通知父層更新
         this.$emit("after-form-submit", response.data.orderId);
       } catch (error) {
-        console.log(error);
         this.$message.warning(`${error.message}，請再次確認`);
         this.$store.commit("setLoading", false);
       }
     },
     resetCartInfo() {
-      // 清空state購物車資料
+      // 清空state及LocalStorage購物車資料
       this.$store.commit("setCartInfo", {
         cartList: [],
         total: 0,
         final_total: 0,
       });
-      // 清空LocalStorage購物車資料
       this.setLocalStorage({ cartList: [], total: 0 });
     },
   },
 };
 </script>
+
+<style scoped>
+.cart-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+}
+
+.collapse,
+.coupon,
+.form {
+  width: 100%;
+}
+
+ol {
+  margin-bottom: 20px;
+}
+
+li {
+  list-style: decimal;
+}
+
+.collapse-table span {
+  font-size: 18px;
+  font-style: italic;
+  line-height: 24px;
+  color: #f56c6c;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 40px;
+  color: #44607a;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.el-tag {
+  margin: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+/* md */
+@media only screen and (min-width: 992px) {
+  .collapse,
+  .coupon,
+  .form {
+    width: 100%;
+  }
+}
+</style>

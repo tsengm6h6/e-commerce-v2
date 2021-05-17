@@ -195,7 +195,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import adminAPI from "../../apis/admin";
+import adminAPI from "@/apis/admin.js";
 
 export default {
   name: "ProductUpdateDialog",
@@ -267,7 +267,7 @@ export default {
     ...mapGetters(["categoryList"]),
   },
   methods: {
-    // ***** 對話框開關 ****** //
+    // ***** 對話框控制 ****** //
     handleOpenDialog(product) {
       this.editTarget = {
         ...product,
@@ -280,7 +280,7 @@ export default {
         this.handleDialogClosed();
         done();
       } catch (error) {
-        console.log(error);
+        return;
       }
     },
     handleDialogClosed() {
@@ -304,7 +304,6 @@ export default {
         if (valid) {
           this.handleSubmit();
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -312,14 +311,13 @@ export default {
     async handleSubmit() {
       try {
         this.isLoading = true;
-        // 如果沒有id則新增、有id就編輯
+        // 如果有id就編輯、沒有id則新增
         if (this.editTarget.id) {
           await this.submitEdit({
             id: this.editTarget.id,
             data: this.editTarget,
           });
         } else {
-          // 向後端 API 要求新增
           await this.submitCreate({ data: this.editTarget });
         }
         // 通知父層重新取得產品列表（管理員列表更新）
@@ -345,13 +343,11 @@ export default {
           throw new Error(response.data.message);
         }
       } catch (error) {
-        console.log(error);
         throw new Error(error);
       }
     },
     async submitCreate({ data }) {
       try {
-        console.log("submit create");
         const response = await adminAPI.addProduct({
           data,
         });
@@ -359,7 +355,6 @@ export default {
           throw new Error(response.data.message);
         }
       } catch (error) {
-        console.log(error);
         throw new Error(error);
       }
     },
@@ -368,9 +363,9 @@ export default {
       this.addCategory = false;
       this.$refs[formName].resetFields();
     },
-    // ***** 圖片相關 ****** //
+    // ***** 圖片處理 ****** //
 
-    // 上傳前確認格式、大小，並整理成formData
+    // 上傳前確認格式及大小，並整理成formData
     beforeAvatarUpload(file) {
       if (!file) return;
       const isLt1M = file.size < 1 * 1024 * 1024;
@@ -386,15 +381,14 @@ export default {
       const formData = new FormData();
       return formData.append("file-to-upload", file);
     },
-    // 上傳成功則存下回傳的url
-    handleUplaodSuccess(res, file) {
-      console.log("成功", res, file);
+    // 上傳成功 -> 存下回傳的url
+    handleUplaodSuccess(res) {
       if (res.success !== true) {
         return this.$message.error(`${res.message}`);
       }
       this.editTarget.image = res.imageUrl;
     },
-    // 上傳失敗回傳錯誤訊息
+    // 上傳失敗 -> 回傳錯誤訊息
     handleError(err) {
       return this.$message.error(`${err.message}`);
     },

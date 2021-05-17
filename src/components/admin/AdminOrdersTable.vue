@@ -148,19 +148,16 @@
   </el-container>
 </template>
 
-<style scoped>
-.btn {
-  display: flex;
-  justify-content: center;
-}
-</style>
-
 <script>
-import adminAPI from "../../apis/admin";
-import { Toast } from "../../utils/helper";
-import mixin from "../../utils/mixin";
+import adminAPI from "@/apis/admin.js";
+import { Toast } from "@/utils/helper.js";
+import mixin from "@/utils/mixin.js";
 
 export default {
+  metaInfo: {
+    name: "AdminOrdersTable",
+    title: "訂單列表",
+  },
   data() {
     return {
       originOrder: [],
@@ -242,7 +239,7 @@ export default {
         if (response.data.success !== true) {
           throw new Error();
         }
-        console.log("所有訂單", response.data);
+
         this.originOrder = response.data.orders;
         this.OrdersList = this.originOrder.map((item) => ({
           createdAt: this.dateFormat(item.create_at) || "",
@@ -257,7 +254,6 @@ export default {
         this.$emit("renderPaginator", response.data.pagination);
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         return Toast.fire({
           icon: "error",
@@ -266,9 +262,8 @@ export default {
       }
     },
     showEditDialog(order) {
-      console.log(order);
       const { id, total, is_paid, user } = order;
-      console.log(user);
+
       this.editOrder = {
         id,
         total,
@@ -289,7 +284,6 @@ export default {
         if (valid) {
           this.handleSubmit();
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -327,16 +321,13 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message);
         }
-        console.log(response);
-        // 重新取得訂單列表
+
+        // 重新取得訂單列表，重置表單並關閉對話框
         await this.fetchOrdersList();
-        // 重置表單（欄位清空、驗證重置）
         this.resetForm("editForm");
-        // 關閉對話方塊
         this.editDialogVisible = false;
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
       }
     },
@@ -350,3 +341,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn {
+  display: flex;
+  justify-content: center;
+}
+</style>

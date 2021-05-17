@@ -1,8 +1,3 @@
-// cartInfo :{
-//   cartList:[],
-//   total: 0,
-// }
-
 export default {
   methods: {
     getLocalStorage() {
@@ -18,12 +13,12 @@ export default {
         total
       }
       this.$store.commit('setCartInfo', CartInfo)
-      console.log('fetchLocalCart')
+
     },
     updateLocalCartStatus(key, value) {
       const cartInfo = this.getLocalStorage()
       cartInfo[key] = value
-      console.log('updateCart', cartInfo)
+
       this.setLocalStorage(cartInfo)
     },
     // **** 新增購物車內容 ***** //
@@ -38,43 +33,34 @@ export default {
         date: form.date,
         time: form.time
       }
-      // 取出localStorage裡的購物車資料
+
       const { cartList = [] } = this.getLocalStorage()
-      // 如果購物紀錄沒有商品，直接新增並返回
       if (!cartList.length) {
         this.pushProductToCart(cartList, addData)
-        const newTotal = this.updateCartTotal(cartList)
-        // commit 一份給 store儲存
-        const newCartInfo = {
-          cartList,
-          total: newTotal
-        }
-        this.$store.commit('setCartInfo', newCartInfo)
-        // 更新一份放回 LocalStorage
-        this.setLocalStorage(newCartInfo)
-        this.$message.success('商品已加入購物車')
+        this.saveCartInfo(cartList)
         return
       }
       // 如果記錄中有商品，則尋找是否有相同商品
       const recordCartItem = cartList.find(record => record.product_id === addData.product_id && record.date === addData.date && record.time === addData.time)
-      // 沒有相同商品 pushProductToCart
+
       if (!recordCartItem) {
         this.pushProductToCart(cartList, addData)
       } else {
-        // 已有此商品 incrementItemQty
         this.incrementItemQty(cartList, addData)
       }
-      // updateCartTotal
+      this.saveCartInfo(cartList)
+    },
+    saveCartInfo(cartList) {
       const newTotal = this.updateCartTotal(cartList)
-      // commit 一份給 store儲存
       const newCartInfo = {
         cartList,
         total: newTotal
       }
+      // store 及 LocalStorage 各存一份
       this.$store.commit('setCartInfo', newCartInfo)
-      // 更新一份放回 LocalStorage
       this.setLocalStorage(newCartInfo)
       this.$message.success('商品已加入購物車')
+      return
     },
     pushProductToCart(cartList, addData) {
       return cartList.push(addData)
@@ -94,15 +80,11 @@ export default {
     // **** 更新購物車明細 **** //
     updateCartRecord({ cartItem, action }) {
       let { cartList = [] } = this.getLocalStorage()
-      console.log(cartItem, action)
       if (action === 'REDUCE') {
-        console.log('REDUCE')
         this.handleReduceQty(cartList, cartItem)
       } else if (action === 'INCREASE') {
-        console.log('INCREASE')
         this.handleIncreaseQty(cartList, cartItem)
       } else {
-        console.log('REMOVE')
         cartList = this.handleRemove(cartList, cartItem)
       }
       const updateTotal = this.updateCartTotal(cartList)

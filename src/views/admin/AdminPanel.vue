@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import AdminSidebar from "../../components/admin/AdminSidebar";
-import AdminProductsTable from "../../components/admin/AdminProductsTable";
-import AdminCouponsTable from "../../components/admin/AdminCouponsTable";
-import AdminOrdersTable from "../../components/admin/AdminOrdersTable";
+import AdminSidebar from "@/components/admin/AdminSidebar.vue";
+import AdminProductsTable from "@/components/admin/AdminProductsTable.vue";
+import AdminCouponsTable from "@/components/admin/AdminCouponsTable.vue";
+import AdminOrdersTable from "@/components/admin/AdminOrdersTable.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -45,6 +45,10 @@ export default {
     AdminProductsTable,
     AdminOrdersTable,
     AdminCouponsTable,
+  },
+  metaInfo: {
+    title: "",
+    titleTemplate: "管理員頁面 | %s",
   },
   data() {
     return {
@@ -79,7 +83,6 @@ export default {
       });
     },
     renderPaginator(payload) {
-      console.log(payload);
       this.pagination = {
         ...payload,
       };

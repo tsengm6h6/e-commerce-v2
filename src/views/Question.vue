@@ -12,14 +12,17 @@
 </template>
 
 <script>
-import TurtleFlat from "../components/animation/TurtleFlat";
-import Breadcrumb from "../components/Breadcrumb";
+import TurtleFlat from "../components/animation/TurtleFlat.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "Question",
   components: {
     TurtleFlat,
     Breadcrumb,
+  },
+  metaInfo: {
+    title: "常見問答",
   },
   data() {
     return {

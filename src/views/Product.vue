@@ -65,11 +65,11 @@
 </template>
 
 <script>
-import customerAPI from "../apis/customer";
-import cartMixin from "../utils/cartMixin";
-import AddToCartDialog from "../components/AddToCartDialog";
-import RelativeProduct from "../components/RelatvieProduct";
-import Loading from "../components/Loading";
+import customerAPI from "../apis/customer.js";
+import cartMixin from "../utils/cartMixin.js";
+import AddToCartDialog from "../components/AddToCartDialog.vue";
+import RelativeProduct from "../components/RelatvieProduct.vue";
+import Loading from "../components/Loading.vue";
 
 export default {
   name: "product",
@@ -77,6 +77,11 @@ export default {
     AddToCartDialog,
     RelativeProduct,
     Loading,
+  },
+  metaInfo() {
+    return {
+      title: this.product.title,
+    };
   },
   data() {
     return {
@@ -138,13 +143,10 @@ export default {
           ...response.data.product,
           description: desctiptionFormat,
         };
-        console.log(this.product);
         this.isLoading = false;
         this.$refs.relative.category = this.product.category;
         this.$refs.relative.currId = this.product.id;
-        console.log("product", this.product.category);
       } catch (error) {
-        console.log(error);
         this.$message.error("無法取得頁面，請稍後再試");
         this.isLoading = false;
       }

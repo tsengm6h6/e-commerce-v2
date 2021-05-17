@@ -54,7 +54,7 @@
 
 <script>
 import { mapState } from "vuex";
-import cartMixin from "../utils/cartMixin";
+import cartMixin from "../utils/cartMixin.js";
 export default {
   name: "CartDrawer",
   data() {
@@ -75,9 +75,6 @@ export default {
     handleCheckout() {
       this.drawer = false;
     },
-  },
-  created() {
-    console.log(this.cartList);
   },
 };
 </script>

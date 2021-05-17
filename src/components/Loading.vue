@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PufferFish from "../components/animation/PufferFish";
+import PufferFish from "../components/animation/PufferFish.vue";
 export default {
   name: "Loading",
   components: {

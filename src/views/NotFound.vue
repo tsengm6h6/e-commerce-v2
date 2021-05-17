@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Octopus from "../components/animation/Octopus";
+import Octopus from "../components/animation/Octopus.vue";
 export default {
   name: "notFound",
   components: {

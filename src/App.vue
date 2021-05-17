@@ -9,16 +9,20 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 import { mapActions, mapState } from "vuex";
-import cartMixin from "./utils/cartMixin";
+import cartMixin from "./utils/cartMixin.js";
 
 export default {
   name: "App",
   components: {
     Navbar,
     Footer,
+  },
+  metaInfo: {
+    title: "PADI水肺潛水 | AIDA 自由潛水 | 台灣潛水旅遊",
+    titleTemplate: "DIVE IN 戶外冒險團隊 | %s",
   },
   mixins: [cartMixin],
   computed: {
@@ -31,7 +35,6 @@ export default {
     this.fetchProducts();
     this.fetchLocalCart();
     const { isPost = null } = this.getLocalStorage();
-    console.log("App.vue 購物車isPost");
     if (isPost) this.$message.warning("上次購物未完成，請盡快完成訂單");
   },
 };

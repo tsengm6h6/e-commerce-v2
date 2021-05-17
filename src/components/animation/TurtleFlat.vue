@@ -206,7 +206,6 @@ export default {
 
 #pink-left-hand {
   animation: leftHand 1s ease-out infinite alternate-reverse;
-  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
   transform-origin: center;
 }
 

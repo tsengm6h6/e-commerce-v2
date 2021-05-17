@@ -49,7 +49,7 @@ export default {
       tripList: (state) =>
         state.productsList
           .filter((item) => item.category === "潛水旅遊")
-          .slice(0, 4), // 只取4個
+          .slice(0, 4),
     }),
   },
 };

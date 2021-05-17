@@ -75,22 +75,18 @@
   </div>
 </template>
 
-<style scoped>
-.btn {
-  display: flex;
-  justify-content: center;
-}
-</style>
-
 <script>
-import adminAPI from "../../apis/admin";
-import { Toast } from "../../utils/helper";
-import ProductUpdateDialog from "../admin/ProductUpdateDialog";
+import adminAPI from "@/apis/admin.js";
+import { Toast } from "@/utils/helper.js";
+import ProductUpdateDialog from "../admin/ProductUpdateDialog.vue";
 
 export default {
   name: "AdminProductsTable",
   components: {
     ProductUpdateDialog,
+  },
+  metaInfo: {
+    title: "產品列表",
   },
   data() {
     return {
@@ -132,11 +128,11 @@ export default {
       try {
         this.isLoading = true;
         const response = await adminAPI.getProducts(page);
-        // 取得的Products為{ }物件 轉成陣列
         if (response.data.success !== true) {
           throw new Error();
         }
         const { products } = response.data;
+        // 將取得的物件轉成陣列
         this.productsList = Object.values(products).map((item) => ({
           category: item.category || "",
           content: item.content || "",
@@ -152,7 +148,6 @@ export default {
         this.$emit("renderPaginator", response.data.pagination);
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         return Toast.fire({
           icon: "error",
@@ -170,7 +165,6 @@ export default {
         await this.fetchProductsList(page);
         this.isLoading = false;
       } catch (error) {
-        console.log(error);
         this.isLoading = false;
         this.$message.error("無法取得產品資料，請稍後再試");
       }
@@ -190,17 +184,16 @@ export default {
                 if (response.data.success !== true) {
                   throw new Error(response.data.message);
                 }
-                console.log(response);
-                // 產品清單移除產品
+
+                // 畫面移除產品
                 this.productsList = this.productsList.filter(
                   (item) => item.id !== productId
                 );
-                // store 重新取得產品清單
+                // store重新取得產品清單
                 this.$store.dispatch("fetchProducts");
                 instance.confirmButtonLoading = false;
                 done();
               } catch (error) {
-                console.log(error);
                 this.$message({
                   type: "info",
                   message: "刪除失敗，請再試一次",
@@ -227,3 +220,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn {
+  display: flex;
+  justify-content: center;
+}
+</style>

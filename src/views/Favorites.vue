@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import ProductCard from "../components/ProductCard";
-import Octopus from "../components/animation/Octopus";
+import ProductCard from "../components/ProductCard.vue";
+import Octopus from "../components/animation/Octopus.vue";
 import { mapGetters } from "vuex";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "Favorites",
@@ -33,12 +33,14 @@ export default {
     Octopus,
     Breadcrumb,
   },
+  metaInfo: {
+    title: "收藏清單",
+  },
   computed: {
     ...mapGetters(["favoriteList"]),
   },
   methods: {
     toggleFavorite(productId) {
-      // 提交mutation去改變商品狀態
       this.$store.commit("UpdateFavorite", productId);
 
       const favoriteIdList =

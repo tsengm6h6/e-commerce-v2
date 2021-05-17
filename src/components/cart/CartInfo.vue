@@ -103,9 +103,9 @@
 </template>
 
 <script>
-import customerAPI from "../../apis/customer";
+import customerAPI from "@/apis/customer.js";
 import { mapState } from "vuex";
-import cartMixin from "../../utils/cartMixin";
+import cartMixin from "@/utils/cartMixin.js";
 
 export default {
   name: "CartInfo",
@@ -144,18 +144,14 @@ export default {
       );
       this.updateLocalCartStatus("isPost", true);
       this.$store.commit("setLoading", false);
-      console.log("All post!");
     },
     async postToCart({ addData }) {
       try {
-        // addData 只需要id、qty
         const response = await customerAPI.postToCart({ data: addData });
         if (response.data.success !== true || !response.data.data.id) {
           throw new Error(response.data.message);
         }
-        console.log("postToCart response", response);
       } catch (error) {
-        console.log(error);
         this.$message.error("無法確認購物車數量，請稍後再試");
         this.$store.commit("setLoading", false);
       }
