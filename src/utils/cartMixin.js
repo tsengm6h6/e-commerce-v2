@@ -1,28 +1,27 @@
 export default {
   methods: {
-    getLocalStorage() {
+    getLocalStorage () {
       return JSON.parse(window.localStorage.getItem('cart')) || {}
     },
-    setLocalStorage(cartInfo) {
+    setLocalStorage (cartInfo) {
       return window.localStorage.setItem('cart', JSON.stringify(cartInfo))
     },
-    fetchLocalCart() {
+    fetchLocalCart () {
       const { cartList = [], total } = this.getLocalStorage()
       const CartInfo = {
         cartList,
         total
       }
       this.$store.commit('setCartInfo', CartInfo)
-
     },
-    updateLocalCartStatus(key, value) {
+    updateLocalCartStatus (key, value) {
       const cartInfo = this.getLocalStorage()
       cartInfo[key] = value
 
       this.setLocalStorage(cartInfo)
     },
     // **** 新增購物車內容 ***** //
-    addToCart(product, selectedNum, form) {
+    addToCart (product, selectedNum, form) {
       const addData = {
         product_id: product.id,
         qty: selectedNum,
@@ -50,7 +49,7 @@ export default {
       }
       this.saveCartInfo(cartList)
     },
-    saveCartInfo(cartList) {
+    saveCartInfo (cartList) {
       const newTotal = this.updateCartTotal(cartList)
       const newCartInfo = {
         cartList,
@@ -60,17 +59,16 @@ export default {
       this.$store.commit('setCartInfo', newCartInfo)
       this.setLocalStorage(newCartInfo)
       this.$message.success('商品已加入購物車')
-      return
     },
-    pushProductToCart(cartList, addData) {
+    pushProductToCart (cartList, addData) {
       return cartList.push(addData)
     },
-    incrementItemQty(cartList, addData) {
+    incrementItemQty (cartList, addData) {
       const target = cartList.find(item => item.product_id === addData.product_id)
       target.qty += addData.qty
       return cartList
     },
-    updateCartTotal(cartList) {
+    updateCartTotal (cartList) {
       const newTotal = cartList.reduce((prev, curr) => {
         return prev + curr.price * curr.qty
       }, 0)
@@ -78,7 +76,7 @@ export default {
     },
 
     // **** 更新購物車明細 **** //
-    updateCartRecord({ cartItem, action }) {
+    updateCartRecord ({ cartItem, action }) {
       let { cartList = [] } = this.getLocalStorage()
       if (action === 'REDUCE') {
         this.handleReduceQty(cartList, cartItem)
@@ -95,17 +93,17 @@ export default {
       this.$store.commit('setCartInfo', updateCartInfo)
       this.setLocalStorage(updateCartInfo)
     },
-    handleReduceQty(cartList, cartItem) {
+    handleReduceQty (cartList, cartItem) {
       const product = cartList.find(item => item.product_id === cartItem.product_id)
       if (product.qty === 1) return
       return product.qty--
     },
-    handleIncreaseQty(cartList, cartItem) {
+    handleIncreaseQty (cartList, cartItem) {
       const product = cartList.find(item => item.product_id === cartItem.product_id)
       if (product.qty === 10) return this.$message.warning('10 人以上報名，請聯繫專人客服')
       return product.qty++
     },
-    handleRemove(cartList, cartItem) {
+    handleRemove (cartList, cartItem) {
       return cartList.filter(item => item.product_id !== cartItem.product_id)
     }
   }

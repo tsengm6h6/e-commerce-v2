@@ -338,8 +338,8 @@
 
 <script>
 export default {
-  name: "PufferFish",
-};
+  name: 'PufferFish'
+}
 </script>
 
 <style scoped>

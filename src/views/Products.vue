@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="spinner" />
+  <Loading v-if="spinner" class="spinner" />
   <div v-else>
     <div class="banner">
       <div class="banner-text">
@@ -67,75 +67,79 @@
 </template>
 
 <script>
-import ProductCard from "../components/ProductCard.vue";
-import AsideMenu from "../components/AsideMenu.vue";
-import { mapGetters, mapState } from "vuex";
-import Loading from "../components/Loading.vue";
-import Breadcrumb from "../components/Breadcrumb.vue";
+import ProductCard from '../components/ProductCard.vue'
+import AsideMenu from '../components/AsideMenu.vue'
+import { mapGetters, mapState } from 'vuex'
+import Loading from '../components/Loading.vue'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 export default {
-  name: "Products",
+  name: 'Products',
   components: {
     ProductCard,
     AsideMenu,
     Loading,
-    Breadcrumb,
+    Breadcrumb
   },
   metaInfo: {
-    title: "所有活動",
+    title: '所有活動'
   },
-  data() {
+  data () {
     return {
       pagination: {},
-      spinner: false,
-    };
+      spinner: false
+    }
   },
   computed: {
-    ...mapState(["productsList", "isLoading", "category", "currCoupon"]),
-    ...mapGetters(["filterProductsList", "categoryList"]),
+    ...mapState(['productsList', 'isLoading', 'category', 'currCoupon']),
+    ...mapGetters(['filterProductsList', 'categoryList']),
     category: {
-      get() {
-        return this.$store.state.category;
+      get () {
+        return this.$store.state.category
       },
-      set(value) {
-        this.$store.commit("setCategory", value);
-      },
-    },
+      set (value) {
+        this.$store.commit('setCategory', value)
+      }
+    }
   },
   methods: {
-    toggleFavorite(productId) {
-      this.$store.commit("UpdateFavorite", productId);
+    toggleFavorite (productId) {
+      this.$store.commit('UpdateFavorite', productId)
 
       const favoriteIdList =
-        JSON.parse(window.localStorage.getItem("favorite_products")) || [];
+        JSON.parse(window.localStorage.getItem('favorite_products')) || []
 
-      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId);
+      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
       itemIndex === -1
         ? favoriteIdList.push(productId)
-        : favoriteIdList.splice(itemIndex, 1);
+        : favoriteIdList.splice(itemIndex, 1)
 
-      localStorage.setItem("favorite_products", JSON.stringify(favoriteIdList));
+      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
     },
-    async doCopy() {
+    async doCopy () {
       try {
-        await this.$copyText("summervibe");
-        this.$message.success("成功複製優惠碼！");
+        await this.$copyText('summervibe')
+        this.$message.success('成功複製優惠碼！')
       } catch (err) {
-        this.$message.danger("無法複製優惠碼，請稍後再試");
+        this.$message.danger('無法複製優惠碼，請稍後再試')
       }
-    },
+    }
   },
-  created() {
-    const vm = this;
-    vm.spinner = true;
+  created () {
+    const vm = this
+    vm.spinner = true
     setTimeout(() => {
-      vm.spinner = false;
-    }, 1000);
-  },
-};
+      vm.spinner = false
+    }, 1000)
+  }
+}
 </script>
 
 <style scoped>
+.spinner {
+  margin-top: 30px;
+}
+
 .products-section {
   padding: 30px;
 }

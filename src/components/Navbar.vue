@@ -102,45 +102,45 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import CartDrawer from "./CartDrawer.vue";
-import CartDrawerMobile from "./CartDrawerMobile.vue";
-import CollapseTransition from "element-ui/lib/transitions/collapse-transition.js";
-import Vue from "vue";
+import { mapState } from 'vuex'
+import CartDrawer from './CartDrawer.vue'
+import CartDrawerMobile from './CartDrawerMobile.vue'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition.js'
+import Vue from 'vue'
 
-Vue.component(CollapseTransition.name, CollapseTransition);
+Vue.component(CollapseTransition.name, CollapseTransition)
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {
     CartDrawer,
-    CartDrawerMobile,
+    CartDrawerMobile
   },
-  data() {
+  data () {
     return {
-      showMenu: false,
-    };
+      showMenu: false
+    }
   },
   computed: {
     ...mapState({
       isLogin: (state) => state.isLogin,
       cartLength: (state) =>
-        state.cartInfo.cartList ? state.cartInfo.cartList.length : 0,
-    }),
+        state.cartInfo.cartList ? state.cartInfo.cartList.length : 0
+    })
   },
   methods: {
-    openDrawer() {
-      this.$refs.drawer.drawer = true;
+    openDrawer () {
+      this.$refs.drawer.drawer = true
     },
-    openDrawerMobile() {
-      this.$refs.mobile.drawer = true;
-      this.showMenu = false;
+    openDrawerMobile () {
+      this.$refs.mobile.drawer = true
+      this.showMenu = false
     },
-    handleClickMenu() {
-      this.showMenu = false;
-    },
-  },
-};
+    handleClickMenu () {
+      this.showMenu = false
+    }
+  }
+}
 </script>
 
 <style scoped>

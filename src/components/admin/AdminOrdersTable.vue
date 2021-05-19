@@ -20,7 +20,7 @@
       <el-table-column prop="user.name" label="購買人" min-width="100">
       </el-table-column>
       <el-table-column
-        prop="is_paid"
+        prop="isPaid"
         label="付款狀態"
         min-width="100"
         :filters="[
@@ -32,9 +32,9 @@
         <template slot-scope="scope">
           <el-tag
             size="small"
-            :type="scope.row.is_paid ? 'info' : 'danger'"
+            :type="scope.row.isPaid ? 'info' : 'danger'"
             disable-transitions
-            >{{ scope.row.is_paid ? "已付款" : "尚未付款" }}</el-tag
+            >{{ scope.row.isPaid ? "已付款" : "尚未付款" }}</el-tag
           >
         </template>
       </el-table-column>
@@ -130,9 +130,9 @@
               ></el-input>
             </el-form-item>
 
-            <el-form-item label="付款狀態" prop="is_paid">
-              <el-checkbox v-model="editOrder.is_paid">{{
-                editOrder.is_paid ? "已付款" : "尚未付款"
+            <el-form-item label="付款狀態" prop="isPaid">
+              <el-checkbox v-model="editOrder.isPaid">{{
+                editOrder.isPaid ? "已付款" : "尚未付款"
               }}</el-checkbox>
             </el-form-item>
           </el-col>
@@ -149,27 +149,27 @@
 </template>
 
 <script>
-import adminAPI from "@/apis/admin.js";
-import { Toast } from "@/utils/helper.js";
-import mixin from "@/utils/mixin.js";
+import adminAPI from '@/apis/admin.js'
+import { Toast } from '@/utils/helper.js'
+import mixin from '@/utils/mixin.js'
 
 export default {
   metaInfo: {
-    name: "AdminOrdersTable",
-    title: "訂單列表",
+    name: 'AdminOrdersTable',
+    title: '訂單列表'
   },
-  data() {
+  data () {
     return {
       originOrder: [],
       OrdersList: [],
       isLoading: false,
       editOrder: {
         total: null,
-        is_paid: null,
-        userName: "",
-        userTel: "",
-        userAddress: "",
-        userEmail: "",
+        isPaid: null,
+        userName: '',
+        userTel: '',
+        userAddress: '',
+        userEmail: ''
       },
       editDialogVisible: false,
       detailDialogVisible: false,
@@ -178,168 +178,169 @@ export default {
         total: [
           {
             required: true,
-            message: "總金額為必填",
-            trigger: "blur",
-          },
+            message: '總金額為必填',
+            trigger: 'blur'
+          }
         ],
         userTel: [
           {
             required: true,
-            message: "訂購人電話為必填",
-            trigger: "blur",
+            message: '訂購人電話為必填',
+            trigger: 'blur'
           },
           {
-            type: "number",
-            message: "電話必須為數字",
-            trigger: "blur",
-          },
+            type: 'number',
+            message: '電話必須為數字',
+            trigger: 'blur'
+          }
         ],
         userName: [
           {
             required: true,
-            message: "訂購人姓名為必填",
-            trigger: "blur",
-          },
+            message: '訂購人姓名為必填',
+            trigger: 'blur'
+          }
         ],
         userEmail: [
           {
             required: true,
-            message: "訂購人信箱為必填",
-            trigger: "blur",
+            message: '訂購人信箱為必填',
+            trigger: 'blur'
           },
           {
-            type: "email",
-            message: "請輸入正確的 Email 格式",
-            trigger: "blur",
-          },
+            type: 'email',
+            message: '請輸入正確的 Email 格式',
+            trigger: 'blur'
+          }
         ],
         userAddress: [
           {
             required: true,
-            message: "訂購人地址必填",
-            trigger: "blur",
-          },
-        ],
-      },
-    };
+            message: '訂購人地址必填',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
   },
   mixins: [mixin],
-  created() {
-    const { page } = this.$route.query;
-    this.fetchOrdersList(page);
+  created () {
+    const { page } = this.$route.query
+    this.fetchOrdersList(page)
   },
   methods: {
-    filterTag(value, row) {
-      return row.is_paid === value;
+    filterTag (value, row) {
+      return row.isPaid === value
     },
-    async fetchOrdersList(page = 1) {
+    async fetchOrdersList (page = 1) {
       try {
-        this.isLoading = true;
-        const response = await adminAPI.getOrders(page);
+        this.isLoading = true
+        const response = await adminAPI.getOrders(page)
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
 
-        this.originOrder = response.data.orders;
+        this.originOrder = response.data.orders
         this.OrdersList = this.originOrder.map((item) => ({
-          createdAt: this.dateFormat(item.create_at) || "",
-          id: item.id || "",
-          is_paid: item.is_paid || null,
+          createdAt: this.dateFormat(item.create_at) || '',
+          id: item.id || '',
+          isPaid: item.is_paid || null,
           num: item.num || null,
-          paid_date: this.dateFormat(item.paid_date) || "",
+          paid_date: this.dateFormat(item.paid_date) || '',
           products: item.products,
           total: item.total || null,
-          user: { ...item.user } || null,
-        }));
-        this.$emit("renderPaginator", response.data.pagination);
-        this.isLoading = false;
+          user: { ...item.user } || null
+        }))
+        this.$emit('renderPaginator', response.data.pagination)
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
+        this.isLoading = false
+        console.log(error)
         return Toast.fire({
-          icon: "error",
-          title: "無法取得訂單資料，請稍後再試",
-        });
+          icon: 'error',
+          title: '無法取得訂單資料，請稍後再試'
+        })
       }
     },
-    showEditDialog(order) {
-      const { id, total, is_paid, user } = order;
+    showEditDialog (order) {
+      const { id, total, isPaid, user } = order
 
       this.editOrder = {
         id,
         total,
-        is_paid,
-        userName: user.name || "",
-        userTel: user.tel || "",
-        userAddress: user.address || "",
-        userEmail: user.email || "",
-      };
-      this.editDialogVisible = true;
+        isPaid,
+        userName: user.name || '',
+        userTel: user.tel || '',
+        userAddress: user.address || '',
+        userEmail: user.email || ''
+      }
+      this.editDialogVisible = true
     },
-    editDialogClosed() {
-      this.resetForm("editForm");
-      this.editDialogVisible = false;
+    editDialogClosed () {
+      this.resetForm('editForm')
+      this.editDialogVisible = false
     },
-    validateForm(formName) {
+    validateForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.handleSubmit();
+          this.handleSubmit()
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
-    async handleSubmit() {
+    async handleSubmit () {
       try {
-        this.isLoading = true;
+        this.isLoading = true
         const {
           total,
-          is_paid,
+          isPaid,
           userName,
           userTel,
           userAddress,
-          userEmail,
-        } = this.editOrder;
+          userEmail
+        } = this.editOrder
         const originData = this.originOrder.find(
           (item) => item.id === this.editOrder.id
-        );
+        )
         const editData = {
           ...originData,
           total,
-          is_paid,
+          is_paid: isPaid,
           user: {
             name: userName,
             tel: userTel,
             address: userAddress,
-            email: userEmail,
-          },
-        };
+            email: userEmail
+          }
+        }
 
         const response = await adminAPI.editOrder({
           id: this.editOrder.id,
-          data: editData,
-        });
+          data: editData
+        })
         if (response.data.success !== true) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message)
         }
 
         // 重新取得訂單列表，重置表單並關閉對話框
-        await this.fetchOrdersList();
-        this.resetForm("editForm");
-        this.editDialogVisible = false;
-        this.isLoading = false;
+        await this.fetchOrdersList()
+        this.resetForm('editForm')
+        this.editDialogVisible = false
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     },
-    showDetailDialog(order) {
-      this.currDetailList = Object.values(order.products);
-      this.detailDialogVisible = true;
-    },
-  },
-};
+    showDetailDialog (order) {
+      this.currDetailList = Object.values(order.products)
+      this.detailDialogVisible = true
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -13,21 +13,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 export default {
-  name: "AsideMenu",
+  name: 'AsideMenu',
   computed: {
-    ...mapGetters(["categoryList"]),
+    ...mapGetters(['categoryList'])
   },
   methods: {
-    handleSelect(item) {
-      this.$store.commit("setCategory", item);
-    },
+    handleSelect (item) {
+      this.$store.commit('setCategory', item)
+    }
   },
-  created() {
-    this.$store.commit("setCategory", "全部");
-  },
-};
+  created () {
+    this.$store.commit('setCategory', '全部')
+  }
+}
 </script>
 
 <style scoped>

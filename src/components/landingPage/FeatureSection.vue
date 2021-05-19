@@ -32,32 +32,32 @@
 
 <script>
 export default {
-  name: "FeatureSection",
-  data() {
+  name: 'FeatureSection',
+  data () {
     return {
       featureList: [
         {
-          image: "https://i.imgur.com/1ex8OSw.png",
-          title: "專業、安全為優先",
+          image: 'https://i.imgur.com/1ex8OSw.png',
+          title: '專業、安全為優先',
           info:
-            "為 PADI 認證五星潛水中心，小班制的專業教學及活動安排，活動期間遵守教練指示，都能放膽玩、安心玩",
+            '為 PADI 認證五星潛水中心，小班制的專業教學及活動安排，活動期間遵守教練指示，都能放膽玩、安心玩'
         },
         {
-          image: "https://i.imgur.com/dTCWG3a.png",
-          title: "夥伴同行不孤單",
+          image: 'https://i.imgur.com/dTCWG3a.png',
+          title: '夥伴同行不孤單',
           info:
-            "創造學員社群，只要參與過 DIVE IN 的課程都可以加入，不論是尋找潛伴或是揪團冒險，不怕沒有伴、只怕你不來",
+            '創造學員社群，只要參與過 DIVE IN 的課程都可以加入，不論是尋找潛伴或是揪團冒險，不怕沒有伴、只怕你不來'
         },
         {
-          image: "https://i.imgur.com/nlAq9In.png",
-          title: "精采生活零設限",
+          image: 'https://i.imgur.com/nlAq9In.png',
+          title: '精采生活零設限',
           info:
-            "不定期推出國內外潛水旅遊或探險新企劃，哪裡好玩我們就去哪裡，拋開壓力與煩惱，玩樂生活自己創造",
-        },
-      ],
-    };
-  },
-};
+            '不定期推出國內外潛水旅遊或探險新企劃，哪裡好玩我們就去哪裡，拋開壓力與煩惱，玩樂生活自己創造'
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped>

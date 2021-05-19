@@ -28,35 +28,34 @@
   </el-aside>
 </template>
 
-
 <script>
-import authorizationAPI from "@/apis/authorization.js";
+import authorizationAPI from '@/apis/authorization.js'
 
 export default {
-  name: "AdminSidebar",
-  data() {
+  name: 'AdminSidebar',
+  data () {
     return {
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   methods: {
-    handleChange(index) {
-      this.$emit("changeTable", index);
+    handleChange (index) {
+      this.$emit('changeTable', index)
     },
-    async adminLogOut() {
+    async adminLogOut () {
       try {
-        this.isLoading = true;
-        const response = await authorizationAPI.logOut();
-        this.$store.commit("setLoginStatus", !response.data.success);
-        this.$router.push("/admin/signin");
-        this.isLoading = false;
+        this.isLoading = true
+        const response = await authorizationAPI.logOut()
+        this.$store.commit('setLoginStatus', !response.data.success)
+        this.$router.push('/admin/signin')
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
-        this.$message.error(`${error.message}，請再試一次`);
+        this.isLoading = false
+        this.$message.error(`${error.message}，請再試一次`)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -194,204 +194,204 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import adminAPI from "@/apis/admin.js";
+import { mapGetters } from 'vuex'
+import adminAPI from '@/apis/admin.js'
 
 export default {
-  name: "ProductUpdateDialog",
-  data() {
+  name: 'ProductUpdateDialog',
+  data () {
     return {
       isLoading: false,
       editTarget: {
-        category: "",
-        content: "",
-        description: "",
-        id: "",
-        image: "",
+        category: '',
+        content: '',
+        description: '',
+        id: '',
+        image: '',
         is_enabled: null,
         origin_price: null,
         price: null,
-        title: "",
-        unit: "",
+        title: '',
+        unit: ''
       },
       addCategory: false,
-      cacheCategory: "",
+      cacheCategory: '',
       UpdateDialogVisible: false,
       imageHeader: {
         Authorization: document.cookie.replace(
           /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-          "$1"
-        ),
+          '$1'
+        )
       },
       uploadPath: process.env.VUE_APP_UPLOAD_URL,
       rules: {
         title: [
           {
             required: true,
-            message: "產品名稱為必填",
-            trigger: "blur",
-          },
+            message: '產品名稱為必填',
+            trigger: 'blur'
+          }
         ],
         category: [
           {
             required: true,
-            message: "分類為必填",
-            trigger: "blur",
-          },
+            message: '分類為必填',
+            trigger: 'blur'
+          }
         ],
         content: [
           {
             required: true,
-            message: "簡介為必填",
-            trigger: "blur",
-          },
+            message: '簡介為必填',
+            trigger: 'blur'
+          }
         ],
         price: [
           {
             required: true,
-            message: "售價為必填",
-            trigger: "blur",
-          },
+            message: '售價為必填',
+            trigger: 'blur'
+          }
         ],
         unit: [
           {
             required: true,
-            message: "單位為必填",
-            trigger: "blur",
-          },
-        ],
-      },
-    };
+            message: '單位為必填',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
   },
   computed: {
-    ...mapGetters(["categoryList"]),
+    ...mapGetters(['categoryList'])
   },
   methods: {
     // ***** 對話框控制 ****** //
-    handleOpenDialog(product) {
+    handleOpenDialog (product) {
       this.editTarget = {
-        ...product,
-      };
-      this.UpdateDialogVisible = true;
+        ...product
+      }
+      this.UpdateDialogVisible = true
     },
-    async handleBeforeClose(done) {
+    async handleBeforeClose (done) {
       try {
-        await this.$confirm("確定不存檔關閉嗎？");
-        this.handleDialogClosed();
-        done();
+        await this.$confirm('確定不存檔關閉嗎？')
+        this.handleDialogClosed()
+        done()
       } catch (error) {
-        return;
+
       }
     },
-    handleDialogClosed() {
-      this.resetForm("editForm");
-      this.UpdateDialogVisible = false;
+    handleDialogClosed () {
+      this.resetForm('editForm')
+      this.UpdateDialogVisible = false
     },
     // ***** 表單行為 ****** //
-    handleConfirmAddCategory() {
+    handleConfirmAddCategory () {
       this.editTarget = {
         ...this.editTarget,
-        category: this.cacheCategory,
-      };
+        category: this.cacheCategory
+      }
     },
-    handleCancelAddCategory() {
-      this.cacheCategory = "";
-      this.editTarget.category = "";
-      this.addCategory = false;
+    handleCancelAddCategory () {
+      this.cacheCategory = ''
+      this.editTarget.category = ''
+      this.addCategory = false
     },
-    validateForm(formName) {
+    validateForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.handleSubmit();
+          this.handleSubmit()
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
-    async handleSubmit() {
+    async handleSubmit () {
       try {
-        this.isLoading = true;
+        this.isLoading = true
         // 如果有id就編輯、沒有id則新增
         if (this.editTarget.id) {
           await this.submitEdit({
             id: this.editTarget.id,
-            data: this.editTarget,
-          });
+            data: this.editTarget
+          })
         } else {
-          await this.submitCreate({ data: this.editTarget });
+          await this.submitCreate({ data: this.editTarget })
         }
         // 通知父層重新取得產品列表（管理員列表更新）
-        this.$emit("after-submit");
-        this.resetForm("editForm");
-        this.UpdateDialogVisible = false;
-        this.isLoading = false;
+        this.$emit('after-submit')
+        this.resetForm('editForm')
+        this.UpdateDialogVisible = false
+        this.isLoading = false
         // 請store重新取得所有產品（客戶首頁產品更新）
-        this.$store.dispatch("fetchProducts");
+        this.$store.dispatch('fetchProducts')
       } catch (error) {
-        this.isLoading = false;
-        this.UpdateDialogVisible = false;
-        this.$message.error(`無法更新資料，請稍後再試`);
+        this.isLoading = false
+        this.UpdateDialogVisible = false
+        this.$message.error('無法更新資料，請稍後再試')
       }
     },
-    async submitEdit({ id, data }) {
+    async submitEdit ({ id, data }) {
       try {
         const response = await adminAPI.editProduct({
           id,
-          data,
-        });
+          data
+        })
         if (response.data.success !== true) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message)
         }
       } catch (error) {
-        throw new Error(error);
+        throw new Error(error)
       }
     },
-    async submitCreate({ data }) {
+    async submitCreate ({ data }) {
       try {
         const response = await adminAPI.addProduct({
-          data,
-        });
+          data
+        })
         if (response.data.success !== true) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message)
         }
       } catch (error) {
-        throw new Error(error);
+        throw new Error(error)
       }
     },
-    resetForm(formName) {
-      this.cacheCategory = "";
-      this.addCategory = false;
-      this.$refs[formName].resetFields();
+    resetForm (formName) {
+      this.cacheCategory = ''
+      this.addCategory = false
+      this.$refs[formName].resetFields()
     },
     // ***** 圖片處理 ****** //
 
     // 上傳前確認格式及大小，並整理成formData
-    beforeAvatarUpload(file) {
-      if (!file) return;
-      const isLt1M = file.size < 1 * 1024 * 1024;
-      const isJPG = file.type === "image/jpeg";
+    beforeAvatarUpload (file) {
+      if (!file) return
+      const isLt1M = file.size < 1 * 1024 * 1024
+      const isJPG = file.type === 'image/jpeg'
       if (!isLt1M) {
-        this.$message.error("檔案必須小於 1 MB");
-        return isLt1M;
+        this.$message.error('檔案必須小於 1 MB')
+        return isLt1M
       }
       if (!isJPG) {
-        this.$message.error("檔案格式錯誤");
-        return isJPG;
+        this.$message.error('檔案格式錯誤')
+        return isJPG
       }
-      const formData = new FormData();
-      return formData.append("file-to-upload", file);
+      const formData = new FormData()
+      return formData.append('file-to-upload', file)
     },
     // 上傳成功 -> 存下回傳的url
-    handleUplaodSuccess(res) {
+    handleUplaodSuccess (res) {
       if (res.success !== true) {
-        return this.$message.error(`${res.message}`);
+        return this.$message.error(`${res.message}`)
       }
-      this.editTarget.image = res.imageUrl;
+      this.editTarget.image = res.imageUrl
     },
     // 上傳失敗 -> 回傳錯誤訊息
-    handleError(err) {
-      return this.$message.error(`${err.message}`);
-    },
-  },
-};
+    handleError (err) {
+      return this.$message.error(`${err.message}`)
+    }
+  }
+}
 </script>

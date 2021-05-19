@@ -6,19 +6,19 @@
 </template>
 
 <script>
-import PufferFish from "../components/animation/PufferFish.vue";
+import PufferFish from '../components/animation/PufferFish.vue'
 export default {
-  name: "Loading",
+  name: 'Loading',
   components: {
-    PufferFish,
-  },
-};
+    PufferFish
+  }
+}
 </script>
 
 <style scoped>
 .container {
   width: 100%;
-  height: 60vh;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -65,97 +65,97 @@
 </template>
 
 <script>
-import customerAPI from "../apis/customer.js";
-import cartMixin from "../utils/cartMixin.js";
-import AddToCartDialog from "../components/AddToCartDialog.vue";
-import RelativeProduct from "../components/RelatvieProduct.vue";
-import Loading from "../components/Loading.vue";
+import customerAPI from '../apis/customer.js'
+import cartMixin from '../utils/cartMixin.js'
+import AddToCartDialog from '../components/AddToCartDialog.vue'
+import RelativeProduct from '../components/RelatvieProduct.vue'
+import Loading from '../components/Loading.vue'
 
 export default {
-  name: "product",
+  name: 'product',
   components: {
     AddToCartDialog,
     RelativeProduct,
-    Loading,
+    Loading
   },
-  metaInfo() {
+  metaInfo () {
     return {
-      title: this.product.title,
-    };
+      title: this.product.title
+    }
   },
-  data() {
+  data () {
     return {
       product: {
-        category: "",
-        content: "",
-        description: "",
-        id: "",
-        image: "",
+        category: '',
+        content: '',
+        description: '',
+        id: '',
+        image: '',
         is_enabled: 0,
         num: 1,
         origin_price: null,
         price: null,
-        title: "",
-        unit: "",
+        title: '',
+        unit: ''
       },
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   mixins: [cartMixin],
-  created() {
-    const { id } = this.$route.params;
-    this.fetchProduct(id);
+  created () {
+    const { id } = this.$route.params
+    this.fetchProduct(id)
   },
-  beforeRouteUpdate(to, from, next) {
-    const { id } = to.params;
-    this.fetchProduct(id);
-    next();
+  beforeRouteUpdate (to, from, next) {
+    const { id } = to.params
+    this.fetchProduct(id)
+    next()
   },
   methods: {
-    async fetchProduct(id) {
+    async fetchProduct (id) {
       try {
-        this.isLoading = true;
-        const response = await customerAPI.getProduct({ id });
+        this.isLoading = true
+        const response = await customerAPI.getProduct({ id })
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
         // 處理描述
-        const description = response.data.product.description;
-        const descript = description ? description.split("#").slice(0) : [];
-        const descriptTitle = [];
-        const descriptInfo = [];
+        const description = response.data.product.description
+        const descript = description ? description.split('#').slice(0) : []
+        const descriptTitle = []
+        const descriptInfo = []
         descript.forEach((item, index) => {
           if (index % 2 === 0) {
-            descriptTitle.push(item);
+            descriptTitle.push(item)
           } else {
-            const items = item.split("|");
-            descriptInfo.push(items);
+            const items = item.split('|')
+            descriptInfo.push(items)
           }
-        });
+        })
         const desctiptionFormat = descriptTitle.map((title, index) => {
           return {
             title: title,
-            infos: descriptInfo[index],
-          };
-        });
+            infos: descriptInfo[index]
+          }
+        })
         this.product = {
           ...this.product,
           ...response.data.product,
-          description: desctiptionFormat,
-        };
-        this.isLoading = false;
-        this.$refs.relative.category = this.product.category;
-        this.$refs.relative.currId = this.product.id;
+          description: desctiptionFormat
+        }
+        this.isLoading = false
+        this.$refs.relative.category = this.product.category
+        this.$refs.relative.currId = this.product.id
       } catch (error) {
-        this.$message.error("無法取得頁面，請稍後再試");
-        this.isLoading = false;
+        this.$message.error('無法取得頁面，請稍後再試')
+        this.isLoading = false
       }
     },
-    handleOpenDialog() {
-      this.$refs.dialog.handleOpen(this.product);
-    },
-  },
-};
+    handleOpenDialog () {
+      this.$refs.dialog.handleOpen(this.product)
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -56,45 +56,45 @@
 </template>
 
 <script>
-import customerAPI from "../apis/customer.js";
-import mixin from "../utils/mixin.js";
-import { mapState } from "vuex";
-import Loading from "../components/Loading.vue";
+import customerAPI from '../apis/customer.js'
+import mixin from '../utils/mixin.js'
+import { mapState } from 'vuex'
+import Loading from '../components/Loading.vue'
 
 export default {
-  name: "Order",
+  name: 'Order',
   props: {
     currOrderId: {
       type: String,
-      require: true,
+      require: true
     },
     fromCheckout: {
       type: Boolean,
-      require: true,
-    },
+      require: true
+    }
   },
   mixins: [mixin],
   components: {
-    Loading,
+    Loading
   },
-  data() {
+  data () {
     return {
       orderIsPaid: false,
       orderList: [],
       productsList: [],
-      showPayBtn: false,
-    };
+      showPayBtn: false
+    }
   },
   computed: {
-    ...mapState(["isLoading"]),
+    ...mapState(['isLoading'])
   },
   methods: {
-    async fetchOrder(orderId) {
+    async fetchOrder (orderId) {
       try {
-        this.$store.commit("setLoading", true);
-        const response = await customerAPI.getOrder(orderId);
+        this.$store.commit('setLoading', true)
+        const response = await customerAPI.getOrder(orderId)
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
         const {
           create_at: createdAt,
@@ -102,63 +102,63 @@ export default {
           is_paid: isPaid,
           products,
           total,
-          user,
-        } = response.data.order;
+          user
+        } = response.data.order
 
-        this.orderIsPaid = isPaid;
+        this.orderIsPaid = isPaid
         if (this.fromCheckout) {
-          this.showPayBtn = false;
+          this.showPayBtn = false
         } else {
-          this.showPayBtn = !isPaid;
+          this.showPayBtn = !isPaid
         }
         this.orderList.push({
           id,
           orderDate: this.dateFormat(createdAt),
-          isPaid: isPaid ? "已付款" : "尚未付款",
+          isPaid: isPaid ? '已付款' : '尚未付款',
           orderSum: total,
-          userName: user ? user.name : "-",
-          userEmail: user ? user.email : "-",
-          userAddress: user ? user.address : "-",
-          userTel: user ? user.tel : "-",
-        });
+          userName: user ? user.name : '-',
+          userEmail: user ? user.email : '-',
+          userAddress: user ? user.address : '-',
+          userTel: user ? user.tel : '-'
+        })
         this.productsList = Object.values(products).map((item) => ({
-          isCoupon: item.coupon ? "已套用" : "",
+          isCoupon: item.coupon ? '已套用' : '',
           qty: item.qty,
           originPrice: item.product.price,
           productName: item.product.title,
-          productUnit: item.product.unit,
-        }));
-        this.$store.commit("setLoading", false);
-        this.$emit("openDialog");
+          productUnit: item.product.unit
+        }))
+        this.$store.commit('setLoading', false)
+        this.$emit('openDialog')
       } catch (error) {
-        this.$message.error("無法取得訂單，請稍後再試");
-        this.$store.commit("setLoading", false);
+        this.$message.error('無法取得訂單，請稍後再試')
+        this.$store.commit('setLoading', false)
       }
     },
-    async payOrder(orderId) {
+    async payOrder (orderId) {
       try {
-        this.$store.commit("setLoading", true);
-        const response = await customerAPI.payOrder(orderId);
+        this.$store.commit('setLoading', true)
+        const response = await customerAPI.payOrder(orderId)
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
         this.orderList = this.orderList.map((item) => ({
           ...item,
-          isPaid: "已付款",
-        }));
-        this.orderIsPaid = true;
-        this.$store.commit("setLoading", false);
-        this.$emit("after-pay-order");
+          isPaid: '已付款'
+        }))
+        this.orderIsPaid = true
+        this.$store.commit('setLoading', false)
+        this.$emit('after-pay-order')
       } catch (error) {
-        this.$message.error("無法完成付款，請稍後再試");
-        this.$store.commit("setLoading", false);
+        this.$message.error('無法完成付款，請稍後再試')
+        this.$store.commit('setLoading', false)
       }
-    },
+    }
   },
-  created() {
-    this.fetchOrder(this.currOrderId);
-  },
-};
+  created () {
+    this.fetchOrder(this.currOrderId)
+  }
+}
 </script>
 
 <style scoped>

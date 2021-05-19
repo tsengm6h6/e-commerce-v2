@@ -32,25 +32,25 @@
 </template>
 
 <script>
-import AdminSidebar from "@/components/admin/AdminSidebar.vue";
-import AdminProductsTable from "@/components/admin/AdminProductsTable.vue";
-import AdminCouponsTable from "@/components/admin/AdminCouponsTable.vue";
-import AdminOrdersTable from "@/components/admin/AdminOrdersTable.vue";
-import { mapState } from "vuex";
+import AdminSidebar from '@/components/admin/AdminSidebar.vue'
+import AdminProductsTable from '@/components/admin/AdminProductsTable.vue'
+import AdminCouponsTable from '@/components/admin/AdminCouponsTable.vue'
+import AdminOrdersTable from '@/components/admin/AdminOrdersTable.vue'
+import { mapState } from 'vuex'
 
 export default {
-  name: "AdminProducts",
+  name: 'AdminProducts',
   components: {
     AdminSidebar,
     AdminProductsTable,
     AdminOrdersTable,
-    AdminCouponsTable,
+    AdminCouponsTable
   },
   metaInfo: {
-    title: "",
-    titleTemplate: "管理員頁面 | %s",
+    title: '',
+    titleTemplate: '管理員頁面 | %s'
   },
-  data() {
+  data () {
     return {
       activeIndex: 1,
       pagination: {
@@ -58,50 +58,50 @@ export default {
         current_page: 1,
         has_next: null,
         has_pre: null,
-        total_pages: 1,
-      },
-    };
+        total_pages: 1
+      }
+    }
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState(['isLogin'])
   },
-  created() {
+  created () {
     if (!this.isLogin) {
-      this.$router.push("/admin/signin");
-      this.$message.warning("請先登入");
+      this.$router.push('/admin/signin')
+      this.$message.warning('請先登入')
     }
   },
   methods: {
-    changeTable(index) {
-      this.activeIndex = index;
+    changeTable (index) {
+      this.activeIndex = index
       this.$router.push({
-        path: "/admin/dashboard",
+        path: '/admin/dashboard',
         query: {
           activeIndex: index,
-          page: 1,
-        },
-      });
+          page: 1
+        }
+      })
     },
-    renderPaginator(payload) {
+    renderPaginator (payload) {
       this.pagination = {
-        ...payload,
-      };
+        ...payload
+      }
     },
-    handlePageChange(val) {
-      if (this.activeIndex === 1) this.$refs.products.fetchProductsList(val);
-      if (this.activeIndex === 2) this.$refs.orders.fetchOrdersList(val);
-      if (this.activeIndex === 3) this.$refs.products.fetchCouponsList(val);
+    handlePageChange (val) {
+      if (this.activeIndex === 1) this.$refs.products.fetchProductsList(val)
+      if (this.activeIndex === 2) this.$refs.orders.fetchOrdersList(val)
+      if (this.activeIndex === 3) this.$refs.products.fetchCouponsList(val)
 
       this.$router.push({
-        path: "/admin/dashboard",
+        path: '/admin/dashboard',
         query: {
           page: val,
-          activeIndex: this.activeIndex,
-        },
-      });
-    },
-  },
-};
+          activeIndex: this.activeIndex
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -113,4 +113,3 @@ export default {
   margin-top: 20px;
 }
 </style>
-  

@@ -32,7 +32,7 @@
               align="center"
             ></el-table-column>
             <el-table-column
-              prop="is_paid"
+              prop="isPaid"
               label="付款狀態"
               min-width="100"
               align="center"
@@ -45,9 +45,9 @@
               <template slot-scope="scope">
                 <el-tag
                   size="small"
-                  :type="scope.row.is_paid ? 'info' : 'danger'"
+                  :type="scope.row.isPaid ? 'info' : 'danger'"
                   disable-transitions
-                  >{{ scope.row.is_paid ? "已付款" : "尚未付款" }}</el-tag
+                  >{{ scope.row.isPaid ? "已付款" : "尚未付款" }}</el-tag
                 >
               </template>
             </el-table-column>
@@ -81,79 +81,86 @@
 </template>
 
 <script>
-import Order from "../components/Order.vue";
-import customerAPI from "../apis/customer.js";
-import mixin from "../utils/mixin.js";
-import Loading from "../components/Loading.vue";
-import Breadcrumb from "../components/Breadcrumb.vue";
+import Order from '../components/Order.vue'
+import customerAPI from '../apis/customer.js'
+import mixin from '../utils/mixin.js'
+import Loading from '../components/Loading.vue'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 export default {
-  name: "orders",
+  name: 'orders',
   components: {
     Order,
     Loading,
-    Breadcrumb,
+    Breadcrumb
   },
   metaInfo: {
-    title: "我的訂單",
+    title: '我的訂單'
   },
-  data() {
+  data () {
     return {
       orders: [],
       pagination: {},
       isLoading: false,
-      currOrderId: "",
-    };
+      currOrderId: ''
+    }
   },
   mixins: [mixin],
   methods: {
-    async fetchOrders(page = 1) {
+    async fetchOrders (page = 1) {
       try {
-        this.isLoading = true;
-        const response = await customerAPI.getOrders(page);
+        this.isLoading = true
+        const response = await customerAPI.getOrders(page)
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
         this.orders = response.data.orders.map((item) => {
-          const { create_at: createdAt, id, is_paid, num, total, user } = item;
+          const {
+            create_at: createdAt,
+            id,
+            is_paid: isPaid,
+            num,
+            total,
+            user
+          } = item
           return {
             createdAt: this.dateFormat(createdAt),
             id,
-            is_paid,
+            isPaid,
             num,
             total,
-            userName: user ? user.name : "-",
-          };
-        });
-        this.pagination = { ...response.data.pagination };
-        this.isLoading = false;
+            userName: user ? user.name : '-'
+          }
+        })
+        this.pagination = { ...response.data.pagination }
+        this.isLoading = false
       } catch (error) {
-        this.$message.error("無法取得訂單列表，請稍後再試");
-        this.isLoading = false;
+        this.$message.error('無法取得訂單列表，請稍後再試')
+        this.isLoading = false
       }
     },
-    handlePageChange(page) {
-      this.fetchOrders(page);
+    handlePageChange (page) {
+      this.fetchOrders(page)
       this.$router.push({
-        path: "/orders",
+        path: '/orders',
         query: {
-          page: page,
-        },
-      });
+          page: page
+        }
+      })
     },
-    filterTag(value, row) {
-      return row.is_paid === value;
+    filterTag (value, row) {
+      return row.isPaid === value
     },
-    afterPayOrder() {
-      const { page } = this.$route.query;
-      this.fetchOrders(page);
-    },
+    afterPayOrder () {
+      const { page } = this.$route.query
+      this.fetchOrders(page)
+    }
   },
-  created() {
-    const { page } = this.$route.query;
-    this.fetchOrders(page);
-  },
-};
+  created () {
+    const { page } = this.$route.query
+    this.fetchOrders(page)
+  }
+}
 </script>
 
 <style scoped>

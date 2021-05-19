@@ -40,19 +40,19 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  name: "TripSection",
+  name: 'TripSection',
   computed: {
     ...mapState({
       tripList: (state) =>
         state.productsList
-          .filter((item) => item.category === "潛水旅遊")
-          .slice(0, 4),
-    }),
-  },
-};
+          .filter((item) => item.category === '潛水旅遊')
+          .slice(0, 4)
+    })
+  }
+}
 </script>
 
 <style scoped>

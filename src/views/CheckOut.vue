@@ -92,74 +92,74 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Order from "../components/Order.vue";
-import CartInfo from "../components/cart/CartInfo.vue";
-import CartForm from "../components/cart/CartForm.vue";
-import cartMixin from "../utils/cartMixin.js";
+import { mapState } from 'vuex'
+import Order from '../components/Order.vue'
+import CartInfo from '../components/cart/CartInfo.vue'
+import CartForm from '../components/cart/CartForm.vue'
+import cartMixin from '../utils/cartMixin.js'
 
 export default {
-  name: "CartList",
+  name: 'CartList',
   components: {
     Order,
     CartInfo,
-    CartForm,
+    CartForm
   },
   metaInfo: {
-    title: "購物車結帳",
+    title: '購物車結帳'
   },
   mixins: [cartMixin],
-  data() {
+  data () {
     return {
       active: 0,
-      currOrderId: "",
-    };
+      currOrderId: ''
+    }
   },
   computed: {
-    ...mapState(["isLoading"]),
+    ...mapState(['isLoading'])
   },
-  created() {
-    const { isPost = null } = this.getLocalStorage();
+  created () {
+    const { isPost = null } = this.getLocalStorage()
     // 如果已經Post過，直接進入Step 2
-    if (isPost) this.next();
+    if (isPost) this.next()
   },
   methods: {
-    next() {
-      this.active++;
+    next () {
+      this.active++
 
       if (this.active > 3) {
-        this.active = 0;
+        this.active = 0
       }
     },
-    async handleConfirmCart() {
+    async handleConfirmCart () {
       try {
-        await this.$confirm("請再次確認商品，下一步後將無法更改", "Warning", {
-          confirmButtonText: "確認",
-          cancelButtonText: "取消",
-          type: "warning",
-          center: true,
-        });
-        await this.$refs.cartInfo.postLocalCartListToCart();
-        this.next();
+        await this.$confirm('請再次確認商品，下一步後將無法更改', 'Warning', {
+          confirmButtonText: '確認',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+        await this.$refs.cartInfo.postLocalCartListToCart()
+        this.next()
       } catch (error) {
-        this.$message.error("無法確認商品，請稍後再試");
+        this.$message.error('無法確認商品，請稍後再試')
       }
     },
-    handleSubmit() {
-      this.$refs.cartForm.validateForm("userForm");
+    handleSubmit () {
+      this.$refs.cartForm.validateForm('userForm')
     },
-    afterFormSubmit(orderId) {
-      this.currOrderId = orderId;
-      this.next();
+    afterFormSubmit (orderId) {
+      this.currOrderId = orderId
+      this.next()
     },
-    handlePayOrder() {
-      this.$refs.order.payOrder(this.currOrderId);
+    handlePayOrder () {
+      this.$refs.order.payOrder(this.currOrderId)
     },
-    afterPayOrder() {
-      this.next();
-    },
-  },
-};
+    afterPayOrder () {
+      this.next()
+    }
+  }
+}
 </script>
 
 <style scoped>

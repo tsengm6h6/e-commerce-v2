@@ -52,38 +52,38 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import AddToCartDialog from "./AddToCartDialog.vue";
+import { mapState } from 'vuex'
+import AddToCartDialog from './AddToCartDialog.vue'
 
 export default {
-  name: "productCard",
+  name: 'productCard',
   props: {
     initProduct: {
       type: Object,
-      require: true,
-    },
+      require: true
+    }
   },
   components: {
-    AddToCartDialog,
+    AddToCartDialog
   },
-  data() {
+  data () {
     return {
-      product: this.initProduct,
-    };
+      product: this.initProduct
+    }
   },
   computed: {
-    ...mapState(["isLoading"]),
+    ...mapState(['isLoading'])
   },
   methods: {
-    handleOpenDialog() {
-      this.$refs.dialog.handleOpen(this.product);
+    handleOpenDialog () {
+      this.$refs.dialog.handleOpen(this.product)
     },
-    toggleFavorite(productId) {
-      this.product.isFavorite = !this.product.isFavorite;
-      this.$emit("toggle-favorite", productId);
-    },
-  },
-};
+    toggleFavorite (productId) {
+      this.product.isFavorite = !this.product.isFavorite
+      this.$emit('toggle-favorite', productId)
+    }
+  }
+}
 </script>
 
 <style scoped>

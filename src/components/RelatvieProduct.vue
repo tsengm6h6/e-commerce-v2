@@ -37,32 +37,32 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  name: "RelativeProduct",
-  data() {
+  name: 'RelativeProduct',
+  data () {
     return {
-      category: "",
-      currId: "",
-      relativeList: [],
-    };
+      category: '',
+      currId: '',
+      relativeList: []
+    }
   },
   watch: {
     currId: {
-      handler(newId) {
+      handler (newId) {
         this.relativeList = this.productsList
           .filter(
             (item) => item.category === this.category && item.id !== newId
           )
-          .slice(0, 3);
-      },
-    },
+          .slice(0, 3)
+      }
+    }
   },
   computed: {
-    ...mapState(["productsList"]),
-  },
-};
+    ...mapState(['productsList'])
+  }
+}
 </script>
 
 <style scoped>

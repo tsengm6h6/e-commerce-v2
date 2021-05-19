@@ -103,63 +103,63 @@
 </template>
 
 <script>
-import customerAPI from "@/apis/customer.js";
-import { mapState } from "vuex";
-import cartMixin from "@/utils/cartMixin.js";
+import customerAPI from '@/apis/customer.js'
+import { mapState } from 'vuex'
+import cartMixin from '@/utils/cartMixin.js'
 
 export default {
-  name: "CartInfo",
+  name: 'CartInfo',
   mixins: [cartMixin],
   watch: {
     cartList: {
-      handler() {
+      handler () {
         if (!this.cartList.length) {
-          this.$message.success("購物車空空的，歡迎繼續購物");
-          return this.$router.push("/products");
+          this.$message.success('購物車空空的，歡迎繼續購物')
+          return this.$router.push('/products')
         }
-      },
-    },
+      }
+    }
   },
-  created() {
-    if (!this.cartList.length) return this.$router.push("/products");
+  created () {
+    if (!this.cartList.length) return this.$router.push('/products')
   },
   computed: {
     ...mapState({
       cartList: (state) => state.cartInfo.cartList,
       total: (state) => state.cartInfo.total,
-      isLoading: (state) => state.isLoading,
-    }),
+      isLoading: (state) => state.isLoading
+    })
   },
   methods: {
-    async postLocalCartListToCart() {
-      this.$store.commit("setLoading", true);
+    async postLocalCartListToCart () {
+      this.$store.commit('setLoading', true)
       await Promise.all(
         Array.from(this.cartList, async (item) => {
           const addData = {
             product_id: item.product_id,
-            qty: item.qty,
-          };
-          await this.postToCart({ addData });
+            qty: item.qty
+          }
+          await this.postToCart({ addData })
         })
-      );
-      this.updateLocalCartStatus("isPost", true);
-      this.$store.commit("setLoading", false);
+      )
+      this.updateLocalCartStatus('isPost', true)
+      this.$store.commit('setLoading', false)
     },
-    async postToCart({ addData }) {
+    async postToCart ({ addData }) {
       try {
-        const response = await customerAPI.postToCart({ data: addData });
+        const response = await customerAPI.postToCart({ data: addData })
         if (response.data.success !== true || !response.data.data.id) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message)
         }
       } catch (error) {
-        this.$message.error("無法確認購物車數量，請稍後再試");
-        this.$store.commit("setLoading", false);
+        this.$message.error('無法確認購物車數量，請稍後再試')
+        this.$store.commit('setLoading', false)
       }
     },
-    getSummaries() {
-      const sums = ["", "", "", "", "", "", "總價", this.total];
-      return sums;
-    },
-  },
-};
+    getSummaries () {
+      const sums = ['', '', '', '', '', '', '總價', this.total]
+      return sums
+    }
+  }
+}
 </script>

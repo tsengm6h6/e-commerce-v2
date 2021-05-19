@@ -15,26 +15,26 @@
 
 <script>
 export default {
-  name: "Breadcrumb",
-  data() {
+  name: 'Breadcrumb',
+  data () {
     return {
-      breadcrumbList: [],
-    };
+      breadcrumbList: []
+    }
   },
   methods: {
-    updateBreadcrumb() {
-      this.breadcrumbList = this.$route.meta.breadcrumb;
+    updateBreadcrumb () {
+      this.breadcrumbList = this.$route.meta.breadcrumb
     },
-    pushRouteTo(index) {
+    pushRouteTo (index) {
       if (this.breadcrumbList[index].link) {
-        this.$router.push({ name: this.breadcrumbList[index].link });
+        this.$router.push({ name: this.breadcrumbList[index].link })
       }
-    },
+    }
   },
-  mounted() {
-    this.updateBreadcrumb();
-  },
-};
+  mounted () {
+    this.updateBreadcrumb()
+  }
+}
 </script>
 
 <style scoped>

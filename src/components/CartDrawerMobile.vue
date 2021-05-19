@@ -53,14 +53,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import cartMixin from "../utils/cartMixin.js";
+import { mapState } from 'vuex'
+import cartMixin from '../utils/cartMixin.js'
 export default {
-  name: "CartDrawerMobile",
-  data() {
+  name: 'CartDrawerMobile',
+  data () {
     return {
-      drawer: false,
-    };
+      drawer: false
+    }
   },
   mixins: [cartMixin],
   computed: {
@@ -68,15 +68,15 @@ export default {
       cartList: (state) =>
         state.cartInfo.cartList ? state.cartInfo.cartList : [],
       total: (state) => state.cartInfo.total || null,
-      final_total: (state) => state.cartInfo.final_total || null,
-    }),
+      final_total: (state) => state.cartInfo.final_total || null
+    })
   },
   methods: {
-    handleCheckout() {
-      this.drawer = false;
-    },
-  },
-};
+    handleCheckout () {
+      this.drawer = false
+    }
+  }
+}
 </script>
 
 <style scoped>

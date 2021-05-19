@@ -53,57 +53,56 @@
   </el-dialog>
 </template>
 
-
 <script>
-import cartMixin from "../utils/cartMixin.js";
+import cartMixin from '../utils/cartMixin.js'
 
 export default {
-  name: "AddToCartDialog",
+  name: 'AddToCartDialog',
   mixins: [cartMixin],
-  data() {
+  data () {
     return {
       dialogVisible: false,
       product: {},
-      selectedNum: "",
+      selectedNum: '',
       form: {
-        data: "",
-        time: "",
+        data: '',
+        time: ''
       },
       pickerOptions: {
         disabledDate: (time) => {
-          return time.getTime() < Date.now();
-        },
-      },
-    };
+          return time.getTime() < Date.now()
+        }
+      }
+    }
   },
   methods: {
-    handleOpen(initProduct) {
-      this.product = { ...initProduct };
-      this.dialogVisible = true;
+    handleOpen (initProduct) {
+      this.product = { ...initProduct }
+      this.dialogVisible = true
     },
-    handleAddToCart() {
+    handleAddToCart () {
       if (!this.product || !this.selectedNum || !this.form) {
         return this.$message.warning(
-          "所有欄位為必填，請確認選購日期、時段及人數"
-        );
+          '所有欄位為必填，請確認選購日期、時段及人數'
+        )
       }
-      this.addToCart(this.product, this.selectedNum, this.form);
-      this.dialogVisible = false;
-      this.resetDialogForm();
+      this.addToCart(this.product, this.selectedNum, this.form)
+      this.dialogVisible = false
+      this.resetDialogForm()
     },
-    handleBuyNow() {
-      this.handleAddToCart();
-      this.$router.push("/checkout");
+    handleBuyNow () {
+      this.handleAddToCart()
+      this.$router.push('/checkout')
     },
-    resetDialogForm() {
-      this.selectedNum = "";
+    resetDialogForm () {
+      this.selectedNum = ''
       this.form = {
-        data: "",
-        time: "",
-      };
-    },
-  },
-};
+        data: '',
+        time: ''
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>

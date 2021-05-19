@@ -1,6 +1,6 @@
 export default {
   methods: {
-    dateFormat(timestamp) {
+    dateFormat (timestamp) {
       const formattedDate = new Date(timestamp * 1000)
       const yyyy = formattedDate.getFullYear()
       const mm =

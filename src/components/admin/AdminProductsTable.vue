@@ -76,149 +76,149 @@
 </template>
 
 <script>
-import adminAPI from "@/apis/admin.js";
-import { Toast } from "@/utils/helper.js";
-import ProductUpdateDialog from "../admin/ProductUpdateDialog.vue";
+import adminAPI from '@/apis/admin.js'
+import { Toast } from '@/utils/helper.js'
+import ProductUpdateDialog from '../admin/ProductUpdateDialog.vue'
 
 export default {
-  name: "AdminProductsTable",
+  name: 'AdminProductsTable',
   components: {
-    ProductUpdateDialog,
+    ProductUpdateDialog
   },
   metaInfo: {
-    title: "產品列表",
+    title: '產品列表'
   },
-  data() {
+  data () {
     return {
       productsList: [],
       isLoading: false,
       categoryFilter: [
         {
-          text: "水肺潛水",
-          value: "水肺潛水",
+          text: '水肺潛水',
+          value: '水肺潛水'
         },
         {
-          text: "自由潛水",
-          value: "自由潛水",
+          text: '自由潛水',
+          value: '自由潛水'
         },
         {
-          text: "潛水旅遊",
-          value: "潛水旅遊",
+          text: '潛水旅遊',
+          value: '潛水旅遊'
         },
         {
-          text: "體驗系列",
-          value: "體驗系列",
-        },
-      ],
-    };
+          text: '體驗系列',
+          value: '體驗系列'
+        }
+      ]
+    }
   },
-  created() {
-    const { page } = this.$route.query;
-    this.fetchProductsList(page);
+  created () {
+    const { page } = this.$route.query
+    this.fetchProductsList(page)
   },
   methods: {
-    filterCategory(value, row, column) {
-      const property = column["property"];
-      return row[property] === value;
+    filterCategory (value, row, column) {
+      const property = column.property
+      return row[property] === value
     },
-    filterIsEnabled(value, row) {
-      return row.is_enabled === value;
+    filterIsEnabled (value, row) {
+      return row.is_enabled === value
     },
-    async fetchProductsList(page = 1) {
+    async fetchProductsList (page = 1) {
       try {
-        this.isLoading = true;
-        const response = await adminAPI.getProducts(page);
+        this.isLoading = true
+        const response = await adminAPI.getProducts(page)
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
-        const { products } = response.data;
+        const { products } = response.data
         // 將取得的物件轉成陣列
         this.productsList = Object.values(products).map((item) => ({
-          category: item.category || "",
-          content: item.content || "",
-          description: item.description || "目前尚無詳細描述",
+          category: item.category || '',
+          content: item.content || '',
+          description: item.description || '目前尚無詳細描述',
           id: item.id,
-          image: item.image || "",
+          image: item.image || '',
           is_enabled: item.is_enabled,
-          origin_price: item.origin_price ? item.origin_price : "",
+          origin_price: item.origin_price ? item.origin_price : '',
           price: item.price,
-          title: item.title || "",
-          unit: item.unit || "",
-        }));
-        this.$emit("renderPaginator", response.data.pagination);
-        this.isLoading = false;
+          title: item.title || '',
+          unit: item.unit || ''
+        }))
+        this.$emit('renderPaginator', response.data.pagination)
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
+        this.isLoading = false
         return Toast.fire({
-          icon: "error",
-          title: "無法取得產品資料，請稍後再試",
-        });
+          icon: 'error',
+          title: '無法取得產品資料，請稍後再試'
+        })
       }
     },
-    showUpdateDialog(product) {
-      this.$refs.dialog.handleOpenDialog(product);
+    showUpdateDialog (product) {
+      this.$refs.dialog.handleOpenDialog(product)
     },
-    async handleAfterSubmit() {
+    async handleAfterSubmit () {
       try {
-        this.isLoading = true;
-        const { page } = this.$route.query;
-        await this.fetchProductsList(page);
-        this.isLoading = false;
+        this.isLoading = true
+        const { page } = this.$route.query
+        await this.fetchProductsList(page)
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
-        this.$message.error("無法取得產品資料，請稍後再試");
+        this.isLoading = false
+        this.$message.error('無法取得產品資料，請稍後再試')
       }
     },
-    async confirmDelete(productId) {
+    async confirmDelete (productId) {
       try {
-        await this.$confirm("產品將永久刪除，是否繼續？", "警告", {
-          confirmButtonText: "確認",
-          cancelButtonText: "取消",
-          type: "warning",
+        await this.$confirm('產品將永久刪除，是否繼續？', '警告', {
+          confirmButtonText: '確認',
+          cancelButtonText: '取消',
+          type: 'warning',
           beforeClose: async (action, instance, done) => {
-            if (action === "confirm") {
-              instance.confirmButtonLoading = true;
-              instance.confirmButtonText = "刪除中...";
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true
+              instance.confirmButtonText = '刪除中...'
               try {
-                const response = await adminAPI.removeProduct(productId);
+                const response = await adminAPI.removeProduct(productId)
                 if (response.data.success !== true) {
-                  throw new Error(response.data.message);
+                  throw new Error(response.data.message)
                 }
 
                 // 畫面移除產品
                 this.productsList = this.productsList.filter(
                   (item) => item.id !== productId
-                );
+                )
                 // store重新取得產品清單
-                this.$store.dispatch("fetchProducts");
-                instance.confirmButtonLoading = false;
-                done();
+                this.$store.dispatch('fetchProducts')
+                instance.confirmButtonLoading = false
+                done()
               } catch (error) {
                 this.$message({
-                  type: "info",
-                  message: "刪除失敗，請再試一次",
-                });
-                instance.confirmButtonLoading = false;
-                instance.confirmButtonText = "確認";
+                  type: 'info',
+                  message: '刪除失敗，請再試一次'
+                })
+                instance.confirmButtonLoading = false
+                instance.confirmButtonText = '確認'
               }
             } else {
-              done();
+              done()
             }
-          },
-        });
+          }
+        })
         this.$message({
-          type: "success",
-          message: "已刪除產品",
-        });
+          type: 'success',
+          message: '已刪除產品'
+        })
       } catch (error) {
         this.$message({
-          type: "info",
-          message: "取消刪除",
-        });
+          type: 'info',
+          message: '取消刪除'
+        })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -1,13 +1,13 @@
 import { authorizationApi } from '../utils/helper'
 
 export default {
-  signIn(data) {
+  signIn (data) {
     return authorizationApi.post('/admin/signin', data)
   },
-  logOut() {
+  logOut () {
     return authorizationApi.post('/logout')
   },
-  checkLogin() {
+  checkLogin () {
     return authorizationApi.post('/api/user/check')
   }
 }

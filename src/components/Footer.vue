@@ -49,8 +49,8 @@
 
 <script>
 export default {
-  name: "Footer",
-};
+  name: 'Footer'
+}
 </script>
 
 <style scoped>
@@ -61,7 +61,6 @@ footer {
     rgba(255, 255, 255, 0.5)
   );
   position: relative;
-  overflow: hidden;
 }
 
 .coral-bg {
@@ -219,7 +218,7 @@ footer {
   }
 
   .coral-bg {
-    width: 70%;
+    width: 60%;
   }
 }
 </style>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authorizationAPI from '../apis/authorization.js'
 import customerAPI from '../apis/customer.js'
-import { Toast } from '../utils/helper.js';
+import { Toast } from '../utils/helper.js'
 
 Vue.use(Vuex)
 
@@ -19,17 +19,16 @@ export default new Vuex.Store({
     category: '全部'
   },
   getters: {
-    favoriteList(state) {
+    favoriteList (state) {
       const favoriteList = state.productsList.filter(item => item.isFavorite)
       return favoriteList
     },
-    filterProductsList(state) {
+    filterProductsList (state) {
       const filterProductsList = state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
 
       return filterProductsList
     },
-    categoryList(state) {
-
+    categoryList (state) {
       return state.productsList.reduce((prev, curr) => {
         if (!prev.includes(curr.category)) {
           prev.push(curr.category)
@@ -39,24 +38,21 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setLoginStatus(state, success) {
+    setLoginStatus (state, success) {
       state.isLogin = success
     },
-    setProductsList(state, payload) {
-
+    setProductsList (state, payload) {
       state.productsList = payload
     },
-    setLoading(state, isLoading) {
+    setLoading (state, isLoading) {
       state.isLoading = isLoading
     },
-    setCategory(state, category) {
+    setCategory (state, category) {
       state.category = category
     },
-    UpdateFavorite(state, productId) {
-
+    UpdateFavorite (state, productId) {
       return state.productsList.map((item) => {
         if (item.id === productId) {
-
           return {
             ...item,
             isFavorite: !item.isFavorite
@@ -64,12 +60,12 @@ export default new Vuex.Store({
         } else return { ...item }
       })
     },
-    setCartInfo(state, cartInfo) {
+    setCartInfo (state, cartInfo) {
       state.cartInfo = { ...cartInfo }
     }
   },
   actions: {
-    async fetchLoginStatus({ commit }) {
+    async fetchLoginStatus ({ commit }) {
       try {
         const response = await authorizationAPI.checkLogin()
         commit('setLoginStatus', response.data.success)
@@ -80,10 +76,10 @@ export default new Vuex.Store({
         })
       }
     },
-    async fetchProducts({ commit }) {
+    async fetchProducts ({ commit }) {
       try {
         commit('setLoading', true)
-        const response = await customerAPI.getProducts();
+        const response = await customerAPI.getProducts()
         if (response.data.success !== true) {
           throw new Error()
         }
@@ -107,7 +103,7 @@ export default new Vuex.Store({
     },
 
     // 取得購物車清單、總計價錢
-    async fetchCartProducts({ state, commit }) {
+    async fetchCartProducts ({ state, commit }) {
       try {
         commit('setLoading', true)
         const response = await customerAPI.getCart()

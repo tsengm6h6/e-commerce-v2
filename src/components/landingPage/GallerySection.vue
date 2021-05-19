@@ -25,24 +25,24 @@
 
 <script>
 export default {
-  name: "GallerySection",
-  data() {
+  name: 'GallerySection',
+  data () {
     return {
       srcList: [
-        "https://i.imgur.com/cn6cJqhl.jpg",
-        "https://i.imgur.com/XrQFxaql.jpg",
-        "https://i.imgur.com/PoflmZ8l.jpg",
-        "https://i.imgur.com/tlal1BYl.jpg",
-        "https://i.imgur.com/mIUfJval.jpg",
-        "https://i.imgur.com/fFAIWcOl.jpg",
-        "https://i.imgur.com/xFxjgFql.jpg",
-        "https://i.imgur.com/EWpN4PQl.jpg",
-        "https://i.imgur.com/3bHVwZgl.jpg",
-        "https://i.imgur.com/oHycFwol.jpg",
-      ],
-    };
-  },
-};
+        'https://i.imgur.com/cn6cJqhl.jpg',
+        'https://i.imgur.com/XrQFxaql.jpg',
+        'https://i.imgur.com/PoflmZ8l.jpg',
+        'https://i.imgur.com/tlal1BYl.jpg',
+        'https://i.imgur.com/mIUfJval.jpg',
+        'https://i.imgur.com/fFAIWcOl.jpg',
+        'https://i.imgur.com/xFxjgFql.jpg',
+        'https://i.imgur.com/EWpN4PQl.jpg',
+        'https://i.imgur.com/3bHVwZgl.jpg',
+        'https://i.imgur.com/oHycFwol.jpg'
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped>

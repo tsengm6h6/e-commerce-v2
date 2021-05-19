@@ -26,20 +26,20 @@
 </template>
 
 <script>
-import FeatureSection from "../components/landingPage/FeatureSection.vue";
-import TripSection from "../components/landingPage/TripSection.vue";
-import CourseSection from "../components/landingPage/CourseSection.vue";
-import GallerySection from "../components/landingPage/GallerySection.vue";
+import FeatureSection from '../components/landingPage/FeatureSection.vue'
+import TripSection from '../components/landingPage/TripSection.vue'
+import CourseSection from '../components/landingPage/CourseSection.vue'
+import GallerySection from '../components/landingPage/GallerySection.vue'
 
 export default {
-  name: "LandingPage",
+  name: 'LandingPage',
   components: {
     FeatureSection,
     TripSection,
     CourseSection,
-    GallerySection,
-  },
-};
+    GallerySection
+  }
+}
 </script>
 
 <style scoped>
@@ -157,7 +157,8 @@ export default {
 /* 大螢幕 */
 @media only screen and (min-width: 768px) {
   .background {
-    height: 120vh;
+    height: calc(100vh - 60px);
+    background-position: 0% 25%;
   }
 
   .display-wrapper {

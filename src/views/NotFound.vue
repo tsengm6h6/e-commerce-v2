@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import Octopus from "../components/animation/Octopus.vue";
+import Octopus from '../components/animation/Octopus.vue'
 export default {
-  name: "notFound",
+  name: 'notFound',
   components: {
-    Octopus,
-  },
-};
+    Octopus
+  }
+}
 </script>
 
 <style scoped>

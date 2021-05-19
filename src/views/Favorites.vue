@@ -21,40 +21,40 @@
 </template>
 
 <script>
-import ProductCard from "../components/ProductCard.vue";
-import Octopus from "../components/animation/Octopus.vue";
-import { mapGetters } from "vuex";
-import Breadcrumb from "../components/Breadcrumb.vue";
+import ProductCard from '../components/ProductCard.vue'
+import Octopus from '../components/animation/Octopus.vue'
+import { mapGetters } from 'vuex'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 export default {
-  name: "Favorites",
+  name: 'Favorites',
   components: {
     ProductCard,
     Octopus,
-    Breadcrumb,
+    Breadcrumb
   },
   metaInfo: {
-    title: "收藏清單",
+    title: '收藏清單'
   },
   computed: {
-    ...mapGetters(["favoriteList"]),
+    ...mapGetters(['favoriteList'])
   },
   methods: {
-    toggleFavorite(productId) {
-      this.$store.commit("UpdateFavorite", productId);
+    toggleFavorite (productId) {
+      this.$store.commit('UpdateFavorite', productId)
 
       const favoriteIdList =
-        JSON.parse(window.localStorage.getItem("favorite_products")) || [];
+        JSON.parse(window.localStorage.getItem('favorite_products')) || []
 
-      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId);
+      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
       itemIndex === -1
         ? favoriteIdList.push(productId)
-        : favoriteIdList.splice(itemIndex, 1);
+        : favoriteIdList.splice(itemIndex, 1)
 
-      localStorage.setItem("favorite_products", JSON.stringify(favoriteIdList));
-    },
-  },
-};
+      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
+    }
+  }
+}
 </script>
 
 <style scoped>

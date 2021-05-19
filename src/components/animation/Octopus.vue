@@ -124,8 +124,8 @@
 
 <script>
 export default {
-  name: "Octopus",
-};
+  name: 'Octopus'
+}
 </script>
 
 <style scoped>

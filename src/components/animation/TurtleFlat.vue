@@ -157,12 +157,12 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      name: "TurtleFlat",
-    };
-  },
-};
+      name: 'TurtleFlat'
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -136,179 +136,179 @@
 </template>
 
 <script>
-import adminAPI from "@/apis/admin.js";
-import { Toast } from "@/utils/helper.js";
+import adminAPI from '@/apis/admin.js'
+import { Toast } from '@/utils/helper.js'
 
 export default {
-  name: "AdminCouponsTable",
+  name: 'AdminCouponsTable',
   metaInfo: {
-    title: "優惠券列表",
+    title: '優惠券列表'
   },
-  data() {
+  data () {
     return {
       couponsList: [],
       isLoading: false,
       editCoupon: {
-        code: "",
-        due_date: "",
+        code: '',
+        due_date: '',
         id: null,
         is_enabled: null,
         num: 0,
         percent: null,
-        title: "",
+        title: ''
       },
       editDialogVisible: false,
       deleteDialogVisible: false,
-      deleteTargetId: "",
+      deleteTargetId: '',
       rules: {
         title: [
           {
             required: true,
-            message: "優惠券名稱為必填",
-            trigger: "blur",
-          },
+            message: '優惠券名稱為必填',
+            trigger: 'blur'
+          }
         ],
         code: [
           {
             required: true,
-            message: "優惠代碼為必填",
-            trigger: "blur",
-          },
+            message: '優惠代碼為必填',
+            trigger: 'blur'
+          }
         ],
         due_date: [
           {
             required: true,
-            message: "優惠期限為必填",
-            trigger: "blur",
-          },
+            message: '優惠期限為必填',
+            trigger: 'blur'
+          }
         ],
         percent: [
           {
             required: true,
-            message: "折扣為必填",
-            trigger: "blur",
+            message: '折扣為必填',
+            trigger: 'blur'
           },
           {
-            type: "number",
-            message: "折扣必須為數字",
-            trigger: ["blur", "change"],
-          },
-        ],
+            type: 'number',
+            message: '折扣必須為數字',
+            trigger: ['blur', 'change']
+          }
+        ]
       },
-      isDeleting: false,
-    };
+      isDeleting: false
+    }
   },
-  created() {
-    const { page } = this.$route.query;
-    this.fetchCouponsList(page);
+  created () {
+    const { page } = this.$route.query
+    this.fetchCouponsList(page)
   },
   methods: {
-    async fetchCouponsList(page = 1) {
+    async fetchCouponsList (page = 1) {
       try {
-        this.isLoading = true;
-        const response = await adminAPI.getCoupons(page);
+        this.isLoading = true
+        const response = await adminAPI.getCoupons(page)
 
         if (response.data.success !== true) {
-          throw new Error();
+          throw new Error()
         }
-        this.couponsList = response.data.coupons;
-        this.$emit("renderPaginator", response.data.pagination);
-        this.isLoading = false;
+        this.couponsList = response.data.coupons
+        this.$emit('renderPaginator', response.data.pagination)
+        this.isLoading = false
       } catch (error) {
-        this.isLoading = false;
+        this.isLoading = false
         return Toast.fire({
-          icon: "error",
-          title: "無法取得優惠券資料，請稍後再試",
-        });
+          icon: 'error',
+          title: '無法取得優惠券資料，請稍後再試'
+        })
       }
     },
-    showEditDialog(isNew, coupon) {
+    showEditDialog (isNew, coupon) {
       this.editCoupon = {
-        ...coupon,
-      };
+        ...coupon
+      }
 
-      this.editDialogVisible = true;
+      this.editDialogVisible = true
     },
-    editDialogClosed() {
-      this.resetForm("editForm");
-      this.editDialogVisible = false;
+    editDialogClosed () {
+      this.resetForm('editForm')
+      this.editDialogVisible = false
     },
-    validateForm(formName) {
+    validateForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.handleSubmit();
+          this.handleSubmit()
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
-    async handleSubmit() {
+    async handleSubmit () {
       try {
-        this.isLoading = true;
+        this.isLoading = true
 
         // 如果沒有id則新增、有id就編輯
         if (this.editCoupon.id) {
           const response = await adminAPI.editCoupon({
             id: this.editCoupon.id,
-            data: this.editCoupon,
-          });
+            data: this.editCoupon
+          })
           if (response.data.success !== true) {
-            throw new Error(response.data.message);
+            throw new Error(response.data.message)
           }
         } else {
           const response = await adminAPI.addCoupon({
-            data: this.editCoupon,
-          });
+            data: this.editCoupon
+          })
           if (response.data.success !== true) {
-            throw new Error(response.data.message);
+            throw new Error(response.data.message)
           }
         }
         // 重新取得優惠列表，重置表單並關閉對話框
-        await this.fetchCouponsList(1);
-        this.resetForm("editForm");
-        this.editDialogVisible = false;
-        this.isLoading = false;
+        await this.fetchCouponsList(1)
+        this.resetForm('editForm')
+        this.editDialogVisible = false
+        this.isLoading = false
       } catch (error) {
         return Toast.fire({
-          icon: "error",
-          title: "無法更新優惠券資料，請稍後再試",
-        });
+          icon: 'error',
+          title: '無法更新優惠券資料，請稍後再試'
+        })
       }
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     },
-    showDeleteDialog(coupon) {
-      this.deleteDialogVisible = true;
-      this.deleteTargetId = coupon.id;
+    showDeleteDialog (coupon) {
+      this.deleteDialogVisible = true
+      this.deleteTargetId = coupon.id
     },
-    async deleteProduct(couponId) {
+    async deleteProduct (couponId) {
       try {
-        this.isDeleting = true;
-        const response = await adminAPI.removeCoupon(couponId);
+        this.isDeleting = true
+        const response = await adminAPI.removeCoupon(couponId)
         if (response.data.success !== true) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message)
         }
 
         // 畫面移除產品
         this.couponsList = this.couponsList.filter(
           (item) => item.id !== couponId
-        );
+        )
         // 重置並關閉對話框
-        this.deleteTargetId = "";
-        this.deleteDialogVisible = false;
-        this.isDeleting = false;
+        this.deleteTargetId = ''
+        this.deleteDialogVisible = false
+        this.isDeleting = false
       } catch (error) {
-        this.deleteDialogVisible = false;
-        this.isDeleting = false;
+        this.deleteDialogVisible = false
+        this.isDeleting = false
         return Toast.fire({
-          icon: "error",
-          title: "無法刪除優惠券，請稍後再試",
-        });
+          icon: 'error',
+          title: '無法刪除優惠券，請稍後再試'
+        })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
