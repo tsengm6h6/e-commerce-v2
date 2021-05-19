@@ -88,21 +88,24 @@ export default {
   align-items: center;
   padding: 0 30px;
   height: 100%;
+  overflow: auto;
 }
 
 .item-wrapper {
   width: 100%;
   flex-grow: 1;
+  max-height: 63vh;
+  overflow: auto;
 }
 
 .sum-wrapper {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .price {
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .price span {

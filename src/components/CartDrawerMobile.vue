@@ -6,7 +6,7 @@
           <div class="avatar">
             <el-avatar
               shape="square"
-              :size="80"
+              :size="70"
               :src="item.image"
               fit="cover"
             ></el-avatar>
@@ -93,16 +93,18 @@ export default {
 .item-wrapper {
   width: 100%;
   flex-grow: 1;
+  max-height: 55vh;
+  overflow: auto;
 }
 
 .sum-wrapper {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .price {
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .price span {
@@ -133,6 +135,7 @@ export default {
 .price-tag {
   margin-bottom: 5px;
   font-weight: 400;
+  font-size: 16px;
 }
 
 .qty span {
