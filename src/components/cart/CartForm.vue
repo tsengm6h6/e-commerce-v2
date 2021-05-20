@@ -63,11 +63,11 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="電話" prop="tel">
+        <el-form-item label="手機號碼" prop="tel">
           <el-input
             type="tel"
-            placeholder="請輸入您的電話"
-            v-model.number="userForm.tel"
+            placeholder="請輸入您的手機號碼（eg. 0912-345-678）"
+            v-model="userForm.tel"
           ></el-input>
         </el-form-item>
 
@@ -79,12 +79,14 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="留言" prop="message">
+        <el-form-item label="留言給我們" prop="message">
           <el-input
             type="textarea"
             :rows="2"
-            placeholder="請留言..."
+            placeholder="請輸入留言..."
             v-model="userForm.message"
+            maxlength="50"
+            show-word-limit
           ></el-input>
         </el-form-item>
       </el-form>
@@ -114,41 +116,39 @@ export default {
         name: [
           {
             required: true,
-            message: '請輸入您的姓名',
+            message: '姓名為必填',
             trigger: 'blur'
           }
         ],
         email: [
           {
             required: true,
-            message: '請輸入您的 Email',
+            message: ' Email為必填',
             trigger: 'blur'
           },
           {
             type: 'email',
-            message: '請輸入正確的 Email 格式',
+            message: 'Email 格式不正確',
             trigger: 'blur'
           }
         ],
         tel: [
           {
             required: true,
-            message: '請輸入您的電話',
+            message: '手機號碼為必填',
             trigger: 'blur'
           },
-          { type: 'number', message: '電話必須為數字' }
+          {
+            pattern: /\d{4}-\d{3}-\d{3}/,
+            message: '格式須為10碼數字含符號（eg. 0912-345-678）',
+            trigger: 'blur'
+          },
+          { len: 12, message: '數字最多為10碼', trigger: 'blur' }
         ],
         address: [
           {
             required: true,
-            message: '請輸入您的地址',
-            trigger: 'blur'
-          }
-        ],
-        message: [
-          {
-            required: true,
-            message: '請輸入您的留言',
+            message: '地址為必填',
             trigger: 'blur'
           }
         ]
@@ -280,6 +280,11 @@ h3 {
   font-size: 14px;
   letter-spacing: 1px;
   font-weight: 400;
+}
+
+.el-input,
+.el-textarea {
+  font-size: 16px;
 }
 
 /* md */

@@ -2,18 +2,18 @@
   <div class="checkout-section">
     <!-- Stepper -->
     <el-row type="flex" justify="center">
-      <el-col :xs="22" :md="24">
-        <el-steps :active="active" align-center finish-status="success">
-          <el-step title="確認商品"></el-step>
-          <el-step title="優惠券及訂購人資訊"></el-step>
-          <el-step title="完成訂單"></el-step>
+      <el-col :xs="24" :sm='18'  :md='16'>
+        <el-steps :active="active" simple>
+          <el-step title="確認商品" icon="el-icon-shopping-cart-2"></el-step>
+          <el-step title="訂購資訊" icon="el-icon-edit"></el-step>
+          <el-step title="付款完成" icon="el-icon-bank-card"></el-step>
         </el-steps>
       </el-col>
     </el-row>
 
     <!-- panel: 購物車 -> form -> 完成訂單 -->
     <el-row type="flex" justify="center" class="main-section">
-      <el-col :xs="24">
+      <el-col :xs="24" :sm='18'  :md='16'>
         <CartInfo ref="cartInfo" v-if="active === 0" />
         <CartForm
           v-if="active === 1"
@@ -25,6 +25,7 @@
           title="訂單尚未完成，請盡快完成付款，待款項確認後，將寄出預約確認信給您，報名才算成功呦！"
           type="info"
           show-icon
+          :closable="false"
         >
         </el-alert>
         <Order
@@ -39,14 +40,16 @@
           title="感謝您的預訂，報名確認信將於3日內寄出，期待與您相見：)"
           type="success"
           show-icon
+          :closable="false"
+          effect="dark"
         >
         </el-alert>
       </el-col>
     </el-row>
 
     <!-- Step control -->
-    <el-row type="flex" justify="end">
-      <el-col :xs="24" :sm="8" :md="6">
+    <el-row type="flex" justify="center">
+      <el-col :xs="24" :sm='18' :md='16'>
         <el-button
           v-if="active === 0"
           @click="handleConfirmCart"
@@ -61,6 +64,7 @@
           @click="handleSubmit"
           :loading="isLoading"
           v-scroll-to="'#navbar'"
+          class="order-btn"
           >送出訂單</el-button
         >
         <el-button
@@ -72,21 +76,17 @@
           >確認付款</el-button
         >
 
-        <el-row v-if="active === 3" :gutter="10" type="flex" justify="end">
-          <el-col :xs="24">
+        <div v-if="active === 3" class="btn-wrapper">
             <router-link to="/orders" v-scroll-to="'#navbar'">
               <el-button @click="next" type="primary" plain
                 >查看訂單紀錄</el-button
               >
             </router-link>
-          </el-col>
-          <el-col :xs="24">
             <router-link to="/" v-scroll-to="'#navbar'">
-              <el-button @click="next" type="primary">回首頁</el-button>
+              <el-button @click="next" type="primary" class="home-btn">回首頁</el-button>
             </router-link>
-          </el-col>
-        </el-row>
-      </el-col>
+        </div>
+        </el-col>
     </el-row>
   </div>
 </template>
@@ -176,6 +176,11 @@ export default {
   margin-top: 50px;
 }
 
+.el-button.order-btn,
+.el-button.home-btn{
+  margin-top: 20px;
+}
+
 .el-alert {
   padding: 16px;
   margin-bottom: 20px;
@@ -185,6 +190,14 @@ export default {
 @media only screen and (min-width: 768px) {
   .checkout-section {
     padding: 50px 80px 30px;
+  }
+
+  .el-button.home-btn{
+    margin-top: 50px;
+    margin-left: 10px;
+  }
+  .btn-wrapper{
+    display: flex;
   }
 }
 

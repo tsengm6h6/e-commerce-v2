@@ -94,8 +94,30 @@ export default {
 .item-wrapper {
   width: 100%;
   flex-grow: 1;
-  max-height: 63vh;
+  max-height: 64vh;
   overflow: auto;
+  padding-right: 8px;
+}
+
+.item-wrapper::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.item-wrapper::-webkit-scrollbar
+{
+  width: 8px;
+  background-color: #F5F5F5;
+  margin-left: 8px;
+}
+
+.item-wrapper::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #00C9C8;
 }
 
 .sum-wrapper {
