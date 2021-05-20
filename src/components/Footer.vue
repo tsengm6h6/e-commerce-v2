@@ -61,17 +61,19 @@ footer {
     rgba(255, 255, 255, 0.5)
   );
   position: relative;
-  overflow: hidden;
+  z-index: 1;
 }
 
 .coral-bg {
-  width: 110%;
+  width: 100%;
+  height: 100%;
   position: absolute;
   bottom: 0;
-  right: -15px;
+  right: 0;
   z-index: -2;
   opacity: 0.5;
   object-fit: cover;
+  object-position: right bottom;
 }
 
 .company-info {
@@ -209,6 +211,7 @@ footer {
 
   .coral-bg {
     width: 80%;
+    height: auto;
   }
 }
 
