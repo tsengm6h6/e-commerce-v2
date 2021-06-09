@@ -2,7 +2,7 @@
   <el-drawer title="購物車" :visible.sync="drawer">
     <div class="drawer-container" v-if="cartList.length">
       <div class="item-wrapper">
-        <div class="item" v-for="item in cartList" :key="item.product_id">
+        <div class="item" v-for="(item, index) in cartList" :key="index">
           <div class="avatar">
             <el-avatar
               shape="square"

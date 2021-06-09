@@ -1,11 +1,10 @@
 <template>
   <!-- Cart Dialog -->
-  <el-dialog :visible.sync="dialogVisible" width="75%">
-    <el-row>
-      <el-col :xs="24" :md="12">
-        <img :src="product.image" alt="" class="dialog-image" />
-      </el-col>
-      <el-col :xs="24" :md="12" class="dialog-info">
+  <el-dialog :visible.sync="dialogVisible" width="80%">
+      <div class="dialog-image">
+        <img :src="product.image" alt="" />
+      </div>
+      <div class="dialog-info">
         <h1>{{ product.title }}</h1>
         <p>NT$ {{ product.price }}</p>
         <span class="info-link" @click="dialogVisible = false">
@@ -13,43 +12,56 @@
             更多資訊
           </router-link>
         </span>
-        <el-date-picker
-          type="date"
-          placeholder="請選擇日期"
-          v-model="form.date"
-          style="width: 100%"
-          :picker-options="pickerOptions"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-        ></el-date-picker>
-        <el-time-select
-          v-model="form.time"
-          :picker-options="{
-            start: '07:00',
-            step: '02:00',
-            end: '15:00',
-          }"
-          placeholder="請選擇時段"
-          style="width: 100%"
+        <el-form
+        ref="submitForm"
+        label-position="top"
+        :rules="rules"
+        :model="submitForm"
+        status-icon
         >
-        </el-time-select>
-        <el-select
-          v-model="selectedNum"
-          placeholder="請選擇報名人數"
-          style="width: 100%"
-        >
-          <el-option v-for="num in 10" :key="num" :label="num" :value="num">
-            選購 {{ num }} {{ product.unit }}
-          </el-option>
-        </el-select>
+          <el-form-item label="日期" prop="date">
+            <el-date-picker
+              type="date"
+              placeholder="請選擇日期"
+              v-model="submitForm.date"
+              style="width: 100%"
+              :picker-options="pickerOptions"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item label="時段" prop="time">
+            <el-time-select
+              v-model="submitForm.time"
+              :picker-options="{
+                start: '07:00',
+                step: '02:00',
+                end: '15:00',
+              }"
+              placeholder="請選擇時段"
+              style="width: 100%"
+            >
+            </el-time-select>
+          </el-form-item>
+          <el-form-item :label="'人數（單位：'+product.unit+'）'">
+            <el-select
+              v-model="submitForm.selectedNum"
+              placeholder="請選擇報名人數"
+              style="width: 100%"
+            >
+              <el-option v-for="num in 10" :key="num" :label="num" :value="num">
+                選購 {{ num }} {{ product.unit }}
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
         <div class="btn-wrapper">
-          <el-button type="primary" @click="handleAddToCart"
+          <el-button type="primary" @click="validateForm ('submitForm')"
             >加入購物車</el-button
           >
           <el-button type="danger" @click="handleBuyNow">立即購買</el-button>
         </div>
-      </el-col>
-    </el-row>
+      </div>
   </el-dialog>
 </template>
 
@@ -63,30 +75,51 @@ export default {
     return {
       dialogVisible: false,
       product: {},
-      selectedNum: '',
-      form: {
+      submitForm: {
         date: '',
-        time: ''
+        time: '',
+        selectedNum: 1
       },
       pickerOptions: {
         disabledDate: (time) => {
           return time.getTime() < Date.now()
         }
+      },
+      rules: {
+        date: [
+          {
+            required: true,
+            message: '日期為必填',
+            trigger: 'blur'
+          }
+        ],
+        time: [
+          {
+            required: true,
+            message: '時段為必填',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
   methods: {
     handleOpen (initProduct) {
       this.product = { ...initProduct }
+      this.resetDialogForm()
       this.dialogVisible = true
     },
+    validateForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.handleAddToCart()
+        } else {
+          return false
+        }
+      })
+    },
     handleAddToCart () {
-      if (!this.selectedNum || !this.form.date || !this.form.time) {
-        return this.$message.warning(
-          '所有欄位為必填，請確認選購日期、時段及人數'
-        )
-      }
-      this.addToCart(this.product, this.selectedNum, this.form)
+      this.addToCart(this.product, this.submitForm)
       this.dialogVisible = false
       this.resetDialogForm()
     },
@@ -95,10 +128,10 @@ export default {
       this.$router.push('/checkout')
     },
     resetDialogForm () {
-      this.selectedNum = ''
-      this.form = {
+      this.submitForm = {
         data: '',
-        time: ''
+        time: '',
+        selectedNum: 1
       }
     }
   }
@@ -106,29 +139,26 @@ export default {
 </script>
 
 <style scoped>
-.el-dialog {
-  width: 80%;
-}
-
 .dialog-image {
   width: 100%;
-  height: 30vh;
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dialog-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 4px;
 }
 
 .dialog-info {
-  padding: 0 20px;
-}
-
-.dialog-info * {
-  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .dialog-info > h1 {
   font-size: 26px;
-  margin-top: 20px;
 }
 
 .dialog-info > p {
@@ -149,35 +179,59 @@ export default {
   color: #00c9c8;
 }
 
+.el-form--label-top >>> .el-form-item__label {
+  padding: 10px 0 10px;
+}
+
+>>> .el-form-item__label {
+  line-height: 16px;
+}
+
+.el-input,
+.el-textarea {
+  font-size: 16px;
+}
+
 .dialog-info .el-button {
   width: 100%;
-  margin: 0 0 10px;
+  margin: 0;
+}
+
+.dialog-info .el-button:not(:last-child) {
+  margin-bottom: 10px;
 }
 
 /* md */
 @media only screen and (min-width: 992px) {
-  .dialog-info * {
-    margin-bottom: 20px;
+  >>> .el-dialog__body {
+    display: flex;
+  }
+
+  .dialog-info {
+    padding: 0 0 0 20px;
   }
 
   .dialog-info > h1 {
-    margin-top: 0;
     font-size: 32px;
     letter-spacing: 1px;
   }
 
-  .dialog-image {
-    height: 376px;
+  .dialog-image,
+  .dialog-info {
+    flex: 1;
   }
 
   .btn-wrapper {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0px;
   }
 
   .dialog-info .el-button {
-    width: 48%;
+    flex: 1;
+  }
+
+  .dialog-info .el-button:not(:last-child) {
+    margin: 0 10px 0 0;
   }
 }
 </style>

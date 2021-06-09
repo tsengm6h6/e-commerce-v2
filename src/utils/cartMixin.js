@@ -21,10 +21,10 @@ export default {
       this.setLocalStorage(cartInfo)
     },
     // **** 新增購物車內容 ***** //
-    addToCart (product, selectedNum, form) {
+    addToCart (product, form) {
       const addData = {
         product_id: product.id,
-        qty: selectedNum,
+        qty: form.selectedNum,
         title: product.title,
         price: product.price,
         image: product.image,
@@ -94,17 +94,18 @@ export default {
       this.setLocalStorage(updateCartInfo)
     },
     handleReduceQty (cartList, cartItem) {
-      const product = cartList.find(item => item.product_id === cartItem.product_id)
+      const product = cartList.find(item => item.product_id === cartItem.product_id && item.date === cartItem.date && item.time === cartItem.time)
       if (product.qty === 1) return
       return product.qty--
     },
     handleIncreaseQty (cartList, cartItem) {
-      const product = cartList.find(item => item.product_id === cartItem.product_id)
+      const product = cartList.find(item => item.product_id === cartItem.product_id && item.date === cartItem.date && item.time === cartItem.time)
       if (product.qty === 10) return this.$message.warning('10 人以上報名，請聯繫專人客服')
       return product.qty++
     },
     handleRemove (cartList, cartItem) {
-      return cartList.filter(item => item.product_id !== cartItem.product_id)
+      return cartList.filter(item => !(item.product_id === cartItem.product_id && item.date === cartItem.date && item.time === cartItem.time)
+      )
     }
   }
 }
