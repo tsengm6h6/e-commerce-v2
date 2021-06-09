@@ -2,7 +2,7 @@
   <el-container class="background">
     <el-header class="navbar">
       <router-link to="/"
-        ><img class="nav-brand" src="https://i.imgur.com/akLAykW.png" alt=""
+        ><img class="nav-brand" src="@/assets/image/logo.svg" alt=""
       /></router-link>
       <input
         type="checkbox"
@@ -44,7 +44,7 @@
               <router-link to="/favorites" class="nav-link">
                 <img
                   class="img-icon"
-                  src="https://i.imgur.com/jRFRLEQ.png"
+                  src="@/assets/image/icons/shell.webp"
                   alt=""
                 />
                 收藏清單
@@ -159,6 +159,7 @@ export default {
 
 .nav-brand {
   width: 100%;
+  max-width: 145px;
   height: 60px;
   cursor: pointer;
   object-fit: contain;

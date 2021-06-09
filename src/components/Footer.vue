@@ -2,7 +2,7 @@
   <footer class="footer">
     <section class="company-info">
       <router-link to="/"
-        ><img class="brand-name" src="https://i.imgur.com/XZFFSvE.png" alt=""
+        ><img class="brand-name" src="@/assets/image/logo.svg" alt=""
       /></router-link>
       <div class="info-wrapper">
         <div class="left">
@@ -42,7 +42,7 @@
       <span>&#169;</span
       >本網站為作業練習，非商業用途｜部分圖片版權所有，轉載必究
     </div>
-    <img src="https://i.imgur.com/6DYXwRJ.png" alt="" class="coral-bg" />
+    <img :src="require('@/assets/image/footer.webp')" alt="" class="coral-bg" />
     <a class="back" v-scroll-to="'#navbar'">Top</a>
   </footer>
 </template>
@@ -81,6 +81,7 @@ footer {
 }
 
 .brand-name {
+  width: 186px;
   margin-bottom: 10px;
 }
 

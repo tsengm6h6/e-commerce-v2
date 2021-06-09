@@ -148,7 +148,7 @@ export default {
   width: 100%;
   height: 60vh;
   position: relative;
-  background-image: url("https://i.imgur.com/6jfOJYX.png");
+  background-image: url("~@/assets/image/banner.webp");
   background-size: cover;
   background-position: 12%;
 }
