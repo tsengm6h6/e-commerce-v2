@@ -40,7 +40,7 @@ export default {
   },
   data () {
     return {
-      Experience: [
+      Experience: Object.freeze([
         {
           title: '個人因素取消',
           info: [
@@ -65,8 +65,8 @@ export default {
             '如活動進行中遇天候狀況或其他事件影響行程安全時，教練有權終止課程'
           ]
         }
-      ],
-      Course: [
+      ]),
+      Course: Object.freeze([
         {
           title: '個人因素取消',
           info:
@@ -96,7 +96,7 @@ export default {
           info:
             '如地震、颱風、豪雨、潮汐變化等，可退款或擇期進行，可重新預約上課時間完成課程，不另收額外費用，若選擇取消需扣除一成行政處理費（客服溝通、人事安排、帳務處理等作業雜項成本）'
         }
-      ]
+      ])
     }
   }
 }
