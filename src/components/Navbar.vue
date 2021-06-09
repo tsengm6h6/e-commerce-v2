@@ -79,7 +79,7 @@
           >
             <img
               class="img-icon"
-              src="https://i.imgur.com/jRFRLEQ.png"
+              src="@/assets/image/icons/shell.webp"
               alt=""
             />
           </el-tooltip>

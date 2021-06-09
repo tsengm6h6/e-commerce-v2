@@ -2,46 +2,20 @@
   <section class="gallery">
     <h3>追蹤我們 @ DIVEINLIFE</h3>
     <div class="gallery-container">
-      <template v-if="srcList.length">
+      <picture v-for="index in 8" :key="index">
         <img
           class="gallery-item"
-          v-for="(img, index) in srcList"
-          :key="index"
-          :src="img"
-          alt=""
+          :src="require(`@/assets/image/gallery/gallery-${index}.jpg`)"
+          alt="gallery-item"
         />
-      </template>
-
-      <el-image v-else>
-        <img
-          slot="error"
-          class="image-slot"
-          src="https://i.imgur.com/F5dYi4q.png"
-        />
-      </el-image>
+      </picture>
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'GallerySection',
-  data () {
-    return {
-      srcList: [
-        'https://i.imgur.com/cn6cJqhl.jpg',
-        'https://i.imgur.com/XrQFxaql.jpg',
-        'https://i.imgur.com/PoflmZ8l.jpg',
-        'https://i.imgur.com/tlal1BYl.jpg',
-        'https://i.imgur.com/mIUfJval.jpg',
-        'https://i.imgur.com/fFAIWcOl.jpg',
-        'https://i.imgur.com/xFxjgFql.jpg',
-        'https://i.imgur.com/EWpN4PQl.jpg',
-        'https://i.imgur.com/3bHVwZgl.jpg',
-        'https://i.imgur.com/oHycFwol.jpg'
-      ]
-    }
-  }
+  name: 'GallerySection'
 }
 </script>
 
@@ -69,13 +43,6 @@ h3 {
   object-fit: cover;
   object-position: center;
   border-radius: 2px;
-}
-
-.image-slot {
-  width: 25%;
-  transform: scale(0.4);
-  position: relative;
-  bottom: 30%;
 }
 
 /* sm */

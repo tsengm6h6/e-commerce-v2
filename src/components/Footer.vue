@@ -26,10 +26,10 @@
           </div>
           <div class="action">
             <div class="icons">
-              <img src="https://i.imgur.com/b2bpXra.png" alt="" />
-              <img src="https://i.imgur.com/0wSCxhy.png" alt="" />
-              <img src="https://i.imgur.com/Fbg65MS.png" alt="" />
-              <img src="https://i.imgur.com/YIy9TrF.png" alt="" />
+              <img src="@/assets/image/icons/facebook.webp" alt="" />
+              <img src="@/assets/image/icons/youtube.webp" alt="" />
+              <img src="@/assets/image/icons/line.webp" alt="" />
+              <img src="@/assets/image/icons/instagram.webp" alt="" />
             </div>
             <router-link to="/products" v-scroll-to="'#navbar'">
               <el-button type="danger">立即報名</el-button>
@@ -151,7 +151,7 @@ footer {
   padding: 0;
   color: #242323;
   font-weight: 500;
-  background-image: url("https://i.imgur.com/vwY9eok.png");
+  background-image: url("~@/assets/image/icons/star.webp");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;

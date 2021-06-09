@@ -52,7 +52,7 @@ export default {
   width: 120%;
   height: 60vh;
   position: relative;
-  background-image: url("https://i.imgur.com/zOPciZH.jpg");
+  background-image:url('~@/assets/image/background.webp');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 60%;
