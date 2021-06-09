@@ -41,13 +41,15 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
 html {
   width: 100%;
   overflow-x: hidden;
 }
 
 body {
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: "Noto Sans TC","Microsoft Yahei", sans-serif;
   color: #242323;
   letter-spacing: 1px;
 }
