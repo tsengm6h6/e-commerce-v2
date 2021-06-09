@@ -160,7 +160,7 @@ export default {
 .nav-brand {
   width: 100%;
   max-width: 145px;
-  height: 60px;
+  height: auto;
   cursor: pointer;
   object-fit: contain;
   object-position: center;

@@ -82,6 +82,7 @@ footer {
 
 .brand-name {
   width: 186px;
+  height: auto;
   margin-bottom: 10px;
 }
 
