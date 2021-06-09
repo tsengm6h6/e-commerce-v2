@@ -15,7 +15,6 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^7.3.1",
     "standard": "^16.0.3",
-    "sweetalert2": "^10.16.9",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
     "vue-i18n": "^8.24.4",

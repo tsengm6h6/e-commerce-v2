@@ -140,7 +140,7 @@ export default {
   padding: 70px 50px;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 .right h2 {
   margin-bottom: 22px;

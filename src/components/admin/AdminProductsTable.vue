@@ -77,7 +77,6 @@
 
 <script>
 import adminAPI from '@/apis/admin.js'
-import { Toast } from '@/utils/helper.js'
 import ProductUpdateDialog from '../admin/ProductUpdateDialog.vue'
 
 export default {
@@ -149,10 +148,7 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
-        return Toast.fire({
-          icon: 'error',
-          title: '無法取得產品資料，請稍後再試'
-        })
+        return this.$message.error('無法取得產品資料，請稍後再試')
       }
     },
     showUpdateDialog (product) {

@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import authorizationAPI from '../apis/authorization.js'
 import customerAPI from '../apis/customer.js'
-import { Toast } from '../utils/helper.js'
+import { Message } from 'element-ui'
 
 Vue.use(Vuex)
 
@@ -65,17 +64,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async fetchLoginStatus ({ commit }) {
-      try {
-        const response = await authorizationAPI.checkLogin()
-        commit('setLoginStatus', response.data.success)
-      } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: '無法確認登入狀態，請重新登入'
-        })
-      }
-    },
+    // TODO: 可刪掉
+    // async fetchLoginStatus ({ commit }) {
+    //   try {
+    //     const response = await authorizationAPI.checkLogin()
+    //     console.log('login status', response.data.success)
+    //     commit('setLoginStatus', response.data.success)
+    //   } catch (error) {
+    //     return Message.error({
+    //       message: '無法確認登入狀態，請稍後再試'
+    //     })
+    //   }
+    // },
     async fetchProducts ({ commit }) {
       try {
         commit('setLoading', true)
@@ -94,9 +94,8 @@ export default new Vuex.Store({
         commit('setProductsList', productsList)
         commit('setLoading', false)
       } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得頁面，請稍後再試'
+        Message.error({
+          message: '無法取得頁面資料，請稍後再試'
         })
         commit('setLoading', false)
       }
@@ -141,9 +140,8 @@ export default new Vuex.Store({
         commit('setCartInfo', cartInfo)
         commit('setLoading', false)
       } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得購物車資料，請稍後再試'
+        Message.error({
+          message: '無法取得購物車資料，請稍後再試'
         })
         commit('setLoading', false)
       }

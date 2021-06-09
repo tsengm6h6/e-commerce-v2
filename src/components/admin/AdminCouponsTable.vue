@@ -137,7 +137,6 @@
 
 <script>
 import adminAPI from '@/apis/admin.js'
-import { Toast } from '@/utils/helper.js'
 
 export default {
   name: 'AdminCouponsTable',
@@ -216,10 +215,7 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
-        return Toast.fire({
-          icon: 'error',
-          title: '無法取得優惠券資料，請稍後再試'
-        })
+        return this.$message.error('無法取得優惠券資料，請稍後再試')
       }
     },
     showEditDialog (isNew, coupon) {
@@ -269,10 +265,7 @@ export default {
         this.editDialogVisible = false
         this.isLoading = false
       } catch (error) {
-        return Toast.fire({
-          icon: 'error',
-          title: '無法更新優惠券資料，請稍後再試'
-        })
+        return this.$message.error('無法更新優惠券資料，請稍後再試')
       }
     },
     resetForm (formName) {
@@ -301,10 +294,7 @@ export default {
       } catch (error) {
         this.deleteDialogVisible = false
         this.isDeleting = false
-        return Toast.fire({
-          icon: 'error',
-          title: '無法刪除優惠券，請稍後再試'
-        })
+        return this.$message.error('無法刪除優惠券資料，請稍後再試')
       }
     }
   }

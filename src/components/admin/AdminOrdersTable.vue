@@ -150,7 +150,6 @@
 
 <script>
 import adminAPI from '@/apis/admin.js'
-import { Toast } from '@/utils/helper.js'
 import mixin from '@/utils/mixin.js'
 
 export default {
@@ -256,10 +255,7 @@ export default {
       } catch (error) {
         this.isLoading = false
         console.log(error)
-        return Toast.fire({
-          icon: 'error',
-          title: '無法取得訂單資料，請稍後再試'
-        })
+        return this.$message.error('無法取得訂單資料，請稍後再試')
       }
     },
     showEditDialog (order) {
