@@ -61,7 +61,6 @@ footer {
     rgba(255, 255, 255, 0.5)
   );
   position: relative;
-  z-index: 1;
 }
 
 .coral-bg {
@@ -82,7 +81,7 @@ footer {
 
 .brand-name {
   width: 186px;
-  height: auto;
+  height: 58px;
   margin-bottom: 10px;
 }
 

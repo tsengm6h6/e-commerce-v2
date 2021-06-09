@@ -158,9 +158,8 @@ export default {
 }
 
 .nav-brand {
-  width: 100%;
-  max-width: 145px;
-  height: auto;
+  width: 145px;
+  height: 45px;
   cursor: pointer;
   object-fit: contain;
   object-position: center;
