@@ -1,5 +1,5 @@
 <template>
-  <el-row type="flex" justify="center" style="margin-top: 100px">
+  <el-row type="flex" justify="center" style="margin-top: 100px; z-index: 2">
     <el-col :xs="20" :sm="16" :md="12" :lg="6">
       <p style="width: 100%; text-align: center">管理員登入</p>
       <el-form ref="signInForm" :rules="rules" :model="signInForm" status-icon>

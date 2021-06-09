@@ -282,6 +282,14 @@ h3 {
   font-weight: 400;
 }
 
+.el-form--label-top >>> .el-form-item__label {
+  padding: 10px 0 10px;
+}
+
+>>> .el-form-item__label {
+  line-height: 16px;
+}
+
 .el-input,
 .el-textarea {
   font-size: 16px;

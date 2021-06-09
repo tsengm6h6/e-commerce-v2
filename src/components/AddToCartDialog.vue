@@ -65,7 +65,7 @@ export default {
       product: {},
       selectedNum: '',
       form: {
-        data: '',
+        date: '',
         time: ''
       },
       pickerOptions: {
@@ -81,7 +81,7 @@ export default {
       this.dialogVisible = true
     },
     handleAddToCart () {
-      if (!this.product || !this.selectedNum || !this.form) {
+      if (!this.selectedNum || !this.form.date || !this.form.time) {
         return this.$message.warning(
           '所有欄位為必填，請確認選購日期、時段及人數'
         )

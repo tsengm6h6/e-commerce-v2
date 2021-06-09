@@ -186,6 +186,14 @@ export default {
   margin-bottom: 20px;
 }
 
+.el-steps--simple {
+  padding: 13px 12%;
+}
+
+.el-step.is-simple >>> .el-step__title {
+  display: none;
+}
+
 /* sm */
 @media only screen and (min-width: 768px) {
   .checkout-section {
@@ -198,6 +206,13 @@ export default {
   }
   .btn-wrapper{
     display: flex;
+  }
+
+  .el-steps--simple {
+    padding: 13px 8%;
+  }
+  .el-step.is-simple >>> .el-step__title {
+    display: block;
   }
 }
 
