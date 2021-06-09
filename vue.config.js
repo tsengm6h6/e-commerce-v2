@@ -1,5 +1,5 @@
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/e-commerce-vue/'
+    ? '/e-commerce-v2/'
     : '/'
 }
