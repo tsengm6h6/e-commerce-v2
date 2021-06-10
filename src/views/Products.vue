@@ -150,7 +150,7 @@ export default {
   position: relative;
   background-image: url("~@/assets/image/banner.webp");
   background-size: cover;
-  background-position: 12%;
+  background-position: 30%;
 }
 
 .banner-text {
@@ -229,6 +229,7 @@ h1 {
 
 /* md */
 @media only screen and (min-width: 992px) {
+
   .banner-text {
     top: 0px;
   }

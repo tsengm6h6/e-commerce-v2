@@ -49,10 +49,10 @@ export default {
 }
 
 .background {
-  width: 120%;
+  width: 100%;
   height: 60vh;
   position: relative;
-  background-image:url('~@/assets/image/background.webp');
+  background-image:url('~@/assets/image/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 60%;
@@ -142,23 +142,25 @@ export default {
   }
 }
 
-@media only screen and (min-width: 500px) {
+/* @media only screen and (min-width: 500px) {
   .background {
     width: 100%;
     height: 80vh;
+    background-image:url('~@/assets/image/background.jpg');
   }
 
   .display-wrapper {
     top: 35%;
     left: 10%;
   }
-}
+} */
 
 /* 大螢幕 */
 @media only screen and (min-width: 768px) {
   .background {
     height: calc(100vh - 60px);
     background-position: 0% 25%;
+    background-image:url('~@/assets/image/background.jpg');
   }
 
   .display-wrapper {

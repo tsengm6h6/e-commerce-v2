@@ -138,52 +138,59 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .dialog-image {
   width: 100%;
   height: auto;
   border-radius: 4px;
   overflow: hidden;
-}
 
-.dialog-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 .dialog-info {
   padding: 20px;
+
+  h1 {
+    font-size: 26px;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 20px;
+    color: #44607a;
+  }
+
+  .info-link {
+    text-decoration: underline;
+    color: #00c9c8;
+    display: block;
+    text-align: end;
+    margin-bottom: 20px;
+    a {
+      color: #00c9c8;
+    }
+  }
+
+  .el-button {
+    width: 100%;
+    margin: 0;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
 }
 
-.dialog-info > h1 {
-  font-size: 26px;
-}
-
-.dialog-info > p {
-  font-weight: 600;
-  font-size: 20px;
-  color: #44607a;
-}
-
-.dialog-info .info-link {
-  text-decoration: underline;
-  color: #00c9c8;
-  display: block;
-  text-align: end;
-  margin-bottom: 20px;
-}
-
-.dialog-info .info-link > a {
-  color: #00c9c8;
-}
-
-.el-form--label-top >>> .el-form-item__label {
+.el-form--label-top /deep/ .el-form-item__label {
   padding: 10px 0 10px;
 }
 
->>> .el-form-item__label {
+/deep/ .el-form-item__label {
   line-height: 16px;
 }
 
@@ -192,28 +199,10 @@ export default {
   font-size: 16px;
 }
 
-.dialog-info .el-button {
-  width: 100%;
-  margin: 0;
-}
-
-.dialog-info .el-button:not(:last-child) {
-  margin-bottom: 10px;
-}
-
 /* md */
 @media only screen and (min-width: 992px) {
-  >>> .el-dialog__body {
+  /deep/.el-dialog__body {
     display: flex;
-  }
-
-  .dialog-info {
-    padding: 0 0 0 20px;
-  }
-
-  .dialog-info > h1 {
-    font-size: 32px;
-    letter-spacing: 1px;
   }
 
   .dialog-image,
@@ -221,17 +210,24 @@ export default {
     flex: 1;
   }
 
+  .dialog-info {
+    padding: 0 0 0 20px;
+    h1 {
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+
+    .el-button {
+      flex: 1;
+      &:not(:last-child) {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
   .btn-wrapper {
     display: flex;
     justify-content: space-between;
-  }
-
-  .dialog-info .el-button {
-    flex: 1;
-  }
-
-  .dialog-info .el-button:not(:last-child) {
-    margin: 0 10px 0 0;
   }
 }
 </style>
