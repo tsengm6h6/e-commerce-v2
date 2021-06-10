@@ -5,11 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-report": "vue-cli-service build --report"
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "babel-plugin-transform-remove-console": "^6.9.4",
     "core-js": "^3.12.1",
     "element-ui": "^2.15.1",
     "node-sass": "^4.14.1",
@@ -17,7 +17,6 @@
     "standard": "^16.0.3",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
-    "vue-i18n": "^8.24.4",
     "vue-loading-overlay": "^3.4.2",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.1",
@@ -32,6 +31,7 @@
     "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
     "compression-webpack-plugin": "^5.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
