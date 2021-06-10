@@ -23,7 +23,7 @@ module.exports = {
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
-            //生產環境自動刪除console
+            // 生產環境自動刪除console
             compress: {
               warnings: false, // 若打包錯誤，則註釋這行
               drop_debugger: true,
@@ -34,6 +34,7 @@ module.exports = {
           sourceMap: false,
           parallel: true
         })
+      )
     }
   }
 }
