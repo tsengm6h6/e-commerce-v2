@@ -186,6 +186,7 @@ export default {
 }
 
 .el-image {
+  width: 100%;
   height: 50vh;
 }
 
