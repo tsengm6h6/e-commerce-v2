@@ -1,33 +1,18 @@
 <template>
   <section class="course-section">
-    <div class="part">
+    <div class="part" :class="{'reverse': index % 2 }" v-for="course, index in courseList" :key='index'>
       <div class="left">
-        <img class="image" src="@/assets/image/course-1.jpg" alt="course" />
+        <img class="image" :src="require(`@/assets/image/course-${index + 1}.jpg`)" alt="course" />
       </div>
       <div class="right">
-        <h2>本月主打：龍洞秘境浮潛體驗</h2>
-        <p>
-          每位教練帶 5~7
-          位學員的小團制安排，確保活動品質不打折，不會游泳、沒有經驗也可以！隱藏在龍洞灣內的浮潛秘境，讓你和大海的第一次接觸零負擔
-        </p>
+        <h2>{{course.title}}</h2>
+        <p>{{course.description}}</p>
         <div class="info">
-          <div class="detail">
+          <div class="detail" v-for="detail, index in course.details" :key="'d' + index">
             <div class="icon">
-              <i class="el-icon-sunrise-1"></i>
+              <i :class="detail.icon"></i>
             </div>
-            <p>暑假親子出遊首選，大人小孩都開心</p>
-          </div>
-          <div class="detail">
-            <div class="icon">
-              <i class="el-icon-camera"></i>
-            </div>
-            <p>免費贈送活動側拍</p>
-          </div>
-          <div class="detail">
-            <div class="icon">
-              <i class="el-icon-date"></i>
-            </div>
-            <p>每日出團，可彈性安排包團</p>
+            <p>{{detail.hightlight}}</p>
           </div>
         </div>
         <p>現在報名即可享 8 折優惠，輸入 summervibe 取得折扣價！</p>
@@ -35,49 +20,7 @@
           <el-button type="success" plain @click="doCopy">
             <h4>領取優惠</h4>
           </el-button>
-          <router-link to="/product/-MYiT0lf4ZlryXj6uGLM">
-            <el-button type="success">
-              <h4>立即報名</h4>
-            </el-button>
-          </router-link>
-        </div>
-      </div>
-    </div>
-    <div class="part reverse">
-      <div class="left">
-        <img class="image" src="@/assets/image/course-2.jpg" alt="course" />
-      </div>
-      <div class="right">
-        <h2>全新推出：獨木舟日出早餐饗宴</h2>
-        <p>
-          龍洞灣岸弧形如蛟龍盤據，巨石臨海矗立，氣勢如虹。清澈的龍洞灣海域內更有最古老的岩石及海崖峭壁，晨光熹微之時划行獨木舟緩緩出發，日出海景與四周奇岩相映成趣，來一份早餐，忘卻生活煩憂與時間流轉
-        </p>
-        <div class="info">
-          <div class="detail">
-            <div class="icon">
-              <i class="el-icon-sunrise-1"></i>
-            </div>
-            <p>東北角絕美的日出</p>
-          </div>
-          <div class="detail">
-            <div class="icon">
-              <i class="el-icon-camera"></i>
-            </div>
-            <p>早起鳥兒有早餐，免費贈送自選野餐籃</p>
-          </div>
-          <div class="detail">
-            <div class="icon">
-              <i class="el-icon-date"></i>
-            </div>
-            <p>限定出團，欲報從速！</p>
-          </div>
-        </div>
-        <p>現在報名即可享 8 折優惠，輸入 summervibe 取得折扣價！</p>
-        <div class="button">
-          <el-button type="success" plain @click="doCopy">
-            <h4>領取優惠</h4>
-          </el-button>
-          <router-link to="/product/-MZi5l3OYnpErDOqCnMg">
+          <router-link :to="{ name: 'product', params: { id: course.productId}}">
             <el-button type="success">
               <h4>立即報名</h4>
             </el-button>
@@ -91,6 +34,50 @@
 <script>
 export default {
   name: 'CourseSection',
+  data () {
+    return {
+      courseList: [
+        {
+          title: '本月主打：龍洞秘境浮潛體驗',
+          description: '每位教練帶 5~7 位學員的小團制安排，確保活動品質不打折，不會游泳、沒有經驗也可以！隱藏在龍洞灣內的浮潛秘境，讓你和大海的第一次接觸零負擔',
+          details: [
+            {
+              icon: 'el-icon-sunrise-1',
+              hightlight: '暑假親子出遊首選，大人小孩都開心'
+            },
+            {
+              icon: 'el-icon-camera',
+              hightlight: '免費贈送活動側拍'
+            },
+            {
+              icon: 'el-icon-date',
+              hightlight: '每日出團，可彈性安排包團'
+            }
+          ],
+          productId: '-MYiT0lf4ZlryXj6uGLM'
+        },
+        {
+          title: '全新推出：獨木舟日出早餐饗宴',
+          description: '龍洞灣岸弧形如蛟龍盤據，巨石臨海矗立，氣勢如虹。清澈的龍洞灣海域內更有最古老的岩石及海崖峭壁，晨光熹微之時划行獨木舟緩緩出發，日出海景與四周奇岩相映成趣，來一份早餐，忘卻生活煩憂與時間流轉',
+          details: [
+            {
+              icon: 'el-icon-sunrise-1',
+              hightlight: '東北角絕美的日出'
+            },
+            {
+              icon: 'el-icon-camera',
+              hightlight: '早起鳥兒有早餐，免費贈送自選野餐籃'
+            },
+            {
+              icon: 'el-icon-date',
+              hightlight: '限定出團，欲報從速！'
+            }
+          ],
+          productId: '-MZi5l3OYnpErDOqCnMg'
+        }
+      ]
+    }
+  },
   methods: {
     async doCopy () {
       try {
