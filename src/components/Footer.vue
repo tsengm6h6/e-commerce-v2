@@ -26,10 +26,10 @@
           </div>
           <div class="action">
             <div class="icons">
-              <img src="@/assets/image/icons/facebook.webp" alt="facebook" />
-              <img src="@/assets/image/icons/youtube.webp" alt="youtube" />
-              <img src="@/assets/image/icons/line.webp" alt="line" />
-              <img src="@/assets/image/icons/instagram.webp" alt="instagram" />
+              <img src="@/assets/image/icons/facebook.svg" alt="facebook" />
+              <img src="@/assets/image/icons/youtube.svg" alt="youtube" />
+              <img src="@/assets/image/icons/line.svg" alt="line" />
+              <img src="@/assets/image/icons/instagram.svg" alt="instagram" />
             </div>
             <router-link to="/products" v-scroll-to="'#navbar'">
               <el-button type="danger">立即報名</el-button>
