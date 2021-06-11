@@ -42,7 +42,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .container {
   width: 100%;
   overflow: hidden;
@@ -74,18 +74,18 @@ export default {
   color: #fcfcfc;
   text-transform: uppercase;
   margin-bottom: 10px;
-}
 
-.display span {
-  display: block;
-}
+  span {
+    display: block;
 
-.display span.top {
-  animation: displayTop 0.8s ease-out 1s both;
-}
+    &.top {
+      animation: displayTop 0.8s ease-out 1s both;
+    }
 
-.display span.bottom {
-  animation: displayBottom 1s cubic-bezier(0.21, 0.16, 0.59, 1.69) 1s both;
+    &.bottom {
+      animation: displayBottom 1s cubic-bezier(0.21, 0.16, 0.59, 1.69) 1s both;
+    }
+  }
 }
 
 .el-button {
@@ -94,51 +94,14 @@ export default {
   font-size: 16px;
   letter-spacing: 1px;
   font-weight: 600;
-}
 
-.el-button.left {
-  animation: opacity 0.5s ease-in-out 2s both, showUp 0.5s ease-in-out 2s both;
-}
+  &.left {
+    animation: opacity 0.5s ease-in-out 2s both, showUp 0.5s ease-in-out 2s both;
+  }
 
-.el-button.right {
-  animation: opacity 0.5s ease-in-out 2.1s both,
+  &.right {
+    animation: opacity 0.5s ease-in-out 2.1s both,
     showUp 0.5s ease-in-out 2.1s both;
-}
-
-@keyframes displayTop {
-  from {
-    transform: translateX(-150%);
-  }
-  to {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes displayBottom {
-  from {
-    transform: translateX(250%);
-  }
-  to {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes opacity {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes showUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
   }
 }
 
@@ -161,6 +124,43 @@ export default {
   .el-button {
     padding: 12px 40px;
     font-size: 20px;
+  }
+}
+
+@keyframes displayTop {
+  from {
+    transform: translateX(-150%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes displayBottom {
+  from {
+    transform: translateX(300%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes showUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
   }
 }
 </style>

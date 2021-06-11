@@ -2,7 +2,7 @@
   <el-drawer title="購物車" :visible.sync="drawer" size="80%">
     <div class="drawer-container" v-if="cartList.length">
       <div class="item-wrapper">
-        <div class="item" v-for="item in cartList" :key="item.product_id">
+        <div class="item" v-for="(item, index) in cartList" :key="index">
           <div class="avatar">
             <el-avatar
               shape="square"
@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .drawer-container,
 .empty-cart {
   display: flex;
@@ -96,27 +96,24 @@ export default {
   max-height: 64vh;
   overflow: auto;
   padding-right: 8px;
-}
 
-.item-wrapper::-webkit-scrollbar-track
-{
-  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  background-color: #F5F5F5;
-}
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
 
-.item-wrapper::-webkit-scrollbar
-{
-  width: 8px;
-  background-color: #F5F5F5;
-  margin-left: 8px;
-}
+  &::-webkit-scrollbar{
+    width: 8px;
+    background-color: #F5F5F5;
+    margin-left: 8px;
+  }
 
-.item-wrapper::-webkit-scrollbar-thumb
-{
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  background-color: #00C9C8;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #00C9C8;
+  }
 }
 
 .sum-wrapper {
@@ -127,10 +124,10 @@ export default {
 .price {
   font-weight: 400;
   margin-bottom: 10px;
-}
 
-.price span {
-  font-size: 26px;
+  span {
+    font-size: 26px;
+  }
 }
 
 .el-button {
@@ -160,12 +157,14 @@ export default {
   font-size: 16px;
 }
 
-.qty span {
-  margin: 0 2rem;
-}
+.qty {
+  span {
+    margin: 0 2rem;
+  }
 
-.qty i {
-  cursor: pointer;
+  i {
+    cursor: pointer;
+  }
 }
 
 .el-icon-delete {

@@ -31,7 +31,6 @@ export default {
 }
 
 p {
-  /* margin-top: 20px; */
   font-weight: 500;
   letter-spacing: 2px;
   color: #44607a;

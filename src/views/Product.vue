@@ -159,26 +159,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .product-section {
   padding: 0 20px;
 }
 
 .title-wrapper {
   padding-top: 60px;
-}
 
-.title-wrapper > h1 {
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
 
-.title-wrapper > p {
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 27px;
+  p {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27px;
+  }
 }
 
 .el-image,
@@ -203,19 +203,20 @@ export default {
   font-weight: 400;
   letter-spacing: 1px;
   margin: 0 20px 20px;
-}
 
-.info-wrapper .info:not(:first-child) {
-  margin-top: 20px;
-}
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
 
-.info-wrapper .info li:first-child {
-  margin-top: 10px;
-}
-.info-wrapper li {
-  position: relative;
-  left: 15px;
-  line-height: 30px;
+  li {
+    position: relative;
+    left: 15px;
+    line-height: 30px;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+  }
 }
 
 .price-wrapper {
@@ -225,22 +226,22 @@ export default {
   border-radius: 16px;
   letter-spacing: 1px;
   margin-top: 20px;
-}
 
-.price-wrapper p {
-  margin: 10px 0;
-}
+  P {
+    margin: 10px 0;
+  }
 
-.price-wrapper .price-tag {
-  font-size: 20px;
-  font-weight: 400;
-  color: #f56c6c;
-  font-style: italic;
-}
+  .price-tag {
+    font-size: 20px;
+    font-weight: 400;
+    color: #f56c6c;
+    font-style: italic;
+  }
 
-.price-wrapper .el-button {
-  width: 100%;
-  margin: 10px 0;
+  .el-button {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 
 .price-tag-wrapper {
@@ -277,10 +278,11 @@ export default {
 
   .price-wrapper {
     padding: 50px;
+
+    .price-tag {
+      font-size: 28px;
+    }
   }
 
-  .price-wrapper .price-tag {
-    font-size: 28px;
-  }
 }
 </style>

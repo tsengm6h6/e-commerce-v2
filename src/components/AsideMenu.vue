@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .el-menu {
   border-right: none;
 }
@@ -39,16 +39,14 @@ export default {
   height: 40px;
   line-height: 40px;
   letter-spacing: 1px;
-}
 
-.el-menu-item:focus,
-.el-menu-item:hover {
-  background-color: transparent;
-}
+  &:focus, &:hover {
+    background-color: transparent;
+  }
 
-.el-menu-item.is-active,
-.el-menu-item:hover {
-  font-weight: 500;
-  color: #00c9c8;
+  &.is-active, &:hover {
+    font-weight: 500;
+    color: #00c9c8;
+  }
 }
 </style>

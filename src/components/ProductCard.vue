@@ -87,15 +87,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 /* Card */
 .el-card {
   border: none;
   background-color: transparent;
-}
 
-.el-card.is-always-shadow {
-  box-shadow: none;
+  &.is-always-shadow {
+    box-shadow: none;
+  }
 }
 
 .image-slot {
@@ -119,15 +119,16 @@ export default {
 
 .image-wrapper {
   position: relative;
-}
+  &:hover {
+    .mask {
+      opacity: 1;
 
-.image-wrapper:hover .mask {
-  opacity: 1;
-}
-
-.image-wrapper:hover .mask .add-to-cart {
-  opacity: 1;
-  transform: scale(1, 1);
+      .add-to-cart {
+        opacity: 1;
+        transform: scale(1, 1);
+      }
+    }
+  }
 }
 
 .mask {
@@ -172,16 +173,15 @@ export default {
   color: #fcfcfc;
   position: relative;
   bottom: 30px;
-}
 
-.el-button.favorite-icon:focus,
-.el-button.favorite-icon:hover {
-  background: none;
-  color: #fcfcfc;
-}
+  &:focus, &:hover {
+    background: none;
+    color: #fcfcfc;
+  }
 
-.el-button.favorite-icon:active {
-  color: #fcfcfc;
+  &:active {
+    color: #fcfcfc;
+  }
 }
 
 /* Card content */
@@ -199,62 +199,4 @@ export default {
   font-weight: 500;
 }
 
-/* Dialog */
-.dialog-image {
-  width: 100%;
-  height: 30vh;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 4px;
-}
-
-.dialog-info {
-  padding: 0 20px;
-}
-
-.dialog-info * {
-  margin-bottom: 10px;
-}
-
-.dialog-info > h1 {
-  margin-top: 20px;
-}
-
-.dialog-info > p {
-  font-weight: 600;
-  font-size: 20px;
-  color: #44607a;
-}
-
-.dialog-info .info-link {
-  text-decoration: underline;
-  color: #00c9c8;
-  display: block;
-  text-align: end;
-  margin-bottom: 20px;
-}
-
-.dialog-info .info-link > a {
-  color: #00c9c8;
-}
-
-.dialog-info .el-button {
-  width: 100%;
-}
-
-/* md */
-@media only screen and (min-width: 992px) {
-  .dialog-info * {
-    margin-bottom: 20px;
-  }
-
-  .dialog-info > h1 {
-    margin-top: 0;
-    letter-spacing: 1px;
-  }
-
-  .dialog-image {
-    height: 365px;
-  }
-}
 </style>

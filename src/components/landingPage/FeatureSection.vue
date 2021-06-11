@@ -60,36 +60,33 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .feature-section {
   padding: 30px;
-}
-
-.feature-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-.feature-section .descript {
-  margin-bottom: 50px;
-  text-align: center;
-}
+  .descript {
+    margin-bottom: 50px;
+    text-align: center;
+  }
 
-.feature-section .descript h1 {
-  margin-bottom: 20px;
-}
+  h1 {
+    margin-bottom: 20px;
+  }
 
-.feature-section .descript span {
-  font-weight: 400;
-  margin: 0 10px;
-}
+  span {
+    font-weight: 400;
+    margin: 0 10px;
+  }
 
-.feature-section .descript p {
-  font-weight: 400;
-  letter-spacing: 1px;
-  line-height: 30px;
+  p {
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 30px;
+  }
 }
 
 .card {
@@ -98,36 +95,36 @@ export default {
   align-items: center;
   justify-content: center;
   margin-bottom: 30px;
-}
 
-.card img {
-  width: 120px;
-  height: 120px;
-}
+  img {
+    width: 120px;
+    height: 120px;
+  }
 
-.card h3 {
-  margin: 25px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
+  h3 {
+    margin: 25px;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
 
-.card .info {
-  width: 80%;
-  text-align: center;
-  letter-spacing: 1px;
-  line-height: 30px;
+  .info {
+    width: 80%;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 30px;
+  }
 }
 
 /* sm */
 @media only screen and (min-width: 768px) {
   .feature-section {
     padding: 80px;
+    .descript {
+      padding: 0 80px;
+    }
   }
 
-  .feature-section .descript {
-    padding: 0 80px;
-  }
-
+  .feature-section
   .card {
     margin-bottom: 0;
   }
@@ -137,10 +134,9 @@ export default {
 @media only screen and (min-width: 992px) {
   .feature-section {
     padding: 120px;
-  }
-
-  .feature-section .descript {
-    padding: 0 150px;
+    .descript {
+      padding: 0 150px;
+    }
   }
 }
 </style>

@@ -143,7 +143,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -154,7 +154,7 @@ export default {
   left: 0;
   width: 100%;
   z-index: 800;
-  background: rgba(255, 255, 255);
+  background: rgb(255, 255, 255);
 }
 
 .nav-brand {
@@ -183,24 +183,23 @@ export default {
   background-color: #00c9c8;
   position: relative;
   border-radius: 16px;
-}
 
-.burger:before,
-.burger:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #00c9c8;
-  border-radius: 16px;
-}
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #00c9c8;
+    border-radius: 16px;
+  }
 
-.burger:before {
-  bottom: 8px;
-}
+  &:before {
+    bottom: 8px;
+  }
 
-.burger:after {
-  top: 8px;
+  &:after {
+    top: 8px;
+  }
 }
 
 .nav-menu {
@@ -225,57 +224,59 @@ li {
   align-items: center;
   justify-content: center;
   margin: 0 20px;
-}
 
-.nav-item:not(:last-child) {
-  border-bottom: 1px solid #8c8f951e;
+  .img-icon,
+  .el-icon-goods {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    position: relative;
+    bottom: 0;
+    font-size: 24px;
+    margin-right: 6px;
+  }
+
+  .img-icon {
+    top: 6px;
+    left: 2px;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #8c8f951e;
+  }
 }
 
 .nav-link {
   cursor: pointer;
-}
 
-.nav-link:hover,
-.nav-link:active,
-.nav-link:focus {
-  color: #00c9c8;
-}
-
-.nav-item .img-icon,
-.nav-item .el-icon-goods {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  position: relative;
-  bottom: 0;
-  font-size: 24px;
-  margin-right: 6px;
-}
-
-.nav-item .img-icon {
-  top: 6px;
-  left: 2px;
+  &:hover, &:active, &:focus {
+    color: #00c9c8;
+  }
 }
 
 .el-menu--horizontal {
   display: none;
+
+  .el-menu-item {
+    color: #242323;
+    border-bottom: none;
+
+    &.is-active {
+      border-bottom: none;
+      color: #00c9c8;
+    }
+
+    &:not(.is-disabled):focus,
+    &:not(.is-disabled):hover {
+      color: #00c9c8;
+    }
+  }
 }
 
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-  color: #00c9c8;
-}
-
-.el-menu.el-menu--horizontal,
-.el-menu--horizontal > .el-menu-item {
+.el-menu.el-menu--horizontal {
   color: #242323;
   border-bottom: none;
-}
-
-.el-menu--horizontal > .el-menu-item.is-active {
-  border-bottom: none;
-  color: #00c9c8;
 }
 
 .el-badge__content {
@@ -321,7 +322,7 @@ li {
     height: 460px;
     right: 80px;
     background-color: #fff;
-    box-shadow: -3px 4px 10px 0px rgb(125 125 125 / 10%);
+    box-shadow: -3px 4px 10px 0px rgba(125,125,125,0.1);
   }
 }
 

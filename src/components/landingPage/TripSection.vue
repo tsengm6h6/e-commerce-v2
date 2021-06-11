@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .trip-section {
   padding: 30px;
   background-color: #242323;
@@ -64,23 +64,23 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-.trip-section .descript {
-  margin: 50px 0;
-  text-align: center;
-  color: #fcfcfc;
-}
+  .descript {
+    margin: 50px 0;
+    text-align: center;
+    color: #fcfcfc;
 
-.trip-section .descript h1 {
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-}
+    h1 {
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
 
-.trip-section .descript p {
-  font-weight: 400;
-  letter-spacing: 1px;
-  line-height: 26px;
+    p {
+      font-weight: 400;
+      letter-spacing: 1px;
+      line-height: 26px;
+    }
+  }
 }
 
 .card {
@@ -88,57 +88,58 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
-}
+  margin: 15px 0;
 
-.card .image,
-.card .empty-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 16px;
-}
-
-.card .empty-image {
-  object-fit: contain;
-  transform: scale(0.5);
+  .image,
+  .empty-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+  }
+  .empty-image {
+    object-fit: contain;
+    transform: scale(0.5);
+  }
 }
 
 .card-content {
   color: #fcfcfc;
   text-align: center;
   margin-top: 20px;
-}
 
-.card-content .product-title {
-  margin-bottom: 10px;
-  letter-spacing: 1px;
+  .product-title {
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
 }
 
 /* sm */
 @media only screen and (min-width: 768px) {
   .trip-section {
     padding: 80px;
-  }
-  .trip-section .descript {
-    margin: 0 0 50px;
-    padding: 0 80px;
+
+    .descript {
+      margin: 0 0 50px;
+      padding: 0 80px;
+    }
   }
 
-  .card {
-    margin-bottom: 0;
-  }
 }
 
 /* md */
 @media only screen and (min-width: 992px) {
   .trip-section {
     padding: 120px;
+
+    .descript {
+      padding: 0 150px;
+    }
   }
 
-  .trip-section .descript {
-    padding: 0 150px;
+  .card {
+    margin: 0;
   }
 }
 </style>

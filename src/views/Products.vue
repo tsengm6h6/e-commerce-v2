@@ -217,11 +217,6 @@ h1 {
     padding: 30px 80px 60px;
   }
 
-  /* .coral-bg {
-    width: 100%;
-    right: -3%;
-  } */
-
   .bread-crumb-and-select {
     margin: 30px 10px 20px;
   }

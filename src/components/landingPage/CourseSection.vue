@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .course-section {
   padding: 120px 0 0;
 }
@@ -118,21 +118,23 @@ export default {
   width: 90%;
   height: 500px;
   position: relative;
-}
-.left .image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-.left::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  border: 3px solid #00c9c8;
-  position: absolute;
-  top: 6%;
-  left: 5%;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border: 3px solid #00c9c8;
+    position: absolute;
+    top: 6%;
+    left: 5%;
+  }
 }
 
 .right {
@@ -141,13 +143,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-.right h2 {
-  margin-bottom: 22px;
-}
-.right > p {
-  margin-bottom: 35px;
-  line-height: 30px;
+
+  h2 {
+    margin-bottom: 22px;
+  }
+
+  > p {
+    margin-bottom: 35px;
+    line-height: 30px;
+  }
 }
 
 .detail {
@@ -155,24 +159,25 @@ export default {
   align-items: center;
   margin-bottom: 23px;
   letter-spacing: 1px;
-}
-.detail .icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.detail .icon i {
-  width: 100%;
-  color: #00c9c8;
-  font-size: 24px;
-}
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.detail:not(:last-child) {
-  margin-bottom: 10px;
+    i {
+      width: 100%;
+      color: #00c9c8;
+      font-size: 24px;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }
 
 .button {
@@ -210,13 +215,14 @@ export default {
   .part.reverse {
     margin-top: 120px;
     flex-direction: row-reverse;
-  }
-  .part.reverse .left::after {
-    top: -6%;
-    left: -5%;
-  }
-  .part.reverse .right {
-    padding: 0 50px 0 120px;
+
+    .left::after {
+      top: -6%;
+      left: -5%;
+    }
+    .right {
+      padding: 0 50px 0 120px;
+    }
   }
 }
 </style>

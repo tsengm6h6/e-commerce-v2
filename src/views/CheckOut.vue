@@ -162,7 +162,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .checkout-section {
   padding: 50px 30px 30px;
 }
@@ -174,11 +174,10 @@ export default {
 .el-button {
   width: 100%;
   margin-top: 50px;
-}
 
-.el-button.order-btn,
-.el-button.home-btn{
-  margin-top: 20px;
+  &.order-btn, &.home-btn {
+    margin-top: 20px;
+  }
 }
 
 .el-alert {
@@ -190,7 +189,7 @@ export default {
   padding: 13px 12%;
 }
 
-.el-step.is-simple >>> .el-step__title {
+.el-step.is-simple /deep/ .el-step__title {
   display: none;
 }
 
@@ -211,7 +210,7 @@ export default {
   .el-steps--simple {
     padding: 13px 8%;
   }
-  .el-step.is-simple >>> .el-step__title {
+  .el-step.is-simple /deep/ .el-step__title {
     display: block;
   }
 }

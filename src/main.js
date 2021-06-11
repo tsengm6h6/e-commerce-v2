@@ -51,7 +51,9 @@ import {
   Image,
   Calendar,
   MessageBox,
-  Message
+  Message,
+  Collapse,
+  CollapseItem
 } from 'element-ui'
 
 Vue.use(Pagination)
@@ -91,6 +93,8 @@ Vue.use(Link)
 Vue.use(Divider)
 Vue.use(Image)
 Vue.use(Calendar)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$message = Message

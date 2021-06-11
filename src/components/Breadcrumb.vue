@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 ul,
 li {
   list-style: none;
@@ -54,14 +54,15 @@ li {
 li:not(:last-child) {
   cursor: pointer;
   font-weight: 500;
+
+  &:hover {
+    color: #44607a;
+  }
+
+  &:after {
+    content: "/";
+    margin: 5px;
+  }
 }
 
-li:not(:last-child):hover {
-  color: #44607a;
-}
-
-li:not(:last-child):after {
-  content: "/";
-  margin: 5px;
-}
 </style>
