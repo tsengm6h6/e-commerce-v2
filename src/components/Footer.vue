@@ -2,7 +2,7 @@
   <footer class="footer">
     <section class="company-info">
       <router-link to="/"
-        ><img class="brand-name" src="@/assets/image/logo.svg" alt=""
+        ><img class="brand-name" src="@/assets/image/logo.svg" alt="logo"
       /></router-link>
       <div class="info-wrapper">
         <div class="left">
@@ -26,10 +26,10 @@
           </div>
           <div class="action">
             <div class="icons">
-              <img src="@/assets/image/icons/facebook.webp" alt="" />
-              <img src="@/assets/image/icons/youtube.webp" alt="" />
-              <img src="@/assets/image/icons/line.webp" alt="" />
-              <img src="@/assets/image/icons/instagram.webp" alt="" />
+              <img src="@/assets/image/icons/facebook.webp" alt="facebook" />
+              <img src="@/assets/image/icons/youtube.webp" alt="youtube" />
+              <img src="@/assets/image/icons/line.webp" alt="line" />
+              <img src="@/assets/image/icons/instagram.webp" alt="instagram" />
             </div>
             <router-link to="/products" v-scroll-to="'#navbar'">
               <el-button type="danger">立即報名</el-button>
@@ -42,7 +42,7 @@
       <span>&#169;</span
       >本網站為作業練習，非商業用途｜部分圖片版權所有，轉載必究
     </div>
-    <img :src="require('@/assets/image/footer.webp')" alt="" class="coral-bg" />
+    <img :src="require('@/assets/image/footer.webp')" alt="footer" class="coral-bg" />
     <a class="back" v-scroll-to="'#navbar'">Top</a>
   </footer>
 </template>

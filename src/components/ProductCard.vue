@@ -4,12 +4,13 @@
       <el-card>
         <div class="image-wrapper">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
-            <img v-if="product.image" :src="product.image" class="image" />
+            <img v-if="product.image" :src="product.image" class="image" alt="product" />
             <el-image v-else>
               <img
                 slot="error"
                 class="image-slot"
                 src="https://i.imgur.com/I4HLm86.png"
+                alt="error"
               />
             </el-image>
             <div class="mask">

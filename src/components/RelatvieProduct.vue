@@ -14,12 +14,13 @@
       >
         <div class="img-wrapper">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
-            <img v-if="product.image" :src="product.image" class="image" />
+            <img v-if="product.image" :src="product.image" class="image" alt="product"/>
             <el-image v-else>
               <img
                 slot="error"
                 class="image-slot"
                 src="https://i.imgur.com/F5dYi4q.png"
+                alt="error"
               />
             </el-image>
           </router-link>

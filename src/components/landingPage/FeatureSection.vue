@@ -18,7 +18,7 @@
         v-for="(feature, index) in featureList"
         :key="index"
       >
-        <img :src="feature.image" alt="" />
+        <img :src="feature.image" alt="feature" />
         <h3 class="title">
           {{ feature.title }}
         </h3>

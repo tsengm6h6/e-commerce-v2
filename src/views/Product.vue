@@ -13,6 +13,7 @@
           slot="error"
           class="image-slot"
           src="https://i.imgur.com/m4YOpWy.png"
+          alt="error"
         />
       </el-image>
 

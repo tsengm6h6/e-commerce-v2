@@ -19,12 +19,13 @@
       >
         <div class="img-wrapper">
           <router-link :to="{ name: 'product', params: { id: product.id } }">
-            <img :src="product.image" class="image" />
-            <!-- <img
+            <img v-if='product.image' :src="product.image" class="image" alt="product"/>
+            <img
               v-else
               src="https://i.imgur.com/0dqbpfY.png"
               class="empty-image"
-            /> -->
+              alt="image"
+            />
           </router-link>
         </div>
 

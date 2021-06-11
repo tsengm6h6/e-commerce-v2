@@ -2,7 +2,7 @@
   <el-container class="background">
     <el-header class="navbar">
       <router-link to="/"
-        ><img class="nav-brand" src="@/assets/image/logo.svg" alt=""
+        ><img class="nav-brand" src="@/assets/image/logo.svg" alt="logo"
       /></router-link>
       <input
         type="checkbox"
@@ -45,7 +45,7 @@
                 <img
                   class="img-icon"
                   src="@/assets/image/icons/shell.webp"
-                  alt=""
+                  alt="favorites"
                 />
                 收藏清單
               </router-link>
@@ -80,7 +80,7 @@
             <img
               class="img-icon"
               src="@/assets/image/icons/shell.webp"
-              alt=""
+              alt="favorites"
             />
           </el-tooltip>
         </el-menu-item>

@@ -2,7 +2,7 @@
   <!-- Cart Dialog -->
   <el-dialog :visible.sync="dialogVisible" width="80%">
       <div class="dialog-image">
-        <img :src="product.image" alt="" />
+        <img :src="product.image" alt="product" />
       </div>
       <div class="dialog-info">
         <h1>{{ product.title }}</h1>

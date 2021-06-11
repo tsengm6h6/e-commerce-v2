@@ -42,7 +42,7 @@
               v-if="editTarget.image"
               width="100%"
               :src="editTarget.image"
-              alt=""
+              alt="image"
             />
           </el-form-item>
         </el-col>

@@ -2,7 +2,7 @@
   <section class="course-section">
     <div class="part">
       <div class="left">
-        <img class="image" src="@/assets/image/course-1.jpg" alt="" />
+        <img class="image" src="@/assets/image/course-1.jpg" alt="course" />
       </div>
       <div class="right">
         <h2>本月主打：龍洞秘境浮潛體驗</h2>
@@ -45,7 +45,7 @@
     </div>
     <div class="part reverse">
       <div class="left">
-        <img class="image" src="@/assets/image/course-2.jpg" alt="" />
+        <img class="image" src="@/assets/image/course-2.jpg" alt="course" />
       </div>
       <div class="right">
         <h2>全新推出：獨木舟日出早餐饗宴</h2>
