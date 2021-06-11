@@ -26,6 +26,7 @@
         placeholder="請輸入優惠碼"
         v-model="couponCode"
         :disabled="isCoupon"
+        @change="addCoupon"
       >
         <template slot="append">
           <el-button

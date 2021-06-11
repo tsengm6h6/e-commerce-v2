@@ -254,7 +254,6 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
-        console.log(error)
         return this.$message.error('無法取得訂單資料，請稍後再試')
       }
     },

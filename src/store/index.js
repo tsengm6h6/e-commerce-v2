@@ -64,18 +64,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // TODO: 可刪掉
-    // async fetchLoginStatus ({ commit }) {
-    //   try {
-    //     const response = await authorizationAPI.checkLogin()
-    //     console.log('login status', response.data.success)
-    //     commit('setLoginStatus', response.data.success)
-    //   } catch (error) {
-    //     return Message.error({
-    //       message: '無法確認登入狀態，請稍後再試'
-    //     })
-    //   }
-    // },
     async fetchProducts ({ commit }) {
       try {
         commit('setLoading', true)
