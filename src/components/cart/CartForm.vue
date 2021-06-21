@@ -67,7 +67,7 @@
         <el-form-item label="手機號碼" prop="tel">
           <el-input
             type="tel"
-            placeholder="請輸入您的手機號碼（eg. 0912-345-678）"
+            placeholder="請輸入您的手機號碼（eg. 0912345678）"
             v-model="userForm.tel"
           ></el-input>
         </el-form-item>
@@ -140,11 +140,11 @@ export default {
             trigger: 'blur'
           },
           {
-            pattern: /\d{4}-\d{3}-\d{3}/,
-            message: '格式須為10碼數字含符號（eg. 0912-345-678）',
+            pattern: /\d{4}\d{3}\d{3}/,
+            message: '格式須為 10 碼數字且不含符號（eg. 0912345678）',
             trigger: 'blur'
           },
-          { len: 12, message: '數字最多為10碼', trigger: 'blur' }
+          { len: 10, message: '數字最多為10碼', trigger: 'blur' }
         ],
         address: [
           {

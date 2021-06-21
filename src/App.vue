@@ -29,7 +29,7 @@ export default {
     ...mapState(['isLogin'])
   },
   methods: {
-    ...mapActions(['fetchProducts', 'fetchCartProducts'])
+    ...mapActions(['fetchProducts'])
   },
   mounted () {
     this.fetchProducts()
