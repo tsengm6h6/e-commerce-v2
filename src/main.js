@@ -106,7 +106,7 @@ Vue.use(VueClipboard)
 
 // messenger
 Vue.use(VueFbCustomerChat, {
-  page_id: process.env.FACEBOOK_PAGE_ID,
+  page_id: process.env.VUE_APP_FB_PAGE_ID,
   locale: 'zh_TW'
 })
 
