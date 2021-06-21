@@ -65,8 +65,7 @@ export default {
   mixins: [cartMixin],
   computed: {
     ...mapState({
-      cartList: (state) =>
-        state.cartInfo.cartList ? state.cartInfo.cartList : [],
+      cartList: (state) => state.cartInfo.cartList || [],
       total: (state) => state.cartInfo.total || null,
       final_total: (state) => state.cartInfo.final_total || null
     })
