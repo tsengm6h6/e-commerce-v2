@@ -11,6 +11,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import VueMeta from 'vue-meta'
 import lang from 'element-ui/lib/locale/lang/zh-TW'
 import locale from 'element-ui/lib/locale'
+import VueFbCustomerChat from 'vue-fb-customer-chat'
 
 import {
   Pagination,
@@ -102,6 +103,12 @@ Vue.prototype.$message = Message
 Vue.use(VueMeta)
 Vue.use(VueScrollTo)
 Vue.use(VueClipboard)
+
+// messenger
+Vue.use(VueFbCustomerChat, {
+  page_id: '112117327778242',
+  locale: 'zh_TW'
+})
 
 // configure language
 locale.use(lang)
