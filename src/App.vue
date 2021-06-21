@@ -5,6 +5,7 @@
       <router-view />
     </main>
     <Footer v-if="!isLogin" />
+    <div id=”fb-root”></div>
   </div>
 </template>
 

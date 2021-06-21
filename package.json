@@ -17,6 +17,7 @@
     "standard": "^16.0.3",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
+    "vue-fb-customer-chat": "^0.2.0",
     "vue-loading-overlay": "^3.4.2",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.1",
