@@ -238,7 +238,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .cart-form {
   display: flex;
   flex-direction: column;
@@ -283,11 +283,11 @@ h3 {
   font-weight: 400;
 }
 
-.el-form--label-top >>> .el-form-item__label {
+.el-form--label-top /deep/ .el-form-item__label {
   padding: 10px 0 10px;
 }
 
->>> .el-form-item__label {
+/deep/ .el-form-item__label {
   line-height: 16px;
 }
 
