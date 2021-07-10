@@ -16,17 +16,8 @@
             <div class="mask">
               <el-button
                 class="favorite-icon"
-                v-if="product.isFavorite"
                 @click.prevent.stop="toggleFavorite(product.id)"
-                icon="el-icon-star-on"
-                circle
-              >
-              </el-button>
-              <el-button
-                class="favorite-icon"
-                v-else
-                @click.prevent.stop="toggleFavorite(product.id)"
-                icon="el-icon-star-off"
+                :icon="`el-icon-star-${product.isFavorite ? 'on' : 'off'}`"
                 circle
               >
               </el-button>
@@ -81,7 +72,17 @@ export default {
     },
     toggleFavorite (productId) {
       this.product.isFavorite = !this.product.isFavorite
-      this.$emit('toggle-favorite', productId)
+      this.$store.commit('updateFavorite', productId)
+
+      const favoriteIdList =
+        JSON.parse(window.localStorage.getItem('favorite_products')) || []
+
+      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
+      itemIndex === -1
+        ? favoriteIdList.push(productId)
+        : favoriteIdList.splice(itemIndex, 1)
+
+      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
     }
   }
 }
