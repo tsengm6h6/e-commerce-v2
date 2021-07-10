@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
-import Products from '../views/Products.vue'
 import LandingPage from '../views/LandingPage.vue'
 
 Vue.use(VueRouter)
@@ -20,7 +19,7 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: Products,
+    component: () => import('../views/Products.vue'),
     meta: {
       breadcrumb: [{
         name: '首頁',
