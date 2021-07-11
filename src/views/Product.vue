@@ -56,7 +56,7 @@
             </div>
           </el-col>
 
-          <AddToCartDialog ref="dialog" :product="product" />
+          <AddToCartDialog ref="dialog"/>
         </el-row>
       </div>
     </template>

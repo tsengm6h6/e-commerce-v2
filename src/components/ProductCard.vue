@@ -21,7 +21,7 @@
                 circle
               >
               </el-button>
-              <div class="add-to-cart" @click.prevent.stop="handleOpenDialog">
+              <div class="add-to-cart" @click.prevent.stop="$emit('open-dialog', product)">
                 加入購物車
               </div>
             </div>
@@ -38,14 +38,11 @@
         </div>
       </el-card>
     </el-col>
-
-    <AddToCartDialog ref="dialog" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import AddToCartDialog from './AddToCartDialog.vue'
 
 export default {
   name: 'productCard',
@@ -54,9 +51,6 @@ export default {
       type: Object,
       require: true
     }
-  },
-  components: {
-    AddToCartDialog
   },
   data () {
     return {
@@ -67,9 +61,6 @@ export default {
     ...mapState(['isLoading'])
   },
   methods: {
-    handleOpenDialog () {
-      this.$refs.dialog.handleOpen(this.product)
-    },
     toggleFavorite (productId) {
       this.product.isFavorite = !this.product.isFavorite
       this.$store.commit('updateFavorite', productId)
