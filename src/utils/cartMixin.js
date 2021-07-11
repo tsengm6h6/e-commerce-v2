@@ -40,7 +40,8 @@ export default {
     saveCartInfo (cartList) {
       const newCartInfo = {
         cartList,
-        total: this.updateCartTotal(cartList)
+        total: this.updateCartTotal(cartList),
+        final_total: this.updateCartTotal(cartList)
       }
       // store 及 LocalStorage 各存一份
       this.$store.commit('setCartInfo', newCartInfo)
