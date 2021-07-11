@@ -12,27 +12,27 @@
             </li>
           </ol>
           <p>總價：NT$ {{ total }} 元</p>
-          <span v-if="final_total">折扣價：NT$ {{ final_total }} 元</span>
+          <span v-if="final_total !== total">折扣價：NT$ {{ final_total }} 元</span>
         </div>
       </el-collapse-item>
     </el-collapse>
     <!-- coupon & form -->
     <div class="coupon">
       <h3>
-        套用優惠碼<el-tag v-if="isCoupon" type="success">已套用優惠券</el-tag>
+        套用優惠碼<el-tag v-if="final_total !== total" type="success">已套用優惠券</el-tag>
       </h3>
 
       <el-input
         placeholder="請輸入優惠碼"
         v-model="couponCode"
-        :disabled="isCoupon"
+        :disabled="final_total !== total"
         @change="addCoupon"
       >
         <template slot="append">
           <el-button
             :loading="isLoading"
             @click.prevent.stop="addCoupon"
-            :disabled="isCoupon"
+            :disabled="final_total !== total"
           >
             套用優惠碼
           </el-button>
@@ -105,7 +105,7 @@ export default {
   data () {
     return {
       couponCode: '',
-      isCoupon: false,
+      // isCoupon: false,
       userForm: {
         name: '',
         email: '',
@@ -176,7 +176,7 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message)
         }
-        this.isCoupon = true
+        // this.isCoupon = true
         await this.$store.dispatch('fetchCartProducts')
         this.updateLocalCartStatus('final_total', this.final_total)
         this.$message.success('購物明細已更新')
