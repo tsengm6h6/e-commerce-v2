@@ -9,8 +9,8 @@
 - 使用 SVG 與 CSS 動畫增加網頁豐富度
 - 透過 Vuex 與 LocalStorage 優化購物車行為
 - 將後端回傳的資料格式，因應畫面需求進行客製化處理
-- 改良圖片大小並改用部分引入、壓縮程式碼等方法進行網站效能優化[[優化前網站]](https://tsengm6h6.github.io/e-commerce-vue/#/) **_NEW_**
-- 加入臉書客服人員對話框 **_NEW_**
+- 改良圖片大小並改用部分引入、壓縮程式碼等方法進行網站效能優化[[優化前網站]](https://tsengm6h6.github.io/e-commerce-vue/#/) :tada: **_NEW FEATURE_**
+- 新增臉書客服人員對話框  :tada: **_NEW FEATURE_**
 
 
 ![alt 首頁](https://i.imgur.com/DlQ4bIo.gif)
