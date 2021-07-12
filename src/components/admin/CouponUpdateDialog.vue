@@ -169,6 +169,7 @@ export default {
         this.editDialogVisible = false
         this.loading = false
       } catch (error) {
+        this.loading = false
         return this.$message.error('無法更新優惠券資料，請稍後再試')
       }
     },
