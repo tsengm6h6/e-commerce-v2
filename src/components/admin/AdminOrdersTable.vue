@@ -64,7 +64,7 @@
     <OrderDetailDialog ref='orderDetail' />
 
     <!-- 修改方塊 -->
-    <OrderUpdateDialog ref="orderUpdate" @after-order-update='afterOrderUpdate' />
+    <OrderUpdateDialog ref="orderUpdate" @after-order-submit='afterOrderSubmit' />
 
   </el-container>
 </template>
@@ -132,7 +132,7 @@ export default {
       )
       this.$refs.orderUpdate.showEditDialog(order, originData)
     },
-    afterOrderUpdate () {
+    afterOrderSubmit () {
       const { page } = this.$route.query
       this.fetchOrdersList(page)
     },

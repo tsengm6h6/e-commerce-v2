@@ -26,7 +26,7 @@
             size="small"
             type="primary"
             icon="el-icon-plus"
-            @click="showEditDialog(true, null)"
+            @click="showEditDialog(editTarget)"
             >新增優惠券</el-button
           >
         </template>
@@ -34,7 +34,7 @@
           <el-button
             size="mini"
             icon="el-icon-edit"
-            @click="showEditDialog(false, scope.row)"
+            @click="showEditDialog(scope.row)"
           ></el-button>
           <el-button
             size="mini"
@@ -47,7 +47,7 @@
     </el-table>
 
     <!-- 修改產品內容 對話方塊-->
-    <CouponUpdateDialog ref="coupon" @after-coupon-update="fetchCouponsList" />
+    <CouponUpdateDialog ref="coupon" @after-coupon-submit="fetchCouponsList" />
 
   </el-container>
 </template>
@@ -67,7 +67,16 @@ export default {
   data () {
     return {
       couponsList: [],
-      isLoading: false
+      isLoading: false,
+      editTarget: {
+        code: '',
+        due_date: '',
+        id: null,
+        is_enabled: 0,
+        num: 0,
+        percent: null,
+        title: ''
+      }
     }
   },
   created () {
@@ -91,8 +100,8 @@ export default {
         return this.$message.error('無法取得優惠券資料，請稍後再試')
       }
     },
-    showEditDialog (isNew, coupon) {
-      this.$refs.coupon.showEditDialog(isNew, coupon)
+    showEditDialog (coupon) {
+      this.$refs.coupon.handleOpenDialog(coupon)
     },
     async confirmDelete (couponId) {
       try {

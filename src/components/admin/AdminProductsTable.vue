@@ -47,14 +47,16 @@
       </el-table-column>
       <el-table-column align="left" min-width="80">
         <template slot="header">
+          <!-- 傳入預設值 -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-plus"
-            @click="showUpdateDialog(null)"
+            @click="showUpdateDialog(editTarget)"
             >新增產品</el-button
           >
         </template>
+        <!-- scope.row 可以傳入該列的物件內容 -->
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -71,7 +73,7 @@
       </el-table-column>
     </el-table>
 
-    <ProductUpdateDialog ref="dialog" @after-submit="handleAfterSubmit" />
+    <ProductUpdateDialog ref="dialog" @after-product-submit="handleAfterSubmit" />
   </div>
 </template>
 
@@ -108,7 +110,19 @@ export default {
           text: '體驗系列',
           value: '體驗系列'
         }
-      ]
+      ],
+      editTarget: {
+        category: '',
+        content: '',
+        description: '',
+        id: '',
+        image: '',
+        is_enabled: 0,
+        origin_price: null,
+        price: null,
+        title: '',
+        unit: ''
+      }
     }
   },
   created () {
@@ -155,10 +169,12 @@ export default {
       this.$refs.dialog.handleOpenDialog(product)
     },
     async handleAfterSubmit () {
+      console.log('handleAfterSubmit')
       try {
         this.isLoading = true
         const { page } = this.$route.query
         await this.fetchProductsList(page)
+        this.$store.dispatch('fetchProducts')
         this.isLoading = false
       } catch (error) {
         this.isLoading = false

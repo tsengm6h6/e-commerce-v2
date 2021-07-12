@@ -1,9 +1,9 @@
 <template>
   <el-dialog
       title="編輯訂單"
-      :visible.sync="editDialogVisible"
+      :visible.sync="UpdateDialogVisible"
       width="40%"
-      @close="editDialogClosed"
+      @close="handleDialogClosed"
     >
     <!-- 表單 -->
     <el-form ref="editForm" :rules="rules" :model="editOrder" status-icon>
@@ -63,8 +63,8 @@
       </el-row>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click.prevent.stop="editDialogClosed">取消</el-button>
-      <el-button type="primary" @click.prevent.stop="validateForm('editForm')"
+      <el-button @click.prevent.stop="handleDialogClosed">取消</el-button>
+      <el-button type="primary" @click.prevent.stop="beforeValidateForm"
       :loading='loading'>確認</el-button
       >
     </span>
@@ -72,23 +72,18 @@
 </template>
 
 <script>
-import adminAPI from '@/apis/admin.js'
+import adminMixin from '@/utils/adminMixin.js'
 
 export default {
   name: 'OrderUpdateDialog',
+  mixins: [adminMixin],
   data () {
     return {
       loading: false,
-      originData: {},
-      editOrder: {
-        total: null,
-        isPaid: null,
-        userName: '',
-        userTel: '',
-        userAddress: '',
-        userEmail: ''
-      },
-      editDialogVisible: false,
+      originData: {}, // 原始資料
+      editOrder: {}, // 可以編輯的內容
+      editTarget: {}, // 編輯後的整包資料
+      UpdateDialogVisible: false,
       rules: {
         total: [
           {
@@ -152,65 +147,31 @@ export default {
         userAddress: user.address || '',
         userEmail: user.email || ''
       }
-      this.editDialogVisible = true
+      this.UpdateDialogVisible = true
     },
-    editDialogClosed () {
-      this.resetForm('editForm')
-      this.editDialogVisible = false
-    },
-    validateForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.handleSubmit()
-        } else {
-          return false
-        }
-      })
-    },
-    async handleSubmit () {
-      try {
-        this.loading = true
-        const {
-          total,
-          isPaid,
-          userName,
-          userTel,
-          userAddress,
-          userEmail
-        } = this.editOrder
+    beforeValidateForm () {
+      const {
+        total,
+        isPaid,
+        userName,
+        userTel,
+        userAddress,
+        userEmail
+      } = this.editOrder
 
-        const editData = {
-          ...this.originData,
-          total,
-          is_paid: isPaid,
-          user: {
-            name: userName,
-            tel: userTel,
-            address: userAddress,
-            email: userEmail
-          }
+      // 整理呈後端 API 原本的形式（eg. user 物件）
+      this.editTarget = {
+        ...this.originData,
+        total,
+        is_paid: isPaid,
+        user: {
+          name: userName,
+          tel: userTel,
+          address: userAddress,
+          email: userEmail
         }
-
-        const response = await adminAPI.editOrder({
-          id: this.editOrder.id,
-          data: editData
-        })
-        if (response.data.success !== true) {
-          throw new Error(response.data.message)
-        }
-
-        // 重新取得訂單列表，重置表單並關閉對話框
-        this.$emit('after-order-update')
-        this.resetForm('editForm')
-        this.editDialogVisible = false
-        this.loading = false
-      } catch (error) {
-        this.loading = false
-        return this.$message.error('無法更新訂單資料，請稍後再試')
       }
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+      this.validateForm('editForm', 'Order')
     }
   }
 }
