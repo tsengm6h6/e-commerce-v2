@@ -105,7 +105,6 @@ export default {
   data () {
     return {
       couponCode: '',
-      // isCoupon: false,
       userForm: {
         name: '',
         email: '',
@@ -176,7 +175,6 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message)
         }
-        // this.isCoupon = true
         await this.$store.dispatch('fetchCartProducts')
         this.updateLocalCartStatus('final_total', this.final_total)
         this.$message.success('購物明細已更新')
@@ -232,7 +230,7 @@ export default {
         total: 0,
         final_total: 0
       })
-      this.setLocalStorage({ cartList: [], total: 0 })
+      this.setLocalStorage({ cartList: [], total: 0, final_total: 0 })
     }
   }
 }
