@@ -117,13 +117,6 @@ export default {
         this.$message.danger('無法複製優惠碼，請稍後再試')
       }
     }
-  },
-  created () {
-    const vm = this
-    vm.spinner = true
-    setTimeout(() => {
-      vm.spinner = false
-    }, 1000)
   }
 }
 </script>
