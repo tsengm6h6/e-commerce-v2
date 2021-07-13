@@ -123,7 +123,7 @@
                 <el-input
                   type="number"
                   placeholder="請輸入售價"
-                  v-model="editTarget.price"
+                  v-model.number="editTarget.price"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -132,7 +132,7 @@
                 <el-input
                   type="number"
                   placeholder="請輸入原價"
-                  v-model="editTarget.origin_price"
+                  v-model.number="editTarget.origin_price"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -197,11 +197,13 @@
 import { mapGetters } from 'vuex'
 // import adminAPI from '@/apis/admin.js'
 import adminMixin from '@/utils/adminMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'ProductUpdateDialog',
   mixins: [adminMixin],
   data () {
+    const { required, number, priceRange } = rules
     return {
       loading: false,
       editTarget: {},
@@ -216,41 +218,12 @@ export default {
       },
       uploadPath: process.env.VUE_APP_UPLOAD_URL,
       rules: {
-        title: [
-          {
-            required: true,
-            message: '產品名稱為必填',
-            trigger: 'blur'
-          }
-        ],
-        category: [
-          {
-            required: true,
-            message: '分類為必填',
-            trigger: 'blur'
-          }
-        ],
-        content: [
-          {
-            required: true,
-            message: '簡介為必填',
-            trigger: 'blur'
-          }
-        ],
-        price: [
-          {
-            required: true,
-            message: '售價為必填',
-            trigger: 'blur'
-          }
-        ],
-        unit: [
-          {
-            required: true,
-            message: '單位為必填',
-            trigger: 'blur'
-          }
-        ]
+        title: [required],
+        category: [required],
+        content: [required],
+        price: [required, number, priceRange],
+        origin_price: [number, priceRange],
+        unit: [required]
       }
     }
   },

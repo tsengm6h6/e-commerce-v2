@@ -99,10 +99,12 @@
 import customerAPI from '@/apis/customer.js'
 import { mapState } from 'vuex'
 import cartMixin from '@/utils/cartMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'CartForm',
   data () {
+    const { required, email, telPattern, telLength } = rules
     return {
       couponCode: '',
       userForm: {
@@ -113,45 +115,10 @@ export default {
         message: ''
       },
       rules: {
-        name: [
-          {
-            required: true,
-            message: '姓名為必填',
-            trigger: 'blur'
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: ' Email為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: 'Email 格式不正確',
-            trigger: 'blur'
-          }
-        ],
-        tel: [
-          {
-            required: true,
-            message: '手機號碼為必填',
-            trigger: 'blur'
-          },
-          {
-            pattern: /\d{4}\d{3}\d{3}/,
-            message: '格式須為 10 碼數字且不含符號（eg. 0912345678）',
-            trigger: 'blur'
-          },
-          { len: 10, message: '數字最多為10碼', trigger: 'blur' }
-        ],
-        address: [
-          {
-            required: true,
-            message: '地址為必填',
-            trigger: 'blur'
-          }
-        ]
+        name: [required],
+        email: [required, email],
+        tel: [required, telPattern, telLength],
+        address: [required]
       }
     }
   },

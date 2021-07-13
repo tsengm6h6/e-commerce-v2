@@ -69,49 +69,22 @@
 
 <script>
 import adminMixin from '@/utils/adminMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'CouponUpdateDialog',
   mixins: [adminMixin],
   data () {
+    const { required, number, discountRange } = rules
     return {
       loading: false,
       UpdateDialogVisible: false,
       editTarget: {},
       rules: {
-        title: [
-          {
-            required: true,
-            message: '優惠券名稱為必填',
-            trigger: 'blur'
-          }
-        ],
-        code: [
-          {
-            required: true,
-            message: '優惠代碼為必填',
-            trigger: 'blur'
-          }
-        ],
-        due_date: [
-          {
-            required: true,
-            message: '優惠期限為必填',
-            trigger: 'blur'
-          }
-        ],
-        percent: [
-          {
-            required: true,
-            message: '折扣為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'number',
-            message: '折扣必須為數字',
-            trigger: ['blur', 'change']
-          }
-        ]
+        title: [required],
+        code: [required],
+        due_date: [required],
+        percent: [required, number, discountRange]
       }
     }
   }

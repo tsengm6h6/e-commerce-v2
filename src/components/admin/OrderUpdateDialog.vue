@@ -23,9 +23,9 @@
             <el-col :span="12" :offset="1">
               <el-form-item label="訂購人電話" prop="userTel">
                 <el-input
-                  type="number"
+                  type="string"
                   placeholder="訂購人電話"
-                  v-model.number="editOrder.userTel"
+                  v-model="editOrder.userTel"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -50,7 +50,7 @@
             <el-input
               type="number"
               placeholder="總金額"
-              v-model="editOrder.total"
+              v-model.number="editOrder.total"
             ></el-input>
           </el-form-item>
 
@@ -73,11 +73,13 @@
 
 <script>
 import adminMixin from '@/utils/adminMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'OrderUpdateDialog',
   mixins: [adminMixin],
   data () {
+    const { required, telPattern, telLength, email, priceRange } = rules
     return {
       loading: false,
       originData: {}, // 原始資料
@@ -85,51 +87,11 @@ export default {
       editTarget: {}, // 編輯後的整包資料
       UpdateDialogVisible: false,
       rules: {
-        total: [
-          {
-            required: true,
-            message: '總金額為必填',
-            trigger: 'blur'
-          }
-        ],
-        userTel: [
-          {
-            required: true,
-            message: '訂購人電話為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'number',
-            message: '電話必須為數字',
-            trigger: 'blur'
-          }
-        ],
-        userName: [
-          {
-            required: true,
-            message: '訂購人姓名為必填',
-            trigger: 'blur'
-          }
-        ],
-        userEmail: [
-          {
-            required: true,
-            message: '訂購人信箱為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: '請輸入正確的 Email 格式',
-            trigger: 'blur'
-          }
-        ],
-        userAddress: [
-          {
-            required: true,
-            message: '訂購人地址必填',
-            trigger: 'blur'
-          }
-        ]
+        total: [required, priceRange],
+        userTel: [required, telPattern, telLength],
+        userName: [required],
+        userEmail: [required, email],
+        userAddress: [required]
       }
     }
   },
