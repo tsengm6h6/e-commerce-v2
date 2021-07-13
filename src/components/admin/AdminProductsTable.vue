@@ -169,7 +169,6 @@ export default {
       this.$refs.dialog.handleOpenDialog(product)
     },
     async handleAfterSubmit () {
-      console.log('handleAfterSubmit')
       try {
         this.isLoading = true
         const { page } = this.$route.query
