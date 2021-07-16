@@ -12,6 +12,7 @@ import VueMeta from 'vue-meta'
 import lang from 'element-ui/lib/locale/lang/zh-TW'
 import locale from 'element-ui/lib/locale'
 import VueFbCustomerChat from 'vue-fb-customer-chat'
+import VueGtm from '@gtm-support/vue2-gtm'
 
 import {
   Pagination,
@@ -108,6 +109,15 @@ Vue.use(VueClipboard)
 Vue.use(VueFbCustomerChat, {
   page_id: process.env.VUE_APP_FB_PAGE_ID,
   locale: 'zh_TW'
+})
+
+Vue.use(VueGtm, {
+  id: 'GTM-56TKNJS',
+  defer: false, // Defaults to false, so the script is loaded `async` by default
+  compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
+  loadScript: true,
+  vueRouter: router,
+  trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
 })
 
 // configure language

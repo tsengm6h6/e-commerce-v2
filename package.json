@@ -9,6 +9,7 @@
     "build-report": "vue-cli-service build --report"
   },
   "dependencies": {
+    "@gtm-support/vue2-gtm": "^1.1.0",
     "axios": "^0.21.1",
     "core-js": "^3.12.1",
     "element-ui": "^2.15.1",
