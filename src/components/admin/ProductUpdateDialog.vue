@@ -123,7 +123,7 @@
                 <el-input
                   type="number"
                   placeholder="請輸入售價"
-                  v-model="editTarget.price"
+                  v-model.number="editTarget.price"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -132,7 +132,7 @@
                 <el-input
                   type="number"
                   placeholder="請輸入原價"
-                  v-model="editTarget.origin_price"
+                  v-model.number="editTarget.origin_price"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -185,8 +185,8 @@
       <el-button @click.prevent.stop="handleDialogClosed">取消</el-button>
       <el-button
         type="primary"
-        :loading="isLoading"
-        @click.prevent.stop="validateForm('editForm')"
+        :loading="loading"
+        @click.prevent.stop="validateForm('editForm', 'Product')"
         >確認</el-button
       >
     </span>
@@ -195,25 +195,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import adminAPI from '@/apis/admin.js'
+// import adminAPI from '@/apis/admin.js'
+import adminMixin from '@/utils/adminMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'ProductUpdateDialog',
+  mixins: [adminMixin],
   data () {
+    const { required, number, priceRange } = rules
     return {
-      isLoading: false,
-      editTarget: {
-        category: '',
-        content: '',
-        description: '',
-        id: '',
-        image: '',
-        is_enabled: null,
-        origin_price: null,
-        price: null,
-        title: '',
-        unit: ''
-      },
+      loading: false,
+      editTarget: {},
       addCategory: false,
       cacheCategory: '',
       UpdateDialogVisible: false,
@@ -225,41 +218,12 @@ export default {
       },
       uploadPath: process.env.VUE_APP_UPLOAD_URL,
       rules: {
-        title: [
-          {
-            required: true,
-            message: '產品名稱為必填',
-            trigger: 'blur'
-          }
-        ],
-        category: [
-          {
-            required: true,
-            message: '分類為必填',
-            trigger: 'blur'
-          }
-        ],
-        content: [
-          {
-            required: true,
-            message: '簡介為必填',
-            trigger: 'blur'
-          }
-        ],
-        price: [
-          {
-            required: true,
-            message: '售價為必填',
-            trigger: 'blur'
-          }
-        ],
-        unit: [
-          {
-            required: true,
-            message: '單位為必填',
-            trigger: 'blur'
-          }
-        ]
+        title: [required],
+        category: [required],
+        content: [required],
+        price: [required, number, priceRange],
+        origin_price: [number, priceRange],
+        unit: [required]
       }
     }
   },
@@ -267,13 +231,6 @@ export default {
     ...mapGetters(['categoryList'])
   },
   methods: {
-    // ***** 對話框控制 ****** //
-    handleOpenDialog (product) {
-      this.editTarget = {
-        ...product
-      }
-      this.UpdateDialogVisible = true
-    },
     async handleBeforeClose (done) {
       try {
         await this.$confirm('確定不存檔關閉嗎？')
@@ -282,10 +239,6 @@ export default {
       } catch (error) {
 
       }
-    },
-    handleDialogClosed () {
-      this.resetForm('editForm')
-      this.UpdateDialogVisible = false
     },
     // ***** 表單行為 ****** //
     handleConfirmAddCategory () {
@@ -298,70 +251,6 @@ export default {
       this.cacheCategory = ''
       this.editTarget.category = ''
       this.addCategory = false
-    },
-    validateForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.handleSubmit()
-        } else {
-          return false
-        }
-      })
-    },
-    async handleSubmit () {
-      try {
-        this.isLoading = true
-        // 如果有id就編輯、沒有id則新增
-        if (this.editTarget.id) {
-          await this.submitEdit({
-            id: this.editTarget.id,
-            data: this.editTarget
-          })
-        } else {
-          await this.submitCreate({ data: this.editTarget })
-        }
-        // 通知父層重新取得產品列表（管理員列表更新）
-        this.$emit('after-submit')
-        this.resetForm('editForm')
-        this.UpdateDialogVisible = false
-        this.isLoading = false
-        // 請store重新取得所有產品（客戶首頁產品更新）
-        this.$store.dispatch('fetchProducts')
-      } catch (error) {
-        this.isLoading = false
-        this.UpdateDialogVisible = false
-        this.$message.error('無法更新資料，請稍後再試')
-      }
-    },
-    async submitEdit ({ id, data }) {
-      try {
-        const response = await adminAPI.editProduct({
-          id,
-          data
-        })
-        if (response.data.success !== true) {
-          throw new Error(response.data.message)
-        }
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    async submitCreate ({ data }) {
-      try {
-        const response = await adminAPI.addProduct({
-          data
-        })
-        if (response.data.success !== true) {
-          throw new Error(response.data.message)
-        }
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    resetForm (formName) {
-      this.cacheCategory = ''
-      this.addCategory = false
-      this.$refs[formName].resetFields()
     },
     // ***** 圖片處理 ****** //
 

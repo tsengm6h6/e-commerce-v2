@@ -1,105 +1,99 @@
 <template>
-  <div>
-    <el-row type="flex" justify="center">
-      <el-col :xs="24">
-        <el-table
-          stripe
-          :data="cartList"
-          :summary-method="getSummaries"
-          show-summary
-          style="width: 100%"
-        >
-          <el-table-column min-width="80" align="center">
-            <template slot-scope="scope">
-              <div class="block">
-                <el-avatar
-                  shape="square"
-                  :size="50"
-                  :src="scope.row.image"
-                  fit="fill"
-                ></el-avatar>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column min-width="120" prop="title" label="商品名稱">
-          </el-table-column>
-          <el-table-column
-            min-width="100"
-            prop="date"
-            label="日期"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            min-width="80"
-            prop="time"
-            label="時段"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="qty"
-            label="數量"
-            min-width="100"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <i
-                class="el-icon-remove"
-                style="cursor: pointer"
-                @click="
-                  updateCartRecord({ cartItem: scope.row, action: 'REDUCE' })
-                "
-              ></i>
-              <span style="margin: 0 10px">{{ scope.row.qty }}</span>
-              <i
-                class="el-icon-circle-plus"
-                style="cursor: pointer"
-                @click="
-                  updateCartRecord({
-                    cartItem: scope.row,
-                    action: 'INCREASE',
-                  })
-                "
-              ></i>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="unit"
-            label="單位"
-            min-width="80"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="price"
-            label="單價"
-            min-width="80"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column label="小計" min-width="80" align="center">
-            <template slot-scope="scope">
-              {{ scope.row.price * scope.row.qty }}
-            </template>
-          </el-table-column>
-          <el-table-column width="50" align="center">
-            <template slot="header"></template>
-            <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="mini"
-                @click="
-                  updateCartRecord({ cartItem: scope.row, action: 'REMOVE' })
-                "
-                ><i class="el-icon-delete"></i
-              ></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-col>
-    </el-row>
-  </div>
+  <el-table
+    stripe
+    :data="cartList"
+    :summary-method="getSummaries"
+    show-summary
+    style="width: 100%"
+  >
+    <el-table-column min-width="80" align="center">
+      <template slot-scope="scope">
+        <div class="block">
+          <el-avatar
+            shape="square"
+            :size="50"
+            :src="scope.row.image"
+            fit="fill"
+          ></el-avatar>
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column min-width="120" prop="title" label="商品名稱">
+    </el-table-column>
+    <el-table-column
+      min-width="100"
+      prop="date"
+      label="日期"
+      align="center"
+    >
+    </el-table-column>
+    <el-table-column
+      min-width="80"
+      prop="time"
+      label="時段"
+      align="center"
+    >
+    </el-table-column>
+    <el-table-column
+      prop="qty"
+      label="數量"
+      min-width="100"
+      align="center"
+    >
+      <template slot-scope="scope">
+        <i
+          class="el-icon-remove"
+          style="cursor: pointer"
+          @click="
+            updateCartRecord({ cartItem: scope.row, action: 'REDUCE' })
+          "
+        ></i>
+        <span style="margin: 0 10px">{{ scope.row.qty }}</span>
+        <i
+          class="el-icon-circle-plus"
+          style="cursor: pointer"
+          @click="
+            updateCartRecord({
+              cartItem: scope.row,
+              action: 'INCREASE',
+            })
+          "
+        ></i>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="unit"
+      label="單位"
+      min-width="80"
+      align="center"
+    >
+    </el-table-column>
+    <el-table-column
+      prop="price"
+      label="單價"
+      min-width="80"
+      align="center"
+    >
+    </el-table-column>
+    <el-table-column label="小計" min-width="80" align="center">
+      <template slot-scope="scope">
+        {{ scope.row.price * scope.row.qty }}
+      </template>
+    </el-table-column>
+    <el-table-column width="50" align="center">
+      <template slot="header"></template>
+      <template slot-scope="scope">
+        <el-button
+          type="text"
+          size="mini"
+          @click="
+            updateCartRecord({ cartItem: scope.row, action: 'REMOVE' })
+          "
+          ><i class="el-icon-delete"></i
+        ></el-button>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>

@@ -33,35 +33,20 @@
 
 <script>
 import authorizationAPI from '@/apis/authorization.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'signin',
   data () {
+    const { required, email } = rules
     return {
       signInForm: {
         email: '',
         password: ''
       },
       rules: {
-        password: [
-          {
-            required: true,
-            message: '請輸入您的密碼',
-            trigger: 'blur'
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: '請輸入您的 Email',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: '請輸入正確的 Email 格式',
-            trigger: 'blur'
-          }
-        ]
+        password: [required],
+        email: [required, email]
       },
       isLoading: false
     }

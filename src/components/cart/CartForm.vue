@@ -12,27 +12,27 @@
             </li>
           </ol>
           <p>總價：NT$ {{ total }} 元</p>
-          <span v-if="final_total">折扣價：NT$ {{ final_total }} 元</span>
+          <span v-if="final_total !== total">折扣價：NT$ {{ final_total }} 元</span>
         </div>
       </el-collapse-item>
     </el-collapse>
     <!-- coupon & form -->
     <div class="coupon">
       <h3>
-        套用優惠碼<el-tag v-if="isCoupon" type="success">已套用優惠券</el-tag>
+        套用優惠碼<el-tag v-if="final_total !== total" type="success">已套用優惠券</el-tag>
       </h3>
 
       <el-input
         placeholder="請輸入優惠碼"
         v-model="couponCode"
-        :disabled="isCoupon"
+        :disabled="final_total !== total"
         @change="addCoupon"
       >
         <template slot="append">
           <el-button
             :loading="isLoading"
             @click.prevent.stop="addCoupon"
-            :disabled="isCoupon"
+            :disabled="final_total !== total"
           >
             套用優惠碼
           </el-button>
@@ -99,13 +99,14 @@
 import customerAPI from '@/apis/customer.js'
 import { mapState } from 'vuex'
 import cartMixin from '@/utils/cartMixin.js'
+import { rules } from '@/utils/helper.js'
 
 export default {
   name: 'CartForm',
   data () {
+    const { required, email, telPattern, telLength } = rules
     return {
       couponCode: '',
-      isCoupon: false,
       userForm: {
         name: '',
         email: '',
@@ -114,45 +115,10 @@ export default {
         message: ''
       },
       rules: {
-        name: [
-          {
-            required: true,
-            message: '姓名為必填',
-            trigger: 'blur'
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: ' Email為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: 'Email 格式不正確',
-            trigger: 'blur'
-          }
-        ],
-        tel: [
-          {
-            required: true,
-            message: '手機號碼為必填',
-            trigger: 'blur'
-          },
-          {
-            pattern: /\d{4}\d{3}\d{3}/,
-            message: '格式須為 10 碼數字且不含符號（eg. 0912345678）',
-            trigger: 'blur'
-          },
-          { len: 10, message: '數字最多為10碼', trigger: 'blur' }
-        ],
-        address: [
-          {
-            required: true,
-            message: '地址為必填',
-            trigger: 'blur'
-          }
-        ]
+        name: [required],
+        email: [required, email],
+        tel: [required, telPattern, telLength],
+        address: [required]
       }
     }
   },
@@ -176,7 +142,6 @@ export default {
         if (response.data.success !== true) {
           throw new Error(response.data.message)
         }
-        this.isCoupon = true
         await this.$store.dispatch('fetchCartProducts')
         this.updateLocalCartStatus('final_total', this.final_total)
         this.$message.success('購物明細已更新')
@@ -232,13 +197,13 @@ export default {
         total: 0,
         final_total: 0
       })
-      this.setLocalStorage({ cartList: [], total: 0 })
+      this.setLocalStorage({ cartList: [], total: 0, final_total: 0 })
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .cart-form {
   display: flex;
   flex-direction: column;
@@ -283,11 +248,11 @@ h3 {
   font-weight: 400;
 }
 
-.el-form--label-top >>> .el-form-item__label {
+.el-form--label-top /deep/ .el-form-item__label {
   padding: 10px 0 10px;
 }
 
->>> .el-form-item__label {
+/deep/ .el-form-item__label {
   line-height: 16px;
 }
 

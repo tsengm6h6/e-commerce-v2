@@ -14,7 +14,6 @@
         v-for="product in favoriteList"
         :key="product.id"
         :init-product="product"
-        @toggle-favorite="toggleFavorite"
       />
     </el-row>
   </el-container>
@@ -38,26 +37,11 @@ export default {
   },
   computed: {
     ...mapGetters(['favoriteList'])
-  },
-  methods: {
-    toggleFavorite (productId) {
-      this.$store.commit('UpdateFavorite', productId)
-
-      const favoriteIdList =
-        JSON.parse(window.localStorage.getItem('favorite_products')) || []
-
-      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
-      itemIndex === -1
-        ? favoriteIdList.push(productId)
-        : favoriteIdList.splice(itemIndex, 1)
-
-      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
-    }
   }
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .el-container {
   padding: 30px;
 }
@@ -75,10 +59,9 @@ export default {
   align-items: center;
   margin-bottom: 30px;
   letter-spacing: 1px;
-}
-
-.title h3 {
-  margin-bottom: 10px;
+  h3 {
+    margin-bottom: 10px;
+  }
 }
 
 .wrapper {

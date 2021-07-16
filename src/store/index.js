@@ -19,8 +19,7 @@ export default new Vuex.Store({
   },
   getters: {
     favoriteList (state) {
-      const favoriteList = state.productsList.filter(item => item.isFavorite)
-      return favoriteList
+      return state.productsList.filter(item => item.isFavorite)
     },
     filterProductsList (state) {
       const filterProductsList = state.category === '全部' ? state.productsList : state.productsList.filter(item => item.category === state.category)
@@ -49,7 +48,7 @@ export default new Vuex.Store({
     setCategory (state, category) {
       state.category = category
     },
-    UpdateFavorite (state, productId) {
+    updateFavorite (state, productId) {
       return state.productsList.map((item) => {
         if (item.id === productId) {
           return {

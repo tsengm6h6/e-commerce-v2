@@ -57,12 +57,13 @@
               v-for="product in filterProductsList"
               :key="product.id"
               :init-product="product"
-              @toggle-favorite="toggleFavorite"
+              @open-dialog="handleOpenDialog"
             />
           </el-row>
         </el-col>
       </el-row>
     </el-container>
+    <AddToCartDialog ref="dialog" />
   </div>
 </template>
 
@@ -72,6 +73,7 @@ import AsideMenu from '../components/AsideMenu.vue'
 import { mapGetters, mapState } from 'vuex'
 import Loading from '../components/Loading.vue'
 import Breadcrumb from '../components/Breadcrumb.vue'
+import AddToCartDialog from '../components/AddToCartDialog.vue'
 
 export default {
   name: 'Products',
@@ -79,7 +81,8 @@ export default {
     ProductCard,
     AsideMenu,
     Loading,
-    Breadcrumb
+    Breadcrumb,
+    AddToCartDialog
   },
   metaInfo: {
     title: '所有活動'
@@ -103,18 +106,8 @@ export default {
     }
   },
   methods: {
-    toggleFavorite (productId) {
-      this.$store.commit('UpdateFavorite', productId)
-
-      const favoriteIdList =
-        JSON.parse(window.localStorage.getItem('favorite_products')) || []
-
-      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
-      itemIndex === -1
-        ? favoriteIdList.push(productId)
-        : favoriteIdList.splice(itemIndex, 1)
-
-      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
+    handleOpenDialog (product) {
+      this.$refs.dialog.handleOpen(product)
     },
     async doCopy () {
       try {
@@ -124,13 +117,6 @@ export default {
         this.$message.danger('無法複製優惠碼，請稍後再試')
       }
     }
-  },
-  created () {
-    const vm = this
-    vm.spinner = true
-    setTimeout(() => {
-      vm.spinner = false
-    }, 1000)
   }
 }
 </script>

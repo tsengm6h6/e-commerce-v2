@@ -32,7 +32,7 @@ export default {
   methods: {
     ...mapActions(['fetchProducts'])
   },
-  mounted () {
+  created () {
     this.fetchProducts()
     this.fetchLocalCart()
     const { isPost = null } = this.getLocalStorage()

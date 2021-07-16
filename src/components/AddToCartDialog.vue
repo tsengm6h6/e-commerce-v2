@@ -67,11 +67,13 @@
 
 <script>
 import cartMixin from '../utils/cartMixin.js'
+import { rules } from '../utils/helper.js'
 
 export default {
   name: 'AddToCartDialog',
   mixins: [cartMixin],
   data () {
+    const { required } = rules
     return {
       dialogVisible: false,
       product: {},
@@ -86,20 +88,8 @@ export default {
         }
       },
       rules: {
-        date: [
-          {
-            required: true,
-            message: '日期為必填',
-            trigger: 'blur'
-          }
-        ],
-        time: [
-          {
-            required: true,
-            message: '時段為必填',
-            trigger: 'blur'
-          }
-        ]
+        date: [required],
+        time: [required]
       }
     }
   },

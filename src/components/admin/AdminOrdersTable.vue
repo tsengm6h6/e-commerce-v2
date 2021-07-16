@@ -11,10 +11,12 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <p>訂購人資訊</p>
-          <p>姓名：{{ props.row.user.name }}</p>
-          <p>信箱：{{ props.row.user.email }}</p>
-          <p>電話：{{ props.row.user.tel }}</p>
-          <p>地址：{{ props.row.user.address }}</p>
+          <ul>
+            <li>姓名：{{ props.row.user.name }}</li>
+            <li>信箱：{{ props.row.user.email }}</li>
+            <li>電話：{{ props.row.user.tel }}</li>
+            <li>地址：{{ props.row.user.address }}</li>
+          </ul>
         </template>
       </el-table-column>
       <el-table-column prop="user.name" label="購買人" min-width="100">
@@ -59,167 +61,34 @@
     </el-table>
 
     <!-- Detail顯示方塊 -->
-    <el-dialog title="訂單明細" :visible.sync="detailDialogVisible">
-      <el-table ref="productTable" :data="currDetailList" style="width: 100%">
-        <el-table-column type="index" width="50"> </el-table-column>
-        <el-table-column property="product.title" label="商品名稱" width="120">
-        </el-table-column>
-        <el-table-column property="qty" label="數量" width="120">
-        </el-table-column>
-        <el-table-column property="product.unit" label="單位" width="120">
-        </el-table-column>
-        <el-table-column property="product.price" label="單價">
-        </el-table-column>
-      </el-table>
-    </el-dialog>
+    <OrderDetailDialog ref='orderDetail' />
 
     <!-- 修改方塊 -->
-    <!-- 假設只能修改訂單金額、狀態、訂購人資訊 -->
-    <el-dialog
-      title="編輯訂單"
-      :visible.sync="editDialogVisible"
-      width="40%"
-      @close="editDialogClosed"
-    >
-      <!-- 表單 -->
-      <el-form ref="editForm" :rules="rules" :model="editOrder" status-icon>
-        <el-row>
-          <!-- 文字區 -->
-          <el-col :span="24">
-            <el-row>
-              <el-col :span="11">
-                <el-form-item label="訂購人姓名" prop="userName">
-                  <el-input
-                    type="text"
-                    placeholder="請輸入訂購人姓名"
-                    v-model="editOrder.userName"
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12" :offset="1">
-                <el-form-item label="訂購人電話" prop="userTel">
-                  <el-input
-                    type="number"
-                    placeholder="訂購人電話"
-                    v-model.number="editOrder.userTel"
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-form-item label="訂購人信箱" prop="userEmail">
-              <el-input
-                type="email"
-                placeholder="請輸入訂購人信箱"
-                v-model="editOrder.userEmail"
-              ></el-input>
-            </el-form-item>
+    <OrderUpdateDialog ref="orderUpdate" @after-order-submit='afterOrderSubmit' />
 
-            <el-form-item label="訂購人地址" prop="userAddress">
-              <el-input
-                type="text"
-                placeholder="訂購人地址"
-                v-model="editOrder.userAddress"
-              ></el-input>
-            </el-form-item>
-
-            <el-form-item label="總金額" prop="total">
-              <el-input
-                type="number"
-                placeholder="總金額"
-                v-model="editOrder.total"
-              ></el-input>
-            </el-form-item>
-
-            <el-form-item label="付款狀態" prop="isPaid">
-              <el-checkbox v-model="editOrder.isPaid">{{
-                editOrder.isPaid ? "已付款" : "尚未付款"
-              }}</el-checkbox>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click.prevent.stop="editDialogClosed">取消</el-button>
-        <el-button type="primary" @click.prevent.stop="validateForm('editForm')"
-          >確認</el-button
-        >
-      </span>
-    </el-dialog>
   </el-container>
 </template>
 
 <script>
 import adminAPI from '@/apis/admin.js'
 import mixin from '@/utils/mixin.js'
+import OrderDetailDialog from './OrderDetailDialog.vue'
+import OrderUpdateDialog from './OrderUpdateDialog.vue'
 
 export default {
   metaInfo: {
     name: 'AdminOrdersTable',
     title: '訂單列表'
   },
+  components: {
+    OrderDetailDialog,
+    OrderUpdateDialog
+  },
   data () {
     return {
-      originOrder: [],
-      OrdersList: [],
-      isLoading: false,
-      editOrder: {
-        total: null,
-        isPaid: null,
-        userName: '',
-        userTel: '',
-        userAddress: '',
-        userEmail: ''
-      },
-      editDialogVisible: false,
-      detailDialogVisible: false,
-      currDetailList: [],
-      rules: {
-        total: [
-          {
-            required: true,
-            message: '總金額為必填',
-            trigger: 'blur'
-          }
-        ],
-        userTel: [
-          {
-            required: true,
-            message: '訂購人電話為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'number',
-            message: '電話必須為數字',
-            trigger: 'blur'
-          }
-        ],
-        userName: [
-          {
-            required: true,
-            message: '訂購人姓名為必填',
-            trigger: 'blur'
-          }
-        ],
-        userEmail: [
-          {
-            required: true,
-            message: '訂購人信箱為必填',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: '請輸入正確的 Email 格式',
-            trigger: 'blur'
-          }
-        ],
-        userAddress: [
-          {
-            required: true,
-            message: '訂購人地址必填',
-            trigger: 'blur'
-          }
-        ]
-      }
+      originOrder: [], // API 回傳的原始資料
+      OrdersList: [], // 處理過的資料
+      isLoading: false
     }
   },
   mixins: [mixin],
@@ -258,81 +127,18 @@ export default {
       }
     },
     showEditDialog (order) {
-      const { id, total, isPaid, user } = order
-
-      this.editOrder = {
-        id,
-        total,
-        isPaid,
-        userName: user.name || '',
-        userTel: user.tel || '',
-        userAddress: user.address || '',
-        userEmail: user.email || ''
-      }
-      this.editDialogVisible = true
+      const originData = this.originOrder.find(
+        (item) => item.id === order.id
+      )
+      this.$refs.orderUpdate.showEditDialog(order, originData)
     },
-    editDialogClosed () {
-      this.resetForm('editForm')
-      this.editDialogVisible = false
-    },
-    validateForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.handleSubmit()
-        } else {
-          return false
-        }
-      })
-    },
-    async handleSubmit () {
-      try {
-        this.isLoading = true
-        const {
-          total,
-          isPaid,
-          userName,
-          userTel,
-          userAddress,
-          userEmail
-        } = this.editOrder
-        const originData = this.originOrder.find(
-          (item) => item.id === this.editOrder.id
-        )
-        const editData = {
-          ...originData,
-          total,
-          is_paid: isPaid,
-          user: {
-            name: userName,
-            tel: userTel,
-            address: userAddress,
-            email: userEmail
-          }
-        }
-
-        const response = await adminAPI.editOrder({
-          id: this.editOrder.id,
-          data: editData
-        })
-        if (response.data.success !== true) {
-          throw new Error(response.data.message)
-        }
-
-        // 重新取得訂單列表，重置表單並關閉對話框
-        await this.fetchOrdersList()
-        this.resetForm('editForm')
-        this.editDialogVisible = false
-        this.isLoading = false
-      } catch (error) {
-        this.isLoading = false
-      }
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    afterOrderSubmit () {
+      const { page } = this.$route.query
+      this.fetchOrdersList(page)
     },
     showDetailDialog (order) {
-      this.currDetailList = Object.values(order.products)
-      this.detailDialogVisible = true
+      const currDetailList = Object.values(order.products)
+      this.$refs.orderDetail.showDetailDialog(currDetailList)
     }
   }
 }
@@ -343,4 +149,9 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+ul {
+  margin: 10px 0 0 20px;
+}
+
 </style>

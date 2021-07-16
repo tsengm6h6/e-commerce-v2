@@ -16,21 +16,12 @@
             <div class="mask">
               <el-button
                 class="favorite-icon"
-                v-if="product.isFavorite"
                 @click.prevent.stop="toggleFavorite(product.id)"
-                icon="el-icon-star-on"
+                :icon="`el-icon-star-${product.isFavorite ? 'on' : 'off'}`"
                 circle
               >
               </el-button>
-              <el-button
-                class="favorite-icon"
-                v-else
-                @click.prevent.stop="toggleFavorite(product.id)"
-                icon="el-icon-star-off"
-                circle
-              >
-              </el-button>
-              <div class="add-to-cart" @click.prevent.stop="handleOpenDialog">
+              <div class="add-to-cart" @click.prevent.stop="$emit('open-dialog', product)">
                 加入購物車
               </div>
             </div>
@@ -47,14 +38,11 @@
         </div>
       </el-card>
     </el-col>
-
-    <AddToCartDialog ref="dialog" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import AddToCartDialog from './AddToCartDialog.vue'
 
 export default {
   name: 'productCard',
@@ -63,9 +51,6 @@ export default {
       type: Object,
       require: true
     }
-  },
-  components: {
-    AddToCartDialog
   },
   data () {
     return {
@@ -76,12 +61,19 @@ export default {
     ...mapState(['isLoading'])
   },
   methods: {
-    handleOpenDialog () {
-      this.$refs.dialog.handleOpen(this.product)
-    },
     toggleFavorite (productId) {
       this.product.isFavorite = !this.product.isFavorite
-      this.$emit('toggle-favorite', productId)
+      this.$store.commit('updateFavorite', productId)
+
+      const favoriteIdList =
+        JSON.parse(window.localStorage.getItem('favorite_products')) || []
+
+      const itemIndex = favoriteIdList.findIndex((Id) => Id === productId)
+      itemIndex === -1
+        ? favoriteIdList.push(productId)
+        : favoriteIdList.splice(itemIndex, 1)
+
+      localStorage.setItem('favorite_products', JSON.stringify(favoriteIdList))
     }
   }
 }
