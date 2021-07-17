@@ -1,7 +1,7 @@
 <template>
   <el-container direction="vertical">
     <loading :active.sync="isLoading"></loading>
-    <el-table height="100%" stripe :data="OrdersList">
+    <el-table height="90%" stripe :data="OrdersList">
       <el-table-column fixed prop="id" label="訂單編號" min-width="180">
       </el-table-column>
       <el-table-column prop="createdAt" label="日期" min-width="100">
@@ -59,6 +59,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <Pagination :pagination='pagination' @handlePageChange='changePage'/>
 
     <!-- Detail顯示方塊 -->
     <OrderDetailDialog ref='orderDetail' />
@@ -74,6 +75,7 @@ import adminAPI from '@/apis/admin.js'
 import mixin from '@/utils/mixin.js'
 import OrderDetailDialog from './OrderDetailDialog.vue'
 import OrderUpdateDialog from './OrderUpdateDialog.vue'
+import Pagination from './Pagination.vue'
 
 export default {
   metaInfo: {
@@ -82,13 +84,15 @@ export default {
   },
   components: {
     OrderDetailDialog,
-    OrderUpdateDialog
+    OrderUpdateDialog,
+    Pagination
   },
   data () {
     return {
       originOrder: [], // API 回傳的原始資料
       OrdersList: [], // 處理過的資料
-      isLoading: false
+      isLoading: false,
+      pagination: {}
     }
   },
   mixins: [mixin],
@@ -119,7 +123,7 @@ export default {
           total: item.total || null,
           user: { ...item.user } || null
         }))
-        this.$emit('renderPaginator', response.data.pagination)
+        this.pagination = { ...response.data.pagination }
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
@@ -139,6 +143,17 @@ export default {
     showDetailDialog (order) {
       const currDetailList = Object.values(order.products)
       this.$refs.orderDetail.showDetailDialog(currDetailList)
+    },
+    changePage (val) {
+      const { activeIndex } = this.$route.query
+      this.fetchOrdersList(val)
+      this.$router.push({
+        path: '/admin/dashboard',
+        query: {
+          page: val,
+          activeIndex: activeIndex
+        }
+      })
     }
   }
 }

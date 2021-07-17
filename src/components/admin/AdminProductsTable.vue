@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <el-container direction="vertical">
     <!-- 產品列表 -->
-
     <loading :active.sync="isLoading"></loading>
-    <el-table stripe :data="productsList" height="80vh">
+    <el-table stripe :data="productsList" height="90%">
       <el-table-column fixed prop="title" label="產品名稱" min-width="150">
       </el-table-column>
       <el-table-column
@@ -72,19 +71,21 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <Pagination :pagination='pagination' @handlePageChange='changePage'/>
     <ProductUpdateDialog ref="dialog" @after-product-submit="handleAfterSubmit" />
-  </div>
+  </el-container>
 </template>
 
 <script>
 import adminAPI from '@/apis/admin.js'
 import ProductUpdateDialog from '../admin/ProductUpdateDialog.vue'
+import Pagination from './Pagination.vue'
 
 export default {
   name: 'AdminProductsTable',
   components: {
-    ProductUpdateDialog
+    ProductUpdateDialog,
+    Pagination
   },
   metaInfo: {
     title: '產品列表'
@@ -122,7 +123,8 @@ export default {
         price: null,
         title: '',
         unit: ''
-      }
+      },
+      pagination: {}
     }
   },
   created () {
@@ -158,7 +160,7 @@ export default {
           title: item.title || '',
           unit: item.unit || ''
         }))
-        this.$emit('renderPaginator', response.data.pagination)
+        this.pagination = { ...response.data.pagination }
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
@@ -227,6 +229,17 @@ export default {
           message: '取消刪除'
         })
       }
+    },
+    changePage (val) {
+      const { activeIndex } = this.$route.query
+      this.fetchProductsList(val)
+      this.$router.push({
+        path: '/admin/dashboard',
+        query: {
+          page: val,
+          activeIndex: activeIndex
+        }
+      })
     }
   }
 }

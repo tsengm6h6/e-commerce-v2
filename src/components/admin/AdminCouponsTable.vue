@@ -1,7 +1,7 @@
 <template>
   <el-container direction="vertical">
     <loading :active.sync="isLoading"></loading>
-    <el-table stripe :data="couponsList">
+    <el-table stripe :data="couponsList" height="90%">
       <el-table-column fixed prop="title" label="優惠券名稱" min-width="150">
       </el-table-column>
       <el-table-column prop="code" label="代碼" min-width="100">
@@ -46,6 +46,8 @@
       </el-table-column>
     </el-table>
 
+    <Pagination :pagination='pagination' @handlePageChange='changePage'/>
+
     <!-- 修改產品內容 對話方塊-->
     <CouponUpdateDialog ref="coupon" @after-coupon-submit="fetchCouponsList" />
 
@@ -55,6 +57,7 @@
 <script>
 import adminAPI from '@/apis/admin.js'
 import CouponUpdateDialog from './CouponUpdateDialog.vue'
+import Pagination from './Pagination.vue'
 
 export default {
   name: 'AdminCouponsTable',
@@ -62,7 +65,8 @@ export default {
     title: '優惠券列表'
   },
   components: {
-    CouponUpdateDialog
+    CouponUpdateDialog,
+    Pagination
   },
   data () {
     return {
@@ -76,7 +80,8 @@ export default {
         num: 0,
         percent: null,
         title: ''
-      }
+      },
+      pagination: {}
     }
   },
   created () {
@@ -93,7 +98,7 @@ export default {
           throw new Error()
         }
         this.couponsList = response.data.coupons
-        this.$emit('renderPaginator', response.data.pagination)
+        this.pagination = { ...response.data.pagination }
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
@@ -147,6 +152,17 @@ export default {
           message: '取消刪除'
         })
       }
+    },
+    changePage (val) {
+      const { activeIndex } = this.$route.query
+      this.fetchProductsList(val)
+      this.$router.push({
+        path: '/admin/dashboard',
+        query: {
+          page: val,
+          activeIndex: activeIndex
+        }
+      })
     }
   }
 }

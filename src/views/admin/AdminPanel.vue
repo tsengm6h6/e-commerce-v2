@@ -3,30 +3,14 @@
     <AdminSidebar @changeTable="changeTable" />
     <el-container direction="vertical" class="admin-section">
       <AdminProductsTable
-        @renderPaginator="renderPaginator"
-        ref="products"
         v-if="activeIndex === 1"
       />
       <AdminOrdersTable
-        @renderPaginator="renderPaginator"
-        ref="orders"
         v-if="activeIndex === 2"
       />
       <AdminCouponsTable
-        @renderPaginator="renderPaginator"
-        ref="coupons"
         v-if="activeIndex === 3"
       />
-      <!-- Pagination -->
-      <el-row type="flex" class="row-bg" justify="center">
-        <el-pagination
-          :page-count="pagination.total_pages"
-          :current-page.sync="pagination.current_page"
-          @current-change="handlePageChange"
-          layout="prev, pager, next"
-        >
-        </el-pagination>
-      </el-row>
     </el-container>
   </el-container>
 </template>
@@ -52,14 +36,7 @@ export default {
   },
   data () {
     return {
-      activeIndex: 1,
-      pagination: {
-        category: null,
-        current_page: 1,
-        has_next: null,
-        has_pre: null,
-        total_pages: 1
-      }
+      activeIndex: 1
     }
   },
   computed: {
@@ -81,24 +58,6 @@ export default {
           page: 1
         }
       })
-    },
-    renderPaginator (payload) {
-      this.pagination = {
-        ...payload
-      }
-    },
-    handlePageChange (val) {
-      if (this.activeIndex === 1) this.$refs.products.fetchProductsList(val)
-      if (this.activeIndex === 2) this.$refs.orders.fetchOrdersList(val)
-      if (this.activeIndex === 3) this.$refs.products.fetchCouponsList(val)
-
-      this.$router.push({
-        path: '/admin/dashboard',
-        query: {
-          page: val,
-          activeIndex: this.activeIndex
-        }
-      })
     }
   }
 }
@@ -107,9 +66,5 @@ export default {
 <style scoped>
 .admin-section {
   margin: 0 20px;
-}
-
-.el-pagination {
-  margin-top: 20px;
 }
 </style>
