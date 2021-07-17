@@ -11,7 +11,6 @@ const routes = [
     name: 'home',
     component: LandingPage,
     meta: {
-      gtm: 'landingPage',
       breadcrumb: [{
         name: '首頁'
       }]
@@ -22,7 +21,6 @@ const routes = [
     name: 'products',
     component: () => import('../views/Products.vue'),
     meta: {
-      gtm: 'homePage',
       breadcrumb: [{
         name: '首頁',
         link: 'home'
@@ -34,15 +32,13 @@ const routes = [
   {
     path: '/product/:id',
     name: 'product',
-    component: () => import('../views/Product.vue'),
-    meta: { gtm: 'product' }
+    component: () => import('../views/Product.vue')
   },
   {
     path: '/favorites',
     name: 'favorites',
     component: () => import('../views/Favorites.vue'),
     meta: {
-      gtm: 'favorite',
       breadcrumb: [{
         name: '首頁',
         link: 'home'
@@ -56,7 +52,6 @@ const routes = [
     name: 'question',
     component: () => import('../views/Question.vue'),
     meta: {
-      gtm: 'question',
       breadcrumb: [{
         name: '首頁',
         link: 'home'
@@ -70,7 +65,6 @@ const routes = [
     name: 'policies',
     component: () => import('../views/Policies.vue'),
     meta: {
-      gtm: 'policies',
       breadcrumb: [{
         name: '首頁',
         link: 'home'
@@ -82,17 +76,13 @@ const routes = [
   {
     path: '/checkout',
     name: 'checkout',
-    component: () => import('../views/CheckOut.vue'),
-    meta: {
-      gtm: 'checkout'
-    }
+    component: () => import('../views/CheckOut.vue')
   },
   {
     path: '/orders',
     name: 'orders',
     component: () => import('../views/Orders.vue'),
     meta: {
-      gtm: 'orders',
       breadcrumb: [{
         name: '首頁',
         link: 'home'
