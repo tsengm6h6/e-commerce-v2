@@ -81,14 +81,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: this.product.title,
-      meta: [
-        { vmid: 'description', name: 'description', content: this.product.description },
-        { property: 'og:title', content: `DIVE IN 戶外冒險團隊 | ${this.product.title}` },
-        { property: 'og:url', content: `https://tsengm6h6.github.io/e-commerce-v2/product/${this.product.id}` },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: this.product.image }
-      ]
+      title: this.product.title
     }
   },
   data () {

@@ -86,14 +86,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: '所有活動',
-      meta: [
-        { vmid: 'description', name: 'description', content: 'PADI 認證五星潛水中心，小班制的專業教學及活動安排，帶各位夥伴一起上山下海，不定期推出國內外潛水旅遊或探險新企劃，不怕沒有伴、只怕你不來' },
-        { property: 'og:title', content: 'DIVE IN 戶外冒險團隊 | 所有活動' },
-        { property: 'og:url', content: 'https://tsengm6h6.github.io/e-commerce-v2/products' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: 'https://imgur.com/fWhPYSU' }
-      ]
+      title: '所有活動'
     }
   },
   data () {
