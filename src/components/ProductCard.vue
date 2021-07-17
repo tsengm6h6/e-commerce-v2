@@ -63,6 +63,16 @@ export default {
   methods: {
     toggleFavorite (productId) {
       this.product.isFavorite = !this.product.isFavorite
+      if (this.product.isFavorite) {
+        this.$gtm.trackEvent({
+          event: 'add-to-wishlist',
+          category: '收藏事件',
+          action: 'add-to-wishlist',
+          label: 'add-to-wishlist',
+          value: this.product.price,
+          items: this.product.title
+        })
+      }
       this.$store.commit('updateFavorite', productId)
 
       const favoriteIdList =

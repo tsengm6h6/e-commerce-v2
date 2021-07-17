@@ -112,6 +112,14 @@ export default {
       this.addToCart(this.product, this.submitForm)
       this.dialogVisible = false
       this.resetDialogForm()
+      this.$gtm.trackEvent({
+        event: 'add-to-cart',
+        category: '購買事件',
+        action: 'add-to-cart',
+        label: 'add-to-cart',
+        items: this.product.title,
+        value: this.product.price * this.submitForm.selectedNum
+      })
     },
     handleBuyNow () {
       this.handleAddToCart()

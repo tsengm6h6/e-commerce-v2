@@ -112,14 +112,27 @@ export default {
     },
     handleReduceQty (sameItem) {
       if (sameItem.qty === 1) return
+      this.gtmTracker('remove-from-cart', sameItem)
       return sameItem.qty--
     },
     handleIncreaseQty (sameItem) {
       if (sameItem.qty >= 10) return this.$message.warning('10 人以上報名，請聯繫專人客服')
+      this.gtmTracker('add-to-cart', sameItem)
       return sameItem.qty++
     },
     handleRemove (cartList, sameItem) {
+      this.gtmTracker('remove-from-cart', sameItem)
       return cartList.filter(item => item !== sameItem)
+    },
+    gtmTracker (eventName, sameItem) {
+      return this.$gtm.trackEvent({
+        event: eventName,
+        category: '購買事件',
+        action: eventName,
+        label: eventName,
+        items: sameItem.title,
+        value: sameItem.price
+      })
     }
   }
 }

@@ -17,11 +17,11 @@
         </div>
         <p>現在報名即可享 8 折優惠，輸入 summervibe 取得折扣價！</p>
         <div class="button">
-          <el-button type="success" plain @click="doCopy">
+          <el-button type="success" plain @click="doCopy(), sendGTMHandler('get-discount')">
             <h4>領取優惠</h4>
           </el-button>
           <router-link :to="{ name: 'product', params: { id: course.productId}}">
-            <el-button type="success">
+            <el-button type="success" @click="sendGTMHandler('enroll-now')">
               <h4>立即報名</h4>
             </el-button>
           </router-link>
@@ -86,6 +86,15 @@ export default {
       } catch (err) {
         this.$message.danger('無法複製優惠碼，請稍後再試')
       }
+    },
+    sendGTMHandler (btn) {
+      this.$gtm.trackEvent({
+        event: 'click-event',
+        category: '點擊事件',
+        action: 'click',
+        label: `${btn} button clicked`,
+        value: null
+      })
     }
   }
 }

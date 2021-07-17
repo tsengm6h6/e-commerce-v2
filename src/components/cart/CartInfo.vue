@@ -154,6 +154,18 @@ export default {
       const sums = ['', '', '', '', '', '', '總價', this.total]
       return sums
     }
+  },
+  mounted () {
+    this.$gtm.trackEvent({
+      event: 'begin-check-out',
+      category: '購買事件',
+      action: 'begin-check-out',
+      label: 'begin-check-out',
+      currenct: 'TWD',
+      value: this.total,
+      coupon: this.couponCode || '',
+      items: this.cartList
+    })
   }
 }
 </script>

@@ -8,12 +8,12 @@
         </div>
         <div class="button">
           <router-link to="#" v-scroll-to="'#feature'"
-            ><el-button class="left" type="danger" plain @click.prevent='sendGTMHandler'
+            ><el-button class="left" type="danger" plain @click="sendGTMHandler('learn-more')"
               >了解更多</el-button
             ></router-link
           >
           <router-link to="#" v-scroll-to="'#course'">
-            <el-button class="right" type="danger">立即報名</el-button>
+            <el-button class="right" type="danger" @click="sendGTMHandler('enroll-now')">立即報名</el-button>
           </router-link>
         </div>
       </div>
@@ -40,12 +40,12 @@ export default {
     GallerySection
   },
   methods: {
-    sendGTMHandler () {
+    sendGTMHandler (btn) {
       this.$gtm.trackEvent({
         event: 'click-event',
         category: '點擊事件', // 類別 字元(必填)
         action: 'click', // 動作 字元(必填)
-        label: 'learn-more btn clicked', // 標籤 字元(選填)
+        label: `${btn} button clicked`, // 標籤 字元(選填)
         value: null // 標籤 數字(選填)
       })
     }
