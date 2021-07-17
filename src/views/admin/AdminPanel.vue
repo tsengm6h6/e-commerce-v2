@@ -3,13 +3,13 @@
     <AdminSidebar @changeTable="changeTable" />
     <el-container direction="vertical" class="admin-section">
       <AdminProductsTable
-        v-if="activeIndex === 1"
+        v-if="activeIndex === '1'"
       />
       <AdminOrdersTable
-        v-if="activeIndex === 2"
+        v-if="activeIndex === '2'"
       />
       <AdminCouponsTable
-        v-if="activeIndex === 3"
+        v-if="activeIndex === '3'"
       />
     </el-container>
   </el-container>
@@ -36,7 +36,7 @@ export default {
   },
   data () {
     return {
-      activeIndex: 1
+      activeIndex: '1'
     }
   },
   computed: {

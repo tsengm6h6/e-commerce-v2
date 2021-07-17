@@ -7,19 +7,15 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <el-menu-item index="1" @click="handleChange(1)">
-        <i class="el-icon-message"></i>
-        <span>產品列表</span>
-      </el-menu-item>
-      <el-menu-item index="2" @click="handleChange(2)">
-        <i class="el-icon-menu"></i>
-        <span>訂單列表</span>
-      </el-menu-item>
-      <el-menu-item index="3" @click="handleChange(3)">
-        <i class="el-icon-s-ticket"></i>
-        <span>優惠券</span>
-      </el-menu-item>
-      <el-menu-item index="4" @click="adminLogOut">
+
+      <template v-for="item in sideList">
+        <el-menu-item :key="item.id" :index="item.id" @click="$emit('changeTable', item.id)">
+          <i :class="item.icon"></i>
+          <span>{{item.title}}</span>
+        </el-menu-item>
+      </template>
+
+      <el-menu-item :index="(Number(sideList.length)+1).toString()" @click="adminLogOut">
         <i class="el-icon-user"></i>
         <span>登出</span>
         <i class="el-icon-loading" v-if="isLoading"></i>
@@ -35,13 +31,15 @@ export default {
   name: 'AdminSidebar',
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      sideList: [
+        { id: '1', title: '產品列表', icon: 'el-icon-message' },
+        { id: '2', title: '訂單列表', icon: 'el-icon-s-ticket' },
+        { id: '3', title: '產品列表', icon: 'el-icon-s-ticket' }
+      ]
     }
   },
   methods: {
-    handleChange (index) {
-      this.$emit('changeTable', index)
-    },
     async adminLogOut () {
       try {
         this.isLoading = true
