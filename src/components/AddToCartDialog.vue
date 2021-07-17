@@ -96,7 +96,7 @@ export default {
   methods: {
     handleOpen (initProduct) {
       this.product = { ...initProduct }
-      this.resetDialogForm()
+      if (this.$refs.submitForm) this.resetDialogForm('submitForm')
       this.dialogVisible = true
     },
     validateForm (formName) {
@@ -111,7 +111,7 @@ export default {
     handleAddToCart () {
       this.addToCart(this.product, this.submitForm)
       this.dialogVisible = false
-      this.resetDialogForm()
+      this.resetDialogForm('submitForm')
       this.$gtm.trackEvent({
         event: 'add-to-cart',
         category: '購買事件',
@@ -125,12 +125,8 @@ export default {
       this.handleAddToCart()
       this.$router.push('/checkout')
     },
-    resetDialogForm () {
-      this.submitForm = {
-        data: '',
-        time: '',
-        selectedNum: 1
-      }
+    resetDialogForm (formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }
