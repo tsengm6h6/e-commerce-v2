@@ -8,7 +8,7 @@
         </div>
         <div class="button">
           <router-link to="#" v-scroll-to="'#feature'"
-            ><el-button class="left" type="danger" plain
+            ><el-button class="left" type="danger" plain @click.prevent='sendGTMHandler'
               >了解更多</el-button
             ></router-link
           >
@@ -38,6 +38,17 @@ export default {
     TripSection,
     CourseSection,
     GallerySection
+  },
+  methods: {
+    sendGTMHandler () {
+      this.$gtm.trackEvent({
+        event: 'click-event',
+        category: '點擊事件', // 類別 字元(必填)
+        action: 'click', // 動作 字元(必填)
+        label: 'learn-more btn clicked', // 標籤 字元(選填)
+        value: null // 標籤 數字(選填)
+      })
+    }
   }
 }
 </script>

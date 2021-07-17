@@ -116,6 +116,7 @@ Vue.use(VueGtm, {
   defer: false, // Defaults to false, so the script is loaded `async` by default
   compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
   loadScript: true,
+  debug: true,
   vueRouter: router,
   trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
 })
