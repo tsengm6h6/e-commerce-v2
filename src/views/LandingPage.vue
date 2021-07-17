@@ -49,6 +49,16 @@ export default {
         value: null // 標籤 數字(選填)
       })
     }
+  },
+  metaInfo () {
+    return {
+      meta: [
+        { property: 'og:title', content: 'DIVE IN 戶外冒險團隊 | PADI水肺潛水 | AIDA 自由潛水 | 台灣潛水旅遊' },
+        { property: 'og:url', content: 'https://tsengm6h6.github.io/e-commerce-v2' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: 'https://imgur.com/fWhPYSU' }
+      ]
+    }
   }
 }
 </script>
